@@ -1,9 +1,11 @@
 package by.training.nc.dev3.beans;
 
+import java.io.Serializable;
+
 /**
  * Created by Дмитрий on 17.03.2017.
  */
-public abstract class Human {
+public abstract class Human implements Serializable {
     private String name;
     private String surname;
 

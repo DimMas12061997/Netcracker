@@ -5,13 +5,14 @@ import by.training.nc.dev3.beans.Human;
 import by.training.nc.dev3.enums.AdminAct;
 import by.training.nc.dev3.enums.CustomerAct;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Дмитрий on 17.03.2017.
  */
-public class Customer extends Human {
+public class Customer extends Human implements Serializable {
     private String CreditCardNumber;
     private String address;
     private double budget;        //параметризация
@@ -41,7 +42,7 @@ public class Customer extends Human {
         return budget;
     }
 
-    public void setBudget(int budget) {
+    public void setBudget(double budget) {
         this.budget = budget;
     }
 
@@ -55,6 +56,8 @@ public class Customer extends Human {
     }
 
     public void doAction(CustomerAct act) {
+        System.out.println(this);
+        CustomerActs customerActs = new CustomerActs(this);
         for (Map.Entry<CustomerAct, ActCommandCustomer> entry : acts.entrySet()) {
             if (act.equals(entry.getKey())) {
                 entry.getValue().execute();

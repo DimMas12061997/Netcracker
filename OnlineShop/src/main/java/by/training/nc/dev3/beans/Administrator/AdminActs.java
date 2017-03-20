@@ -60,6 +60,12 @@ public class AdminActs {
     }
 
     public void checkOrder() {
+        if (Order.getPayment() == true) {
+            if (OnlineShop.getProfit() == Order.getOrderCost()){
+                Order.good.removeAll(Order.good);
+            }
+
+        }
     }
 
 

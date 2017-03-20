@@ -10,7 +10,18 @@ import java.util.Iterator;
 /**
  * Created by Дмитрий on 20.03.2017.
  */
+
 public class CustomerActs {
+    private Order order = new Order();
+    private static Customer customer;
+
+    public CustomerActs() {
+    }
+
+    public CustomerActs(Customer customer) {
+        this.customer = customer;
+    }
+
     public void addGoodOrder() {
         int flag = 0;
         if (checkSize() == false) {
@@ -21,9 +32,8 @@ public class CustomerActs {
                     int number = Operations.inputNumber();
                     if (number <= product.getNumber()) {
                         product.setNumber(product.getNumber() - number);
-                        Order.good.add(new Good(name,number,product.getUnitPrice()));
-                    }
-                    else
+                        Order.good.add(new Good(name, number, product.getUnitPrice()));
+                    } else
                         System.out.println("Сгенерить exception2");
                 }
             if (flag == 0)
@@ -62,15 +72,30 @@ public class CustomerActs {
     }
 
     public void payOrder() {
-
+        System.out.println("Бюджет покупателя: " + customer.getBudget());
+        System.out.println("Корхина покупателя: " + order.getOrderCost());
+        order.setPayment(true);
+        if (customer.getBudget() >= order.getOrderCost()) {
+            System.out.println("бюджета хватает");
+            double x = customer.getBudget() - order.getOrderCost();
+            customer.setBudget(x);
+            OnlineShop.setProfit(order.getOrderCost());
+            System.out.println("Оствшийся бюджет: " + customer.getBudget());
+        } else
+            System.out.println("бюджета не хватает");
     }
 
     public void viewGoodsOrder() {
+        double cost = 0;
         if (checkSizeOrder() == false)
-            for (Good good : Order.good)
+            for (Good good : Order.good) {
+                cost += good.getNumber() * good.getUnitPrice();
                 System.out.println(good);
+            }
         else
             System.out.println("Товара нет");
+        order.setOrderCost(cost);
+        System.out.println("Стоимость корзины: " + order.getOrderCost());
     }
 
     public void removeAllGoodsOrder() {

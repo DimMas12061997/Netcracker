@@ -12,9 +12,10 @@ import by.training.nc.dev3.enums.Role;
  */
 public class Menu {
     public static Administrator admin = new Administrator();
-    public static Customer customer = new Customer();
+    public static Customer customer;
 
     public static void menu() {
+        role:
         while (true) {
             System.out.println("===========================================================");
             System.out.println("==================" + OnlineShop.getName() + "==================================");
@@ -27,7 +28,12 @@ public class Menu {
 
             switch (Operations.inputNumber()) {
                 case 1:
-                    System.out.println(Operations.inputRole(Role.ADMINISTRATOR));
+                    int flag = 0;
+                    do {
+                        System.out.println("Введите данные об админе");
+                        flag = Operations.checkHuman(Role.ADMINISTRATOR);
+                    }
+                    while (flag == 0);
                     admin.fillMap();
                     out:
                     while (true) {
@@ -39,6 +45,7 @@ public class Menu {
                         System.out.println("5. Прочитать список товара из файла");
                         System.out.println("6. Записать список товара в файл");
                         System.out.println("7. Удалить весь товар");
+                        System.out.println("8. Изменить администратора");
                         System.out.println("0. Назад");
                         System.out.println("===========================================================");
 
@@ -54,10 +61,9 @@ public class Menu {
                                 System.out.println("===========================================================");
                                 admin.doAction(AdminAct.REMOVE);
                                 break;
-
                             case 4:
                                 System.out.println("===========================================================");
-
+                                admin.doAction(AdminAct.CHECK);
                                 break;
                             case 5:
                                 System.out.println("===========================================================");
@@ -71,6 +77,11 @@ public class Menu {
                                 System.out.println("===========================================================");
                                 admin.doAction(AdminAct.REMOVEALL);
                                 break;
+                            case 8:
+                                System.out.println("===========================================================");
+                                System.out.println("Введите данные об админе");
+                                admin = (Administrator) Operations.registrationHuman(Role.ADMINISTRATOR);
+                                break;
                             case 0:
                                 System.out.println("===========================================================");
                                 break out;
@@ -81,7 +92,8 @@ public class Menu {
                     }
                     break;
                 case 2:
-                    System.out.println(Operations.inputRole(Role.CUSTOMER));
+                    System.out.println("Введите данные о покупателе");
+                    customer = (Customer) Operations.registrationHuman(Role.CUSTOMER);
                     customer.fillMap();
                     toMenu:
                     while (true) {
@@ -118,7 +130,7 @@ public class Menu {
                                 break;
                             case 6:
                                 System.out.println("===========================================================");
-
+                                customer.doAction(CustomerAct.PAYORDER);
                                 break;
                             case 0:
                                 break toMenu;

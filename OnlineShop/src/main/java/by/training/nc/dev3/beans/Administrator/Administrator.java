@@ -3,17 +3,37 @@ package by.training.nc.dev3.beans.Administrator;
 import by.training.nc.dev3.beans.Human;
 import by.training.nc.dev3.enums.AdminAct;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Дмитрий on 17.03.2017.
  */
-public class Administrator extends Human {
+public class Administrator extends Human implements Serializable {
     private String email;
     Map<AdminAct, ActCommand> acts = new HashMap<>();
 
     public Administrator() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Administrator that = (Administrator) o;
+
+        if (!email.equals(that.email)) return false;
+        return acts != null ? acts.equals(that.acts) : that.acts == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = email.hashCode();
+        result = 31 * result + (acts != null ? acts.hashCode() : 0);
+        return result;
     }
 
     public Administrator(String name, String surname, String email) {

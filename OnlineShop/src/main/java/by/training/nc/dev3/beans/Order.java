@@ -8,10 +8,34 @@ import java.util.List;
  */
 public class Order {
     public static List<Good> good = new ArrayList<>();
-    private double orderCost;
+    private static double orderCost;
     //    private Date date;
     public static Boolean payment = false;
 
-    Order() {
+    public Order() {
+    }
+
+    public static List<Good> getGood() {
+        return good;
+    }
+
+    public static void setGood(List<Good> good) {
+        Order.good = good;
+    }
+
+    public static double getOrderCost() {
+        return orderCost;
+    }
+
+    public static void setOrderCost(double orderCost) {
+        Order.orderCost = orderCost;
+    }
+
+    public static Boolean getPayment() {
+        return payment;
+    }
+
+    public static void setPayment(Boolean payment) {
+        Order.payment = payment;
     }
 }
