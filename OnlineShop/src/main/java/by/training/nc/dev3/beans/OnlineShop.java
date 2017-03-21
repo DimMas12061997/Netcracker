@@ -3,9 +3,6 @@ package by.training.nc.dev3.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Дмитрий on 17.03.2017.
- */
 public abstract class OnlineShop {
     private final static String name = "SPORTIX";
     public static List<Good> good = new ArrayList<>();

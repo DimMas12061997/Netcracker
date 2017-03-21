@@ -4,14 +4,14 @@ import by.training.nc.dev3.beans.Administrator.*;
 import by.training.nc.dev3.beans.Human;
 import by.training.nc.dev3.enums.AdminAct;
 import by.training.nc.dev3.enums.CustomerAct;
+import by.training.nc.dev3.exceptions.MyException;
+import by.training.nc.dev3.tools.FileWorker;
 
+import java.io.InvalidObjectException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Дмитрий on 17.03.2017.
- */
 public class Customer extends Human implements Serializable {
     private String CreditCardNumber;
     private String address;
@@ -55,14 +55,51 @@ public class Customer extends Human implements Serializable {
         acts.put(CustomerAct.PAYORDER, new PaymentCommandCustomer());
     }
 
-    public void doAction(CustomerAct act) {
+    public void doAction(CustomerAct act) throws MyException {
         System.out.println(this);
-        CustomerActs customerActs = new CustomerActs(this);
+        FileWorker sz = new FileWorker();
+        String customers = FileWorker.filePath + "customers.txt";
+        Customer res = null;
+        try {
+            res = (Customer) sz.deserialization(customers);
+        } catch (InvalidObjectException e) {
+            e.printStackTrace();
+        }
+        System.out.println(res);
+        CustomerActs customerActs = new CustomerActs(res);
         for (Map.Entry<CustomerAct, ActCommandCustomer> entry : acts.entrySet()) {
             if (act.equals(entry.getKey())) {
                 entry.getValue().execute();
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Customer customer = (Customer) o;
+
+        if (Double.compare(customer.budget, budget) != 0) return false;
+        if (CreditCardNumber != null ? !CreditCardNumber.equals(customer.CreditCardNumber) : customer.CreditCardNumber != null)
+            return false;
+        if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
+        return acts != null ? acts.equals(customer.acts) : customer.acts == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        long temp;
+        result = 31 * result + (CreditCardNumber != null ? CreditCardNumber.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        temp = Double.doubleToLongBits(budget);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (acts != null ? acts.hashCode() : 0);
+        return result;
     }
 
     @Override

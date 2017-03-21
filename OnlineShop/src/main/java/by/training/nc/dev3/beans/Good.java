@@ -1,9 +1,9 @@
 package by.training.nc.dev3.beans;
 
-/**
- * Created by Дмитрий on 17.03.2017.
- */
-public class Good {
+
+import java.io.Serializable;
+
+public class Good implements Serializable{
     private String name;
     private int number;
     private double unitPrice;

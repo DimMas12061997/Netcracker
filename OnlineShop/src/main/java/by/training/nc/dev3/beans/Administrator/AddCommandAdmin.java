@@ -1,11 +1,11 @@
 package by.training.nc.dev3.beans.Administrator;
 
-/**
- * Created by Дмитрий on 20.03.2017.
- */
+
+import by.training.nc.dev3.exceptions.MyException;
+
 public class AddCommandAdmin extends ActCommand {
     @Override
-    public void execute() {
+    public void execute() throws MyException {
         acts.addGood();
     }
 }

@@ -1,11 +1,10 @@
 package by.training.nc.dev3.beans.Customer;
 
-/**
- * Created by Дмитрий on 20.03.2017.
- */
+import by.training.nc.dev3.exceptions.MyException;
+
 public class RemoveCommandCustomer extends ActCommandCustomer {
     @Override
-    public void execute() {
+    public void execute() throws MyException {
         acts.removeGoodOrder();
     }
 }

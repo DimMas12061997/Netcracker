@@ -2,19 +2,17 @@ package by.training.nc.dev3.tools;
 
 import by.training.nc.dev3.beans.Administrator.Administrator;
 import by.training.nc.dev3.beans.Customer.Customer;
-import by.training.nc.dev3.beans.Good;
 import by.training.nc.dev3.beans.Human;
 import by.training.nc.dev3.enums.Role;
 
+import java.io.File;
 import java.io.InvalidObjectException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * Created by Дмитрий on 18.03.2017.
- */
+
 public final class Operations {
-    public static Serializator sz = new Serializator();
+    public static FileWorker sz = new FileWorker();
     public static Scanner input = new Scanner(System.in);
 
     private Operations() {
@@ -25,9 +23,10 @@ public final class Operations {
         return input.next();
     }
 
+
     public static Human registrationHuman(Role role) {
-        String admins = "admins.txt";
-        String customers = "customers.txt";
+        String admins = FileWorker.filePath + "admins.txt";
+        String customers = FileWorker.filePath + "customers.txt";
         boolean in;
         if (role.equals(role.ADMINISTRATOR)) {
             Administrator admin = new Administrator(Operations.inputString(), Operations.inputString(), Operations.inputString());
@@ -42,31 +41,44 @@ public final class Operations {
         } else return null;
     }
 
-    public static int checkHuman(Role role) {
+    public static Human checkHuman(Role role) {
         int flag = 0;
-        String admins = "admins.txt";
-        String customers = "customers.txt";
+        String admins = FileWorker.filePath + "admins.txt";
+        String customers = FileWorker.filePath + "customers.txt";
         boolean in;
-        Administrator res = null;
-        Customer res1 = null;
+        Human res = null;
+        int flag1 = 0;
         if (role.equals(role.ADMINISTRATOR)) {
             try {
                 res = (Administrator) sz.deserialization(admins);
                 System.out.println(res);
-                Administrator admin = new Administrator(Operations.inputString(), Operations.inputString(), Operations.inputString());
-                if (admin.equals(res))
-                    flag = 1;
+                do {
+                    System.out.println("Введите данные об админе");
+                    Administrator admin = new Administrator(Operations.inputString(), Operations.inputString(), Operations.inputString());
+                    if (admin.equals(res)) {
+                        flag1 = 1;
+
+                    }
+                } while (flag1 == 0);
             } catch (InvalidObjectException e) {
                 e.printStackTrace();
             }
         } else if (role.equals(role.CUSTOMER)) {
             try {
-                res1 = (Customer) sz.deserialization(customers);
+                res = (Customer) sz.deserialization(customers);
+                System.out.println(res);
+                do {
+                    System.out.println("Введите данные о покупателе");
+                    Customer customer = new Customer(Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputNumber());
+                    if (customer.equals(res)) {
+                        flag1 = 1;
+                    }
+                } while (flag1 == 0);
             } catch (InvalidObjectException e) {
                 e.printStackTrace();
             }
         }
-        return flag;
+        return res;
     }
 
     public static int inputNumber() {      //параметризация

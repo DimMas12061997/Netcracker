@@ -1,13 +1,16 @@
 package by.training.nc.dev3.beans;
 
-import java.util.ArrayList;
-import java.util.List;
+import by.training.nc.dev3.beans.Customer.Customer;
 
-/**
- * Created by Дмитрий on 18.03.2017.
- */
-public class Order {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Order implements Serializable{
     public static List<Good> good = new ArrayList<>();
+    public static Map<Customer, List<Good>> map = new HashMap<>();
     private static double orderCost;
     //    private Date date;
     public static Boolean payment = false;
@@ -15,12 +18,12 @@ public class Order {
     public Order() {
     }
 
-    public static List<Good> getGood() {
-        return good;
+    public static Map<Customer, List<Good>> getMap() {
+        return map;
     }
 
-    public static void setGood(List<Good> good) {
-        Order.good = good;
+    public static void setMap(Map<Customer,List<Good>> map) {
+        Order.map = map;
     }
 
     public static double getOrderCost() {

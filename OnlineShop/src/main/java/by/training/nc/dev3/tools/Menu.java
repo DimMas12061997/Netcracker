@@ -6,15 +6,18 @@ import by.training.nc.dev3.beans.OnlineShop;
 import by.training.nc.dev3.enums.AdminAct;
 import by.training.nc.dev3.enums.CustomerAct;
 import by.training.nc.dev3.enums.Role;
+import by.training.nc.dev3.exceptions.MyException;
 
-/**
- * Created by Дмитрий on 18.03.2017.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class Menu {
     public static Administrator admin = new Administrator();
     public static Customer customer;
+    //public static List<Customer> customers = new ArrayList<>();
 
-    public static void menu() {
+    public static void menu() throws MyException {
+        int flag = 0;
         role:
         while (true) {
             System.out.println("===========================================================");
@@ -25,15 +28,36 @@ public class Menu {
             System.out.println("2. Клиент");
             System.out.println("0. Выход");
             System.out.println("===========================================================");
-
+            out2:
             switch (Operations.inputNumber()) {
                 case 1:
-                    int flag = 0;
-                    do {
-                        System.out.println("Введите данные об админе");
-                        flag = Operations.checkHuman(Role.ADMINISTRATOR);
+                    while (flag == 0) {
+                        System.out.println("===========================================================");
+                        System.out.println("1. Вход");
+                        System.out.println("2. Регистрация");
+                        System.out.println("0. Назад");
+                        System.out.println("===========================================================");
+
+                        switch (Operations.inputNumber()) {
+                            case 1:
+                                admin = (Administrator) Operations.checkHuman(Role.ADMINISTRATOR);
+                                flag++;
+                                break;
+                            case 2:
+                                System.out.println("===========================================================");
+                                System.out.println("Введите данные об админе");
+                                admin = (Administrator) Operations.registrationHuman(Role.ADMINISTRATOR);
+                                flag++;
+                                break;
+                            case 0:
+                                System.out.println("===========================================================");
+                                System.out.println(flag);
+                                break out2;
+                            default:
+                                System.out.println("===========================================================");
+                                System.out.println("Неверный выбор либо формат. Повторите...");
+                        }
                     }
-                    while (flag == 0);
                     admin.fillMap();
                     out:
                     while (true) {
@@ -41,11 +65,10 @@ public class Menu {
                         System.out.println("1. Просмотр товара магазина");
                         System.out.println("2. Добавить товар");
                         System.out.println("3. Удалить товар");
-                        System.out.println("4. Проверка оплаты заказа");
-                        System.out.println("5. Прочитать список товара из файла");
+                        System.out.println("4. Просмотр заказов покупателей");
+                        System.out.println("5. Проверка оплаты заказа");
                         System.out.println("6. Записать список товара в файл");
                         System.out.println("7. Удалить весь товар");
-                        System.out.println("8. Изменить администратора");
                         System.out.println("0. Назад");
                         System.out.println("===========================================================");
 
@@ -63,7 +86,7 @@ public class Menu {
                                 break;
                             case 4:
                                 System.out.println("===========================================================");
-                                admin.doAction(AdminAct.CHECK);
+                                admin.doAction(AdminAct.VIEWORDER);
                                 break;
                             case 5:
                                 System.out.println("===========================================================");
@@ -71,19 +94,15 @@ public class Menu {
                                 break;
                             case 6:
                                 System.out.println("===========================================================");
-
+                                admin.doAction(AdminAct.WRITE);
                                 break;
                             case 7:
                                 System.out.println("===========================================================");
                                 admin.doAction(AdminAct.REMOVEALL);
                                 break;
-                            case 8:
-                                System.out.println("===========================================================");
-                                System.out.println("Введите данные об админе");
-                                admin = (Administrator) Operations.registrationHuman(Role.ADMINISTRATOR);
-                                break;
                             case 0:
                                 System.out.println("===========================================================");
+                                flag = 0;
                                 break out;
                             default:
                                 System.out.println("===========================================================");
@@ -92,8 +111,32 @@ public class Menu {
                     }
                     break;
                 case 2:
-                    System.out.println("Введите данные о покупателе");
-                    customer = (Customer) Operations.registrationHuman(Role.CUSTOMER);
+                    while (flag == 0) {
+                        System.out.println("===========================================================");
+                        System.out.println("1. Вход");
+                        System.out.println("2. Регистрация");
+                        System.out.println("0. Назад");
+                        System.out.println("===========================================================");
+
+                        switch (Operations.inputNumber()) {
+                            case 1:
+                                customer = (Customer) Operations.checkHuman(Role.CUSTOMER);
+                                flag++;
+                                break;
+                            case 2:
+                                System.out.println("===========================================================");
+                                System.out.println("Введите данные о покупателе");
+                                customer = (Customer) Operations.registrationHuman(Role.CUSTOMER);
+                                flag++;
+                                break;
+                            case 0:
+                                System.out.println("===========================================================");
+                                break out2;
+                            default:
+                                System.out.println("===========================================================");
+                                System.out.println("Неверный выбор либо формат. Повторите...");
+                        }
+                    }
                     customer.fillMap();
                     toMenu:
                     while (true) {
@@ -102,7 +145,7 @@ public class Menu {
                         System.out.println("2. Добавить товар в заказ");
                         System.out.println("3. Удалить товар из заказа");
                         System.out.println("4. Удалить весь товар из заказа");
-                        System.out.println("5. Просмотр заказа");
+                        System.out.println("5. Сформировать заказ");
                         System.out.println("6. Оплата заказа");
                         System.out.println("0. Назад");
                         System.out.println("===========================================================");
@@ -133,6 +176,8 @@ public class Menu {
                                 customer.doAction(CustomerAct.PAYORDER);
                                 break;
                             case 0:
+                                System.out.println("===========================================================");
+                                flag = 0;
                                 break toMenu;
                             default:
                                 System.out.println("===========================================================");
