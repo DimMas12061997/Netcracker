@@ -1,15 +1,13 @@
 package by.training.nc.dev3.tools;
 
-import by.training.nc.dev3.beans.Administrator.Administrator;
-import by.training.nc.dev3.beans.Customer.Customer;
+import by.training.nc.dev3.beans.Administrator;
+import by.training.nc.dev3.beans.Customer;
 import by.training.nc.dev3.beans.OnlineShop;
 import by.training.nc.dev3.enums.AdminAct;
 import by.training.nc.dev3.enums.CustomerAct;
 import by.training.nc.dev3.enums.Role;
+import by.training.nc.dev3.enums.SortingIndex;
 import by.training.nc.dev3.exceptions.MyException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Menu {
     public static Administrator admin = new Administrator();
@@ -67,8 +65,9 @@ public class Menu {
                         System.out.println("3. Удалить товар");
                         System.out.println("4. Просмотр заказов покупателей");
                         System.out.println("5. Проверка оплаты заказа");
-                        System.out.println("6. Записать список товара в файл");
+                        System.out.println("6. Просмотр черного списка");
                         System.out.println("7. Удалить весь товар");
+                        System.out.println("8. Сортировка товара");
                         System.out.println("0. Назад");
                         System.out.println("===========================================================");
 
@@ -90,15 +89,38 @@ public class Menu {
                                 break;
                             case 5:
                                 System.out.println("===========================================================");
-
+                                admin.doAction(AdminAct.CHECK);
                                 break;
                             case 6:
                                 System.out.println("===========================================================");
-                                admin.doAction(AdminAct.WRITE);
+                                admin.doAction(AdminAct.VIEWBLACKLIST);
                                 break;
                             case 7:
                                 System.out.println("===========================================================");
                                 admin.doAction(AdminAct.REMOVEALL);
+                                break;
+                            case 8:
+                                System.out.println("===========================================================");
+                                label:
+                                while(true){
+                                    System.out.println("1. По цене");
+                                    System.out.println("2. По наименованию");
+                                    System.out.println("3. По количеству");
+
+                                    switch(Operations.inputNumber()){
+                                        case 1:
+                                            Operations.sortServices(SortingIndex.PRICE);
+                                            break label;
+                                        case 2:
+                                            Operations.sortServices(SortingIndex.NAME);
+                                            break label;
+                                        case 3:
+                                            Operations.sortServices(SortingIndex.NUMBER);
+                                            break label;
+                                        default:
+                                            System.out.println("Неверный выбор. Повторите");
+                                    }
+                                }
                                 break;
                             case 0:
                                 System.out.println("===========================================================");
@@ -147,6 +169,7 @@ public class Menu {
                         System.out.println("4. Удалить весь товар из заказа");
                         System.out.println("5. Сформировать заказ");
                         System.out.println("6. Оплата заказа");
+                        System.out.println("7. Сортировка товара");
                         System.out.println("0. Назад");
                         System.out.println("===========================================================");
 
@@ -174,6 +197,29 @@ public class Menu {
                             case 6:
                                 System.out.println("===========================================================");
                                 customer.doAction(CustomerAct.PAYORDER);
+                                break;
+                            case 7:
+                                System.out.println("===========================================================");
+                                label:
+                                while(true){
+                                    System.out.println("1. По цене");
+                                    System.out.println("2. По наименованию");
+                                    System.out.println("3. По количеству");
+
+                                    switch(Operations.inputNumber()){
+                                        case 1:
+                                            Operations.sortServices(SortingIndex.PRICE);
+                                            break label;
+                                        case 2:
+                                            Operations.sortServices(SortingIndex.NAME);
+                                            break label;
+                                        case 3:
+                                            Operations.sortServices(SortingIndex.NUMBER);
+                                            break label;
+                                        default:
+                                            System.out.println("Неверный выбор. Повторите");
+                                    }
+                                }
                                 break;
                             case 0:
                                 System.out.println("===========================================================");

@@ -1,7 +1,7 @@
 package by.training.nc.dev3.enums;
 
-import by.training.nc.dev3.beans.Administrator.Administrator;
-import by.training.nc.dev3.beans.Customer.Customer;
+import by.training.nc.dev3.beans.Administrator;
+import by.training.nc.dev3.beans.Customer;
 import by.training.nc.dev3.beans.Human;
 import by.training.nc.dev3.tools.Operations;
 

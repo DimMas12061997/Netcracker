@@ -1,7 +1,5 @@
 package by.training.nc.dev3.beans;
 
-import by.training.nc.dev3.beans.Customer.Customer;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,12 +1,15 @@
 package by.training.nc.dev3.tools;
 
-import by.training.nc.dev3.beans.Administrator.Administrator;
-import by.training.nc.dev3.beans.Customer.Customer;
+import by.training.nc.dev3.beans.Administrator;
+import by.training.nc.dev3.beans.Customer;
+import by.training.nc.dev3.beans.Good;
 import by.training.nc.dev3.beans.Human;
+import by.training.nc.dev3.beans.OnlineShop;
 import by.training.nc.dev3.enums.Role;
+import by.training.nc.dev3.enums.SortingIndex;
 
-import java.io.File;
 import java.io.InvalidObjectException;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -23,6 +26,12 @@ public final class Operations {
         return input.next();
     }
 
+    public static void sortServices(SortingIndex index) {
+        OnlineShop.good = FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
+        Collections.sort(OnlineShop.good, new ServiceComparator(index));
+        for(Good product : OnlineShop.good)
+            System.out.println(product);
+    }
 
     public static Human registrationHuman(Role role) {
         String admins = FileWorker.filePath + "admins.txt";
@@ -57,7 +66,6 @@ public final class Operations {
                     Administrator admin = new Administrator(Operations.inputString(), Operations.inputString(), Operations.inputString());
                     if (admin.equals(res)) {
                         flag1 = 1;
-
                     }
                 } while (flag1 == 0);
             } catch (InvalidObjectException e) {
