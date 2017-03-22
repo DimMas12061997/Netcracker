@@ -2,6 +2,7 @@ package by.training.nc.dev3.beans;
 
 import by.training.nc.dev3.command.*;
 import by.training.nc.dev3.enums.CustomerAct;
+import by.training.nc.dev3.exceptions.InvalidSerializationException;
 import by.training.nc.dev3.exceptions.MyException;
 import by.training.nc.dev3.tools.FileWorker;
 import by.training.nc.dev3.service.*;
@@ -14,7 +15,7 @@ import java.util.Map;
 public class Customer extends Human implements Serializable {
     private String CreditCardNumber;
     private String address;
-    private double budget;        //параметризация
+    private double budget;
     Map<CustomerAct, ActCommandCustomer> acts = new HashMap<>();
 
     public Customer() {
@@ -54,23 +55,23 @@ public class Customer extends Human implements Serializable {
         acts.put(CustomerAct.PAYORDER, new PaymentCommandCustomer());
     }
 
-    public void doAction(CustomerAct act) throws MyException {
+    public void doAction(CustomerAct act){
         System.out.println(this);
         FileWorker sz = new FileWorker();
         String customers = FileWorker.filePath + "customers.txt";
         Customer res = null;
         try {
             res = (Customer) sz.deserialization(customers);
-        } catch (InvalidObjectException e) {
-            e.printStackTrace();
+        } catch (InvalidSerializationException e) {
+            System.out.println(e.getMessage());
         }
-        CustomerActs customerActs = new CustomerActs(res);
+        new CustomerActs(res);
         for (Map.Entry<CustomerAct, ActCommandCustomer> entry : acts.entrySet()) {
             if (act.equals(entry.getKey())) {
                 try {
                     entry.getValue().execute();
-                } catch (InvalidObjectException e) {
-                    e.printStackTrace();
+                } catch (MyException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }

@@ -22,14 +22,24 @@ public class CustomerActs implements Serializable {
         this.customer = customer;
     }
 
-    public void addGoodOrder() throws MyException {
+    public int checkBlackList() {
+        int k = 0;
         FileWorker sz = new FileWorker();
-        List<Customer> res = sz.readListCustomers(FileWorker.filePath + "blackList.txt");
-        for(Customer cus : res)
-        if(cus.equals(customer) == false) {
+        List<Customer> res = (List<Customer>) sz.readObject(FileWorker.filePath + "blackList.txt");
+        if (res.size() != 0)
+            for (Customer cus : res)
+                if (cus.equals(customer))
+                    k++;
+        return k;
+    }
+
+    public void addGoodOrder() throws MyException {
+        int k = checkBlackList();
+        if (k == 0) {
             int flag = 0;
-            OnlineShop.good = FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
+            OnlineShop.good = (List<Good>) FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
             String name = Operations.inputString();
+            Order.map = FileWorker.readOrder(FileWorker.filePath + "Order.txt");
             for (Iterator<Good> it = OnlineShop.good.iterator(); it.hasNext(); ) {
                 Good product = it.next();
                 if (name.equals(product.getName())) {
@@ -39,35 +49,52 @@ public class CustomerActs implements Serializable {
                         product.setNumber(product.getNumber() - number);
                         if (product.getNumber() == 0)
                             it.remove();
-                        Order.good.add(new Good(name, number, product.getUnitPrice()));
-                        Order.map.put(customer, Order.good);
-                        FileWorker.writeOrder(Order.map, new File(FileWorker.filePath + "Order.txt"));
+                        checkCustomer(name, number, product);
                         FileWorker.writeObject(OnlineShop.good, new File(FileWorker.filePath + "OnlineShop.txt"));
+                        break;
                     } else
                         throw new MyException("Товара в таком количестве нет");
                 }
             }
             if (flag == 0)
                 throw new MyException("Товара с таким названием нет");
-        }
-        else
-            System.out.println("Вы в черном списке");
+        } else
+            throw new MyException("Вы в черном списке");
     }
 
-    public List<Good> checkMapOrder(List<Good> list) {
-        for (Good g : list)
-            System.out.println(list);
-        for (Map.Entry<Customer, List<Good>> entry : FileWorker.readOrder(FileWorker.filePath + "Order.txt").entrySet())
-            for (int i = 0; i < list.size(); i++) {
-                for (Good product : entry.getValue())
-                    if (product.getName().equals(list.get(i).getName())) {
-                        list.get(i).setNumber(list.get(i).getNumber() + product.getNumber());
-                    }
+    public List<Good> checkMapOrder(List<Good> list, Good good) {
+        int flag = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals(good.getName())) {
+                list.get(i).setNumber(good.getNumber() + list.get(i).getNumber());
+                flag++;
+                break;
             }
+        }
+        if (flag == 0)
+            list.add(good);
         return list;
     }
 
+    public void checkCustomer(String name, int number, Good product) {
+        int g = 0;
+        List<Good> list = new ArrayList<>();
+        for (Map.Entry<Customer, List<Good>> entry : Order.map.entrySet()) {
+            if (customer.equals(entry.getKey())) {
+                list = entry.getValue();
+                Order.map.put(customer, checkMapOrder(list, new Good(name, number, product.getUnitPrice())));
+                g++;
+            }
+        }
+        if (g == 0) {
+            Order.good.removeAll(Order.good);
+            Order.map.put(customer, checkMapOrder(list, new Good(name, number, product.getUnitPrice())));
+        }
+        FileWorker.writeOrder(Order.map, new File(FileWorker.filePath + "Order.txt"));
+    }
+
     public void delGood(String name, Good basket) {
+        OnlineShop.good = (List<Good>) FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
         for (Iterator<Good> it = OnlineShop.good.iterator(); it.hasNext(); ) {
             Good good = it.next();
             if (name.equals(good.getName())) {
@@ -77,48 +104,51 @@ public class CustomerActs implements Serializable {
         }
     }
 
-    public void removeGoodOrder() throws MyException {    //работает
+    public void removeGoodOrder() throws MyException {
         int flag = 0;
         Order.map = FileWorker.readOrder(FileWorker.filePath + "Order.txt");
         for (Map.Entry<Customer, List<Good>> entry : Order.map.entrySet()) {
-            System.out.println("===========================");
-            System.out.println("Клиент " + entry.getKey());
-            System.out.println("Заказ " + entry.getValue());
-            System.out.println("===========================");
-        }
-        String name = Operations.inputString();
-        for (Map.Entry<Customer, List<Good>> entry : Order.map.entrySet()) {
-            for (Good basket : entry.getValue()) {
-                if (name.equals(basket.getName())) {
-                    flag++;
-                    int number = Operations.inputNumber();
-                    if (number == basket.getNumber()) {
-                        Order.good.remove(Order.good);
-                        Order.map.put(entry.getKey(), Order.good);
-                        FileWorker.writeOrder(Order.map, new File(FileWorker.filePath + "Order.txt"));
-                        delGood(name, basket);
-                    } else if (number < basket.getNumber()) {
-                        basket.setNumber(basket.getNumber() - number);
-                        FileWorker.writeOrder(Order.map, new File(FileWorker.filePath + "Order.txt"));
-                        delGood(name, basket);
-                    } else
-                        throw new MyException("В заказе нет столько товара");
+            if (customer.equals(entry.getKey())) {
+                String name = Operations.inputString();
+                for (Good basket : entry.getValue()) {
+                    if (name.equals(basket.getName())) {
+                        flag++;
+                        int number = Operations.inputNumber();
+                        if (number == basket.getNumber()) {
+                            entry.getValue().remove(basket);
+                            Order.map.put(entry.getKey(), entry.getValue());
+                            FileWorker.writeOrder(Order.map, new File(FileWorker.filePath + "Order.txt"));
+                            delGood(name, basket);
+                        } else if (number < basket.getNumber()) {
+                            basket.setNumber(basket.getNumber() - number);
+                            FileWorker.writeOrder(Order.map, new File(FileWorker.filePath + "Order.txt"));
+                            delGood(name, basket);
+                        } else
+                            throw new MyException("В заказе нет столько товара");
+                        break;
+                    }
                 }
             }
         }
         if (flag == 0)
-            throw new MyException("Товара с таким названием нет");
+            throw new MyException("Товара с таким названием в вашей корзине нет");
     }
 
     public void payOrder() throws MyException {
+        int flag = 0;
         FileWorker sz = new FileWorker();
         Order.map = FileWorker.readOrder(FileWorker.filePath + "Order.txt");
         System.out.println("Бюджет покупателя: " + customer.getBudget());
         System.out.println("Корзина покупателя: " + Order.getOrderCost());
         Order.setPayment(true);
+        List<Customer> list = (List<Customer>) sz.readObject(FileWorker.filePath + "non-payers.txt");
         if (Order.map.isEmpty() == false)
             if (Order.getOrderCost() != 0)
                 if (customer.getBudget() >= Order.getOrderCost()) {
+                    for (int i = 0; i < list.size(); i++)
+                        if (customer.equals(list.get(i)))
+                            list.remove(list.get(i));
+                    sz.writeObject(list, new File(FileWorker.filePath + "non-payers.txt"));
                     double x = customer.getBudget() - Order.getOrderCost();
                     customer.setBudget(x);
                     sz.serialization(customer, FileWorker.filePath + "customers.txt");
@@ -126,12 +156,16 @@ public class CustomerActs implements Serializable {
                     writeProfitOnlineShop(OnlineShop.getProfit());
                     Order.map.clear();
                     FileWorker.writeOrder(Order.map, new File(FileWorker.filePath + "Order.txt"));
-                    String str = "Покупатель: " + customer.getName() + " " + customer.getSurname() + " " + ", Стоимость заказа = " + Order.getOrderCost() + ", Оставшийся бюджет: " + customer.getBudget();
+                    String str = "Покупатель: " + customer.getName() + " " + customer.getSurname() + " " + ", Стоимость заказа = " + Order.getOrderCost() + ", Оставшийся бюджет: " + customer.getBudget() + "\n";
                     FileWorker.writeByteFile(str, new File(FileWorker.filePath + "InfoOrder.txt"));
                 } else {
-                    List<Customer> list = sz.readListCustomers(FileWorker.filePath + "non-payers.txt");
-                    list.add(customer);
-                    sz.writeListCustomers(list, new File(FileWorker.filePath + "non-payers.txt"));
+                    for (Customer man : list)
+                        if (customer.equals(man))
+                            flag++;
+                    if (flag == 0) {
+                        list.add(customer);
+                        sz.writeObject(list, new File(FileWorker.filePath + "non-payers.txt"));
+                    }
                 }
     }
 
@@ -156,7 +190,9 @@ public class CustomerActs implements Serializable {
             }
         }
         Order.setOrderCost(cost);
+        System.out.println("Если ваш заказ превышает ваш бюджет и вы попытаетесь оплатить заказ, вы будете считаться неплательщиком");
         System.out.println("Стоимость корзины: " + Order.getOrderCost());
+        System.out.println("Ваш бюдджет: " + customer.getBudget());
         viewDate();
     }
 
@@ -174,23 +210,34 @@ public class CustomerActs implements Serializable {
         System.out.println(gcalendar.get(Calendar.SECOND));
     }
 
-    public void removeAllGoodsOrder() {   //исправить
+    public void addGoodsFromOrder(List<Good> list) {
+        OnlineShop.good = (List<Good>) FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
+        for (int i = 0; i < OnlineShop.good.size(); i++) {
+            for (Good product : list) {
+                if (product.getName().equals(OnlineShop.good.get(i).getName())) {
+                    OnlineShop.good.get(i).setNumber(OnlineShop.good.get(i).getNumber() + product.getNumber());
+                }
+            }
+        }
+        FileWorker.writeObject(OnlineShop.good, new File(FileWorker.filePath + "OnlineShop.txt"));
+    }
+
+    public void removeAllGoodsOrder() {
         Order.map = FileWorker.readOrder(FileWorker.filePath + "Order.txt");
-        for (Map.Entry<Customer, List<Good>> entry : Order.map.entrySet())
-            for (Good basket : entry.getValue()) {
+        for (Map.Entry<Customer, List<Good>> entry : Order.map.entrySet()) {
+            if (customer.equals(entry.getKey())) {
+                if (entry.getValue().size() != 0)
+                    addGoodsFromOrder(entry.getValue());
                 Order.good.removeAll(Order.good);
                 Order.map.put(entry.getKey(), Order.good);
                 FileWorker.writeOrder(Order.map, new File(FileWorker.filePath + "Order.txt"));
-                for (Iterator<Good> it = OnlineShop.good.iterator(); it.hasNext(); ) {
-                    Good good = it.next();
-                    good.setNumber(good.getNumber() + basket.getNumber());
-                    FileWorker.writeObject(OnlineShop.good, new File(FileWorker.filePath + "OnlineShop.txt"));
-                }
+                break;
             }
+        }
     }
 
     public void viewGoods() {
-        OnlineShop.good = FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
+        OnlineShop.good = (List<Good>) FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
         for (Good ob : OnlineShop.good)
             System.out.println(ob);
     }

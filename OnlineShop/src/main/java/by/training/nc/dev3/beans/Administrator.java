@@ -49,17 +49,17 @@ public class Administrator extends Human implements Serializable {
         acts.put(AdminAct.REMOVEALL, new RemoveAllCommandAdmin());
         acts.put(AdminAct.VIEWORDER, new ViewOrderCommandAdmin());
         acts.put(AdminAct.CHECK, new CheckOrderCommandAdmin());
-        acts.put(AdminAct.VIEWBLACKLIST, new  ViewBlackListCommandAdmin());
-
+        acts.put(AdminAct.VIEWBLACKLIST, new ViewBlackListCommandAdmin());
+        acts.put(AdminAct.VIEWARCHIVE, new ViewArchiveCommandAdmin());
     }
 
-    public void doAction(AdminAct act) throws MyException {
+    public void doAction(AdminAct act) {
         for (Map.Entry<AdminAct, ActCommand> entry : acts.entrySet()) {
             if (act.equals(entry.getKey())) {
                 try {
                     entry.getValue().execute();
-                } catch (InvalidObjectException e) {
-                    e.printStackTrace();
+                } catch (MyException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }

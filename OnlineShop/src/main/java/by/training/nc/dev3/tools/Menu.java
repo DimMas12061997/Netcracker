@@ -7,14 +7,14 @@ import by.training.nc.dev3.enums.AdminAct;
 import by.training.nc.dev3.enums.CustomerAct;
 import by.training.nc.dev3.enums.Role;
 import by.training.nc.dev3.enums.SortingIndex;
+import by.training.nc.dev3.exceptions.InvalidSerializationException;
 import by.training.nc.dev3.exceptions.MyException;
 
 public class Menu {
-    public static Administrator admin = new Administrator();
+    public static Administrator admin;
     public static Customer customer;
-    //public static List<Customer> customers = new ArrayList<>();
 
-    public static void menu() throws MyException {
+    public static void menu() {
         int flag = 0;
         role:
         while (true) {
@@ -63,11 +63,12 @@ public class Menu {
                         System.out.println("1. Просмотр товара магазина");
                         System.out.println("2. Добавить товар");
                         System.out.println("3. Удалить товар");
-                        System.out.println("4. Просмотр заказов покупателей");
+                        System.out.println("4. Просмотр заказов потенциальных покупателей");
                         System.out.println("5. Проверка оплаты заказа");
                         System.out.println("6. Просмотр черного списка");
                         System.out.println("7. Удалить весь товар");
                         System.out.println("8. Сортировка товара");
+                        System.out.println("9. Прибыль магазина и данные о покупателях");
                         System.out.println("0. Назад");
                         System.out.println("===========================================================");
 
@@ -102,12 +103,12 @@ public class Menu {
                             case 8:
                                 System.out.println("===========================================================");
                                 label:
-                                while(true){
+                                while (true) {
                                     System.out.println("1. По цене");
                                     System.out.println("2. По наименованию");
                                     System.out.println("3. По количеству");
 
-                                    switch(Operations.inputNumber()){
+                                    switch (Operations.inputNumber()) {
                                         case 1:
                                             Operations.sortServices(SortingIndex.PRICE);
                                             break label;
@@ -121,6 +122,10 @@ public class Menu {
                                             System.out.println("Неверный выбор. Повторите");
                                     }
                                 }
+                                break;
+                            case 9:
+                                System.out.println("===========================================================");
+                                admin.doAction(AdminAct.VIEWARCHIVE);
                                 break;
                             case 0:
                                 System.out.println("===========================================================");
@@ -201,12 +206,12 @@ public class Menu {
                             case 7:
                                 System.out.println("===========================================================");
                                 label:
-                                while(true){
+                                while (true) {
                                     System.out.println("1. По цене");
                                     System.out.println("2. По наименованию");
                                     System.out.println("3. По количеству");
 
-                                    switch(Operations.inputNumber()){
+                                    switch (Operations.inputNumber()) {
                                         case 1:
                                             Operations.sortServices(SortingIndex.PRICE);
                                             break label;

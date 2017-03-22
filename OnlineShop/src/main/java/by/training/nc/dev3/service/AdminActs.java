@@ -9,15 +9,13 @@ import by.training.nc.dev3.tools.FileWorker;
 import by.training.nc.dev3.tools.Operations;
 
 import java.io.File;
-import java.io.InvalidObjectException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class AdminActs {
     public void addGood() throws MyException {
-        OnlineShop.good = FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
+        OnlineShop.good = (List<Good>) FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
         Good good = new Good(Operations.inputString(), Operations.inputNumber(), Operations.inputNumber());
         checkGood(good);
         writeGoods();
@@ -47,7 +45,7 @@ public class AdminActs {
 
     public void removeGood() throws MyException {
         int flag = 0;
-        OnlineShop.good = FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
+        OnlineShop.good = (List<Good>) FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
         String name = Operations.inputString();
         for (Iterator<Good> it = OnlineShop.good.iterator(); it.hasNext(); ) {
             Good good = it.next();
@@ -69,7 +67,8 @@ public class AdminActs {
 
 
     public void viewGoods() {
-        for (Good ob : FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt"))
+        List<Good> list = (List<Good>) FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
+        for (Good ob : list)
             System.out.println(ob);
     }
 
@@ -82,24 +81,34 @@ public class AdminActs {
         FileWorker sz = new FileWorker();
         String customers = FileWorker.filePath + "non-payers.txt";
         boolean in;
-        List<Customer> res = sz.readListCustomers(customers);
+        List<Customer> res = (List<Customer>) sz.readObject(customers);
         blackList(res);
+        System.out.println("Все неплательщики занесены в чс");
     }
 
     public void blackList(List<Customer> res) {
         FileWorker sz = new FileWorker();
-        sz.writeListCustomers(res, new File(FileWorker.filePath + "blackList.txt"));
+        sz.writeObject(res, new File(FileWorker.filePath + "blackList.txt"));
     }
 
-    public void viewBlackList(){
+    public void viewBlackList() {
         FileWorker sz = new FileWorker();
-        List<Customer> res = sz.readListCustomers(FileWorker.filePath + "blackList.txt");
-        for(Customer cus : res)
-            System.out.println(cus);
+        List<Customer> res = (List<Customer>) sz.readObject(FileWorker.filePath + "blackList.txt");
+        if (res.size() == 0)
+            System.out.println("В черном списке никого нет.");
+        else {
+            System.out.println("Черный список магазина:");
+            for (Customer cus : res)
+                System.out.println(cus);
+        }
+    }
+
+    public void viewArchive() {
+        System.out.println(FileWorker.readByteFile(new File(FileWorker.filePath + "InfoOrder.txt")));
+        System.out.println("\nПрибыль магазина: " + FileWorker.readFile(new File(FileWorker.filePath + "ProfitOnlineShop.txt")));
     }
 
     public void viewOrder() {
-        System.out.println(FileWorker.readByteFile(new File(FileWorker.filePath + "InfoOrder.txt")));
         Order.map = FileWorker.readOrder(FileWorker.filePath + "Order.txt");
         for (Map.Entry<Customer, List<Good>> entry : Order.map.entrySet()) {
             System.out.println("===========================");

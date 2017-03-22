@@ -5,5 +5,5 @@ import by.training.nc.dev3.exceptions.MyException;
 import java.io.InvalidObjectException;
 
 public interface Command {
-   void execute() throws MyException, InvalidObjectException;
+   void execute() throws MyException;
 }

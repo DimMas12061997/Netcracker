@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Order implements Serializable{
+public class Order implements Serializable {
     public static List<Good> good = new ArrayList<>();
     public static Map<Customer, List<Good>> map = new HashMap<>();
     private static double orderCost;
-    //    private Date date;
     public static Boolean payment = false;
 
     public Order() {
@@ -20,7 +19,7 @@ public class Order implements Serializable{
         return map;
     }
 
-    public static void setMap(Map<Customer,List<Good>> map) {
+    public static void setMap(Map<Customer, List<Good>> map) {
         Order.map = map;
     }
 

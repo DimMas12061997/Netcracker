@@ -4,7 +4,7 @@ import java.io.InvalidObjectException;
 
 public class CheckOrderCommandAdmin extends ActCommand {
     @Override
-    public void execute() throws InvalidObjectException {
+    public void execute(){
         acts.checkOrder();
     }
 }
