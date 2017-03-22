@@ -2,15 +2,13 @@ package by.training.nc.dev3.tools;
 
 import by.training.nc.dev3.beans.Administrator;
 import by.training.nc.dev3.beans.Customer;
-import by.training.nc.dev3.beans.Good;
+import by.training.nc.dev3.beans.Goods;
 import by.training.nc.dev3.beans.Human;
 import by.training.nc.dev3.beans.OnlineShop;
 import by.training.nc.dev3.enums.Role;
 import by.training.nc.dev3.enums.SortingIndex;
 import by.training.nc.dev3.exceptions.InvalidSerializationException;
-import by.training.nc.dev3.exceptions.MyException;
 
-import java.io.InvalidObjectException;
 import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -18,8 +16,8 @@ import java.util.Scanner;
 
 
 public final class Operations {
-    public static FileWorker sz = new FileWorker();
-    public static Scanner input = new Scanner(System.in);
+    private static FileWorker sz = new FileWorker();
+    private static Scanner input = new Scanner(System.in);
 
     private Operations() {
     }
@@ -30,15 +28,15 @@ public final class Operations {
     }
 
     public static void sortServices(SortingIndex index) {
-        OnlineShop.good = (List<Good>) FileWorker.readObject(FileWorker.filePath + "OnlineShop.txt");
-        Collections.sort(OnlineShop.good, new ServiceComparator(index));
-        for (Good product : OnlineShop.good)
+        OnlineShop.setGoodList((List<Goods>) FileWorker.readObject(FileWorker.getFilePath() + "OnlineShop.txt"));
+        Collections.sort(OnlineShop.getGoodList(), new ServiceComparator(index));
+        for (Goods product : OnlineShop.getGoodList())
             System.out.println(product);
     }
 
     public static Human registrationHuman(Role role) {
-        String admins = FileWorker.filePath + "admins.txt";
-        String customers = FileWorker.filePath + "customers.txt";
+        String admins = FileWorker.getFilePath() + "admins.txt";
+        String customers = FileWorker.getFilePath() + "customers.txt";
         boolean in;
         if (role.equals(role.ADMINISTRATOR)) {
             Administrator admin = new Administrator(Operations.inputString(), Operations.inputString(), Operations.inputString());
@@ -55,8 +53,8 @@ public final class Operations {
 
     public static Human checkHuman(Role role) {
         int flag = 0;
-        String admins = FileWorker.filePath + "admins.txt";
-        String customers = FileWorker.filePath + "customers.txt";
+        String admins = FileWorker.getFilePath() + "admins.txt";
+        String customers = FileWorker.getFilePath() + "customers.txt";
         boolean in;
         Human res = null;
         int flag1 = 0;
@@ -64,7 +62,7 @@ public final class Operations {
             try {
                 res = (Administrator) sz.deserialization(admins);
             } catch (InvalidSerializationException e) {
-                System.out.println(e.getMessage()+ " зарегистрируйтесь под администратором");
+                System.out.println(e.getMessage()+ ", зарегистрируйтесь под администратором");
                 res = registrationHuman(role.ADMINISTRATOR);
             }
             System.out.println(res);
@@ -79,7 +77,7 @@ public final class Operations {
             try {
                 res = (Customer) sz.deserialization(customers);
             } catch (InvalidSerializationException e) {
-                System.out.println(e.getMessage() + " зарегистрируйтесь под покупателем");
+                System.out.println(e.getMessage() + ", зарегистрируйтесь под покупателем");
                 res = registrationHuman(role.CUSTOMER);
             }
             System.out.println(res);

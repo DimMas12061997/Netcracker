@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class OnlineShop {
     private final static String name = "SPORTIX";
-    public static List<Good> good = new ArrayList<>();
+    private static List<Goods> goodList = new ArrayList<>();
     private static double profit;
 
     public OnlineShop() {
@@ -15,12 +15,12 @@ public abstract class OnlineShop {
         return name;
     }
 
-    public static List<Good> getGood() {
-        return good;
+    public static List<Goods> getGoodList() {
+        return goodList;
     }
 
-    public static void setGood(List<Good> good) {
-        OnlineShop.good = good;
+    public static void setGoodList(List<Goods> good) {
+        OnlineShop.goodList = good;
     }
 
     public static double getProfit() {

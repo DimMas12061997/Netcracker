@@ -16,7 +16,7 @@ public class Customer extends Human implements Serializable {
     private String CreditCardNumber;
     private String address;
     private double budget;
-    Map<CustomerAct, ActCommandCustomer> acts = new HashMap<>();
+    private Map<CustomerAct, ActCommandCustomer> acts = new HashMap<>();
 
     public Customer() {
 
@@ -58,7 +58,7 @@ public class Customer extends Human implements Serializable {
     public void doAction(CustomerAct act){
         System.out.println(this);
         FileWorker sz = new FileWorker();
-        String customers = FileWorker.filePath + "customers.txt";
+        String customers = FileWorker.getFilePath() + "customers.txt";
         Customer res = null;
         try {
             res = (Customer) sz.deserialization(customers);

@@ -1,35 +1,20 @@
 package by.training.nc.dev3.tools;
 
-import by.training.nc.dev3.beans.Good;
+import by.training.nc.dev3.beans.Goods;
 import by.training.nc.dev3.enums.SortingIndex;
 
 import java.util.Comparator;
 
-/**
- * Created by Дмитрий on 21.03.2017.
- */
-public class ServiceComparator implements Comparator<Good> {
+
+public class ServiceComparator implements Comparator<Goods> {
     private SortingIndex index;
 
     public ServiceComparator(SortingIndex index) {
         this.index = index;
     }
 
-    public SortingIndex getIndex() {
-        return index;
-    }
-
-    public void setIndex(SortingIndex index) {
-        if(index != null){
-            this.index = index;
-        }
-        else{
-            throw new IllegalArgumentException();
-        }
-    }
-
     @Override
-    public int compare(Good o1, Good o2) {
+    public int compare(Goods o1, Goods o2) {
         switch(index){
             case NAME:
                 return o1.getName().compareTo(o2.getName());

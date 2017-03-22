@@ -11,8 +11,8 @@ import by.training.nc.dev3.exceptions.InvalidSerializationException;
 import by.training.nc.dev3.exceptions.MyException;
 
 public class Menu {
-    public static Administrator admin;
-    public static Customer customer;
+    private static Administrator admin;
+    private static Customer customer;
 
     public static void menu() {
         int flag = 0;

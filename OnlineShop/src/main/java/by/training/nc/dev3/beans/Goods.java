@@ -3,26 +3,30 @@ package by.training.nc.dev3.beans;
 
 import java.io.Serializable;
 
-public class Good implements Serializable{
+public class Goods implements Serializable {
     private String name;
     private int number;
     private double unitPrice;
+    private static int numberObjects;
 
-    public Good() {
+    public Goods() {
+        numberObjects++;
     }
 
-    public Good(String name, int number, double unitPrice) {
+    public Goods(String name, int number, double unitPrice) {
         this.name = name;
         this.number = number;
         this.unitPrice = unitPrice;
+        numberObjects++;
     }
 
     @Override
     public String toString() {
-        return "Good{" +
+        return "Goods{" +
                 "name='" + name + '\'' +
                 ", number=" + number +
                 ", unitPrice=" + unitPrice +
+                ", numberObjects=" + numberObjects +
                 '}';
     }
 

@@ -2,16 +2,18 @@ package by.training.nc.dev3.tools;
 
 
 import by.training.nc.dev3.beans.Customer;
-import by.training.nc.dev3.beans.Good;
-import by.training.nc.dev3.beans.Human;
+import by.training.nc.dev3.beans.Goods;
 import by.training.nc.dev3.exceptions.InvalidSerializationException;
-import by.training.nc.dev3.exceptions.MyException;
 
 import java.io.*;
 import java.util.*;
 
 public class FileWorker {
-    public final static String filePath = "E://NetCracker//Netcracker//OnlineShop//src//main//java//by//training//nc//dev3//files//";
+    private final static String filePath = "src//main//java//by//training//nc//dev3//resources//";
+
+    public static String getFilePath() {
+        return filePath;
+    }
 
     public <T> boolean serialization(T s, String fileName) {
         boolean flag = false;
@@ -59,8 +61,7 @@ public class FileWorker {
             System.err.println("Несовпадение версий классов: " + ioe);
         } catch (IOException ioe) {
             System.err.println("Общая I/O ошибка: " + ioe);
-        }
-        finally {
+        } finally {
             try {
                 if (istream != null) {
                     istream.close();
@@ -130,7 +131,7 @@ public class FileWorker {
         }
     }
 
-    public static void writeOrder(Map<Customer, List<Good>> list, File file) {
+    public static void writeOrder(Map<Customer, List<Goods>> list, File file) {
         boolean flag = false;
         ObjectOutputStream ostream = null;
         try {
@@ -157,14 +158,14 @@ public class FileWorker {
         }
     }
 
-    public static Map<Customer, List<Good>> readOrder(String fileName) {
+    public static Map<Customer, List<Goods>> readOrder(String fileName) {
         File fr = new File(fileName);
         ObjectInputStream istream = null;
-        Map<Customer, List<Good>> st = new HashMap<>();
+        Map<Customer, List<Goods>> st = new HashMap<>();
         try {
             FileInputStream fis = new FileInputStream(fr);
             istream = new ObjectInputStream(fis);
-            st = (Map<Customer, List<Good>>) istream.readObject();
+            st = (Map<Customer, List<Goods>>) istream.readObject();
 
         } catch (ClassNotFoundException ce) {
             System.err.println("Класс не существует: " + ce);

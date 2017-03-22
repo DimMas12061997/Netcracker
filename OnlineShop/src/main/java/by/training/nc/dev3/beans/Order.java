@@ -7,19 +7,27 @@ import java.util.List;
 import java.util.Map;
 
 public class Order implements Serializable {
-    public static List<Good> good = new ArrayList<>();
-    public static Map<Customer, List<Good>> map = new HashMap<>();
+    private static List<Goods> good = new ArrayList<>();
+    private static Map<Customer, List<Goods>> map = new HashMap<>();
     private static double orderCost;
-    public static Boolean payment = false;
+    private static Boolean payment = false;
 
     public Order() {
     }
 
-    public static Map<Customer, List<Good>> getMap() {
+    public static List<Goods> getGood() {
+        return good;
+    }
+
+    public static void setGood(List<Goods> good) {
+        Order.good = good;
+    }
+
+    public static Map<Customer, List<Goods>> getMap() {
         return map;
     }
 
-    public static void setMap(Map<Customer, List<Good>> map) {
+    public static void setMap(Map<Customer, List<Goods>> map) {
         Order.map = map;
     }
 

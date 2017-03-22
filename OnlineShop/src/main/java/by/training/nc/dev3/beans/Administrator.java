@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Administrator extends Human implements Serializable {
     private String email;
-    Map<AdminAct, ActCommand> acts = new HashMap<>();
+    private Map<AdminAct, ActCommand> acts = new HashMap<>();
 
     public Administrator() {
     }
