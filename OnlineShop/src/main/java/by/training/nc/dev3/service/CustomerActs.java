@@ -143,8 +143,8 @@ public class CustomerActs implements Serializable, CustomerActions {
             if (customer.equals(list.get(i)))
                 list.remove(list.get(i));
         sz.writeObject(list, new File(FileWorker.getFilePath() + "non-payers.txt"));
-        double x = customer.getBudget() - Order.getOrderCost();
-        customer.setBudget(x);
+        double budget = customer.getBudget() - Order.getOrderCost();
+        customer.setBudget(budget);
         sz.serialization(customer, FileWorker.getFilePath() + "customers.txt");
         OnlineShop.setProfit(Order.getOrderCost());
         writeProfitOnlineShop(OnlineShop.getProfit());

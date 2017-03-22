@@ -19,7 +19,6 @@ public class Customer extends Human implements Serializable {
     private Map<CustomerAct, ActCommandCustomer> acts = new HashMap<>();
 
     public Customer() {
-
     }
 
     public String getCreditCardNumber() {
