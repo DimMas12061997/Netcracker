@@ -39,7 +39,7 @@ public class CustomerActs implements Serializable, CustomerActions {
         int k = checkBlackList();
         if (k == 0) {
             int flag = 0;
-            OnlineShop.setGoodList((List<Goods>)FileWorker.readObject(FileWorker.getFilePath() + "OnlineShop.txt"));
+            OnlineShop.setGoodList((List<Goods>) FileWorker.readObject(FileWorker.getFilePath() + "OnlineShop.txt"));
             String name = Operations.inputString();
             Order.setMap(FileWorker.readOrder(FileWorker.getFilePath() + "Order.txt"));
             for (Iterator<Goods> it = OnlineShop.getGoodList().iterator(); it.hasNext(); ) {
@@ -138,25 +138,40 @@ public class CustomerActs implements Serializable, CustomerActions {
     }
 
     public void pay(List<Customer> list) {
+        int flag = 0;
         FileWorker sz = new FileWorker();
-        for (int i = 0; i < list.size(); i++)
-            if (customer.equals(list.get(i)))
-                list.remove(list.get(i));
-        sz.writeObject(list, new File(FileWorker.getFilePath() + "non-payers.txt"));
-        double budget = customer.getBudget() - Order.getOrderCost();
-        customer.setBudget(budget);
-        sz.serialization(customer, FileWorker.getFilePath() + "customers.txt");
-        OnlineShop.setProfit(Order.getOrderCost());
-        writeProfitOnlineShop(OnlineShop.getProfit());
-        Order.getMap().clear();
-        FileWorker.writeOrder(Order.getMap(), new File(FileWorker.getFilePath() + "Order.txt"));
-        String str = "Покупатель: " + customer.getName() + " " + customer.getSurname() + " " + ", Стоимость заказа = " + Order.getOrderCost() + ", Оставшийся бюджет: " + customer.getBudget() + "\n";
-        FileWorker.writeByteFile(str, new File(FileWorker.getFilePath() + "InfoOrder.txt"));
+        if (Order.getOrderCost() != 0)
+            if (customer.getBudget() >= Order.getOrderCost()) {
+                for (int i = 0; i < list.size(); i++)
+                    if (customer.equals(list.get(i)))
+                        list.remove(list.get(i));
+                sz.writeObject(list, new File(FileWorker.getFilePath() + "non-payers.txt"));
+                double budget = customer.getBudget() - Order.getOrderCost();
+                customer.setBudget(budget);
+                sz.serialization(customer, FileWorker.getFilePath() + "customers.txt");
+                OnlineShop.setProfit(Order.getOrderCost());
+                writeProfitOnlineShop(OnlineShop.getProfit());
+                Order.getMap().clear();
+                FileWorker.writeOrder(Order.getMap(), new File(FileWorker.getFilePath() + "Order.txt"));
+                String str = "Покупатель: " + customer.getName() + " " + customer.getSurname() + " " + ", Стоимость заказа = " + Order.getOrderCost() + ", Оставшийся бюджет: " + customer.getBudget() + "\n";
+                FileWorker.writeByteFile(str, new File(FileWorker.getFilePath() + "InfoOrder.txt"));
+
+            } else {
+                for (Customer man : list)
+                    if (customer.equals(man)) {
+                        System.out.println("Вы уже находитесь в списке неплательщиков!");
+                        flag++;
+                    }
+                if (flag == 0) {
+                    list.add(customer);
+                    System.out.println("Вы занесены в список неплательщиков!");
+                    sz.writeObject(list, new File(FileWorker.getFilePath() + "non-payers.txt"));
+                }
+            }
     }
 
     @Override
     public void payOrder() throws MyException {
-        int flag = 0;
         FileWorker sz = new FileWorker();
         Order.setMap(FileWorker.readOrder(FileWorker.getFilePath() + "Order.txt"));
         System.out.println("Бюджет покупателя: " + customer.getBudget());
@@ -164,18 +179,9 @@ public class CustomerActs implements Serializable, CustomerActions {
         Order.setPayment(true);
         List<Customer> list = (List<Customer>) sz.readObject(FileWorker.getFilePath() + "non-payers.txt");
         if (Order.getMap().isEmpty() == false)
-            if (Order.getOrderCost() != 0)
-                pay(list);
-            else {
-                for (Customer man : list)
-                    if (customer.equals(man))
-                        flag++;
-                if (flag == 0) {
-                    list.add(customer);
-                    sz.writeObject(list, new File(FileWorker.getFilePath() + "non-payers.txt"));
-                }
-            }
+            pay(list);
     }
+
 
     public void writeProfitOnlineShop(double profit) {
         double str = FileWorker.readFile(new File(FileWorker.getFilePath() + "ProfitOnlineShop.txt"));

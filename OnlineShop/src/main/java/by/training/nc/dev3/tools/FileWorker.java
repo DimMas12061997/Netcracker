@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.*;
 
 public class FileWorker {
-    private final static String filePath = "src//main//java//by//training//nc//dev3//resources//";
+    private final static String filePath = "src//resources//";
 
     public static String getFilePath() {
         return filePath;
@@ -27,18 +27,18 @@ public class FileWorker {
                 flag = true;
             }
         } catch (FileNotFoundException e) {
-            System.err.println("Файл не может быть создан: " + e);
+            System.out.println("Файл не может быть создан");
         } catch (NotSerializableException e) {
-            System.err.println("Класс не поддерживает сериализацию: " + e);
+            System.out.println("Класс не поддерживает сериализацию");
         } catch (IOException e) {
-            System.err.println(e);
+            System.out.println("Ошибка");
         } finally {
             try {
                 if (ostream != null) {
                     ostream.close();
                 }
             } catch (IOException e) {
-                System.err.println("Ошибка закрытия потока");
+                System.out.println("Ошибка закрытия потока");
             }
         }
         return flag;
@@ -53,21 +53,20 @@ public class FileWorker {
             T st = (T) istream.readObject();
             return st;
         } catch (ClassNotFoundException ce) {
-            System.err.println("Класс не существует: " + ce);
-        } catch (
-                FileNotFoundException e) {
-            System.err.println("Файл для десериализации не существует: " + e);
+            System.out.println("Класс не существует");
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл для десериализации не существует");
         } catch (InvalidClassException ioe) {
-            System.err.println("Несовпадение версий классов: " + ioe);
+            System.out.println("Несовпадение версий классов");
         } catch (IOException ioe) {
-            System.err.println("Общая I/O ошибка: " + ioe);
+            throw new InvalidSerializationException("Файл пуст");
         } finally {
             try {
                 if (istream != null) {
                     istream.close();
                 }
             } catch (IOException e) {
-                System.err.println("ошибка закрытия потока ");
+                System.out.println("Ошибка закрытия потока ");
             }
         }
         throw new InvalidSerializationException("Файл пуст");
@@ -84,21 +83,21 @@ public class FileWorker {
             st = (List<?>) istream.readObject();
 
         } catch (ClassNotFoundException ce) {
-            System.err.println("Класс не существует: " + ce);
+            System.out.println("Класс не существует");
         } catch (
                 FileNotFoundException e) {
-            System.err.println("Файл для десериализации не существует: " + e);
+            System.out.println("Файл для десериализации не существует");
         } catch (InvalidClassException ioe) {
-            System.err.println("Несовпадение версий классов: " + ioe);
+            System.out.println("Несовпадение версий классов");
         } catch (IOException ioe) {
-            System.err.println("Общая I/O ошибка: " + ioe);
+            System.out.println("Файл пуст!");
         } finally {
             try {
                 if (istream != null) {
                     istream.close();
                 }
             } catch (IOException e) {
-                System.err.println("ошибка закрытия потока ");
+                System.out.println("ошибка закрытия потока ");
             }
         }
         return st;
@@ -115,18 +114,18 @@ public class FileWorker {
                 flag = true;
             }
         } catch (FileNotFoundException e) {
-            System.err.println("Файл не может быть создан: " + e);
+            System.out.println("Файл не может быть создан");
         } catch (NotSerializableException e) {
-            System.err.println("Класс не поддерживает сериализацию: " + e);
+            System.out.println("Класс не поддерживает сериализацию");
         } catch (IOException e) {
-            System.err.println(e);
+            System.out.println("Ошибка");
         } finally {
             try {
                 if (ostream != null) {
                     ostream.close();
                 }
             } catch (IOException e) {
-                System.err.println("Ошибка закрытия потока");
+                System.out.println("Ошибка закрытия потока");
             }
         }
     }
@@ -142,18 +141,18 @@ public class FileWorker {
                 flag = true;
             }
         } catch (FileNotFoundException e) {
-            System.err.println("Файл не может быть создан: " + e);
+            System.out.println("Файл не может быть создан");
         } catch (NotSerializableException e) {
-            System.err.println("Класс не поддерживает сериализацию: " + e);
+            System.out.println("Класс не поддерживает сериализацию");
         } catch (IOException e) {
-            System.err.println(e);
+            System.out.println("Ошибка!");
         } finally {
             try {
                 if (ostream != null) {
                     ostream.close();
                 }
             } catch (IOException e) {
-                System.err.println("Ошибка закрытия потока");
+                System.out.println("Ошибка закрытия потока");
             }
         }
     }
@@ -168,21 +167,21 @@ public class FileWorker {
             st = (Map<Customer, List<Goods>>) istream.readObject();
 
         } catch (ClassNotFoundException ce) {
-            System.err.println("Класс не существует: " + ce);
+            System.out.println("Класс не существует");
         } catch (
                 FileNotFoundException e) {
-            System.err.println("Файл для десериализации не существует: " + e);
+            System.out.println("Файл для десериализации не существует");
         } catch (InvalidClassException ioe) {
-            System.err.println("Несовпадение версий классов: " + ioe);
+            System.out.println("Несовпадение версий классов");
         } catch (IOException ioe) {
-            System.err.println("Общая I/O ошибка: " + ioe);
+            System.out.println("Файл пуст!");
         } finally {
             try {
                 if (istream != null) {
                     istream.close();
                 }
             } catch (IOException e) {
-                System.err.println("ошибка закрытия потока ");
+                System.out.println("ошибка закрытия потока ");
             }
         }
         return st;
