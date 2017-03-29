@@ -95,12 +95,12 @@ public class CustomerActs implements Serializable, CustomerActions {
         FileWorker.writeOrder(Order.getMap(), new File(FileWorker.getFilePath() + "Order.txt"));
     }
 
-    public void delGood(String name, Goods basket) {
+    public void delGood(String name, int number) {
         OnlineShop.setGoodList((List<Goods>) FileWorker.readObject(FileWorker.getFilePath() + "OnlineShop.txt"));
         for (Iterator<Goods> it = OnlineShop.getGoodList().iterator(); it.hasNext(); ) {
             Goods good = it.next();
             if (name.equals(good.getName())) {
-                good.setNumber(good.getNumber() + basket.getNumber());
+                good.setNumber(good.getNumber() + number);
                 FileWorker.writeObject(OnlineShop.getGoodList(), new File(FileWorker.getFilePath() + "OnlineShop.txt"));
             }
         }
@@ -121,11 +121,11 @@ public class CustomerActs implements Serializable, CustomerActions {
                             entry.getValue().remove(basket);
                             Order.getMap().put(entry.getKey(), entry.getValue());
                             FileWorker.writeOrder(Order.getMap(), new File(FileWorker.getFilePath() + "Order.txt"));
-                            delGood(name, basket);
+                            delGood(name, number);
                         } else if (number < basket.getNumber()) {
                             basket.setNumber(basket.getNumber() - number);
                             FileWorker.writeOrder(Order.getMap(), new File(FileWorker.getFilePath() + "Order.txt"));
-                            delGood(name, basket);
+                            delGood(name, number);
                         } else
                             throw new MyException("В заказе нет столько товара");
                         break;

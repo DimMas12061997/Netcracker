@@ -88,7 +88,8 @@ public class AdminActs implements AdminActions {
         boolean in;
         List<Customer> res = (List<Customer>) sz.readObject(customers);
         blackList(res);
-        System.out.println("Все неплательщики занесены в чс");
+        if (res.size() != 0)
+            System.out.println("Все неплательщики занесены в чс");
     }
 
     public void blackList(List<Customer> res) {

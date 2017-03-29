@@ -1,25 +1,66 @@
 package by.training.nc.dev3.tools;
 
-import by.training.nc.dev3.beans.Administrator;
-import by.training.nc.dev3.beans.Customer;
-import by.training.nc.dev3.beans.Goods;
-import by.training.nc.dev3.beans.Human;
-import by.training.nc.dev3.beans.OnlineShop;
+import by.training.nc.dev3.beans.*;
+import by.training.nc.dev3.command.*;
+import by.training.nc.dev3.enums.AdminAct;
+import by.training.nc.dev3.enums.CustomerAct;
 import by.training.nc.dev3.enums.Role;
 import by.training.nc.dev3.enums.SortingIndex;
 import by.training.nc.dev3.exceptions.InvalidSerializationException;
+import by.training.nc.dev3.exceptions.MyException;
+import by.training.nc.dev3.service.CustomerActs;
 
-import java.util.Collections;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public final class Operations {
     private static FileWorker sz = new FileWorker();
     private static Scanner input = new Scanner(System.in);
+    private static Map<AdminAct, ActCommand> acts = new HashMap<>();
+    private static Map<CustomerAct, ActCommandCustomer> actsCustomer = new HashMap<>();
 
     private Operations() {
+    }
+
+    public static Map<AdminAct, ActCommand> getActs() {
+        return acts;
+    }
+
+    public static void fillMap() {
+        acts.put(AdminAct.ADD, new AddCommandAdmin());
+        acts.put(AdminAct.VIEW, new ViewCommandAdmin());
+        acts.put(AdminAct.REMOVE, new RemoveCommandAdmin());
+        acts.put(AdminAct.REMOVEALL, new RemoveAllCommandAdmin());
+        acts.put(AdminAct.VIEWORDER, new ViewOrderCommandAdmin());
+        acts.put(AdminAct.CHECK, new CheckOrderCommandAdmin());
+        acts.put(AdminAct.VIEWBLACKLIST, new ViewBlackListCommandAdmin());
+        acts.put(AdminAct.VIEWARCHIVE, new ViewArchiveCommandAdmin());
+    }
+
+    public static void fillMapCustomer() {
+        actsCustomer.put(CustomerAct.ADD, new AddCommandCustomer());
+        actsCustomer.put(CustomerAct.VIEW, new ViewCommandCustomer());
+        actsCustomer.put(CustomerAct.REMOVE, new RemoveCommandCustomer());
+        actsCustomer.put(CustomerAct.REMOVEALL, new RemoveAllCommandCustomer());
+        actsCustomer.put(CustomerAct.VIEWORDER, new ViewOrderCommandCustomer());
+        actsCustomer.put(CustomerAct.PAYORDER, new PaymentCommandCustomer());
+    }
+
+    public static void doAction(CustomerAct act) {
+        FileWorker sz = new FileWorker();
+        String customers = FileWorker.getFilePath() + "customers.txt";
+        Customer res = null;
+        try {
+            res = (Customer) sz.deserialization(customers);
+        } catch (InvalidSerializationException e) {
+            System.out.println(e.getMessage());
+        }
+        new CustomerActs(res);
+        try {
+            actsCustomer.get(act).execute();
+        } catch (MyException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static String inputString() {
