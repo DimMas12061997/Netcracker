@@ -2,7 +2,7 @@ package by.training.nc.dev3.beans;
 
 import java.io.Serializable;
 
-public class Customer extends Human implements Serializable {
+public class Customer extends Human implements Serializable{
     private String CreditCardNumber;
     private String address;
     private double budget;

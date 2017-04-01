@@ -6,6 +6,7 @@
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
     <build>
+        <!--<sourceDirectory>src</sourceDirectory>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -16,6 +17,11 @@
                 </configuration>
             </plugin>
         </plugins>
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>${project.basedir}/src/resources</directory>-->
+            <!--</resource>-->
+        <!--</resources>-->
     </build>
     <name>OnlineShop</name>
   <url>http://maven.apache.org</url>

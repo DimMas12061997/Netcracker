@@ -39,8 +39,14 @@ public class Menu {
 
                         switch (Operations.inputNumber()) {
                             case 1:
+                                System.out.println("Введите данные об администраторе");
                                 admin = (Administrator) Operations.checkHuman(Role.ADMINISTRATOR);
-                                flag++;
+                                if (admin == null) {
+                                    System.out.println("Неверно введены данные");
+                                    break out2;
+                                } else {
+                                    flag++;
+                                }
                                 break;
                             case 2:
                                 System.out.println("===========================================================");
@@ -50,7 +56,6 @@ public class Menu {
                                 break;
                             case 0:
                                 System.out.println("===========================================================");
-                                System.out.println(flag);
                                 break out2;
                             default:
                                 System.out.println("===========================================================");
@@ -70,6 +75,7 @@ public class Menu {
                             System.out.println("7. Удалить весь товар");
                             System.out.println("8. Сортировка товара");
                             System.out.println("9. Прибыль магазина и данные о покупателях");
+                            System.out.println("10. Работа с администраторами/покупателями");
                             System.out.println("0. Назад");
                             System.out.println("===========================================================");
 
@@ -108,6 +114,7 @@ public class Menu {
                                         System.out.println("1. По цене");
                                         System.out.println("2. По наименованию");
                                         System.out.println("3. По количеству");
+                                        System.out.println("0. Назад");
 
                                         switch (Operations.inputNumber()) {
                                             case 1:
@@ -119,6 +126,9 @@ public class Menu {
                                             case 3:
                                                 Operations.sortServices(SortingIndex.NUMBER);
                                                 break label;
+                                            case 0:
+                                                System.out.println("===========================================================");
+                                                break label;
                                             default:
                                                 System.out.println("Неверный выбор. Повторите");
                                         }
@@ -127,6 +137,81 @@ public class Menu {
                                 case 9:
                                     System.out.println("===========================================================");
                                     Operations.getActs().get(AdminAct.VIEWARCHIVE).execute();
+                                    break;
+                                case 10:
+                                    System.out.println("===========================================================");
+                                    label:
+                                    while (true) {
+                                        System.out.println("1. Работа с администраторами");
+                                        System.out.println("2. Работа с пользователями");
+                                        System.out.println("3. Выход");
+
+                                        switch (Operations.inputNumber()) {
+                                            case 1:
+                                                System.out.println("===========================================================");
+                                                workAdmin:
+                                                while (true) {
+                                                    System.out.println("1. Просмотр информации об администраторах");
+                                                    System.out.println("2. Удалить администратора");
+                                                    System.out.println("3. Изменить e-mail администратора");
+                                                    System.out.println("4. Добавить администратора");
+                                                    System.out.println("0. Выход");
+
+                                                    switch (Operations.inputNumber()) {
+                                                        case 1:
+                                                            Operations.getActs().get(AdminAct.VIEWADMINS).execute();
+                                                            break;
+                                                        case 2:
+                                                            Operations.getActs().get(AdminAct.REMOVEADMIN).execute();
+                                                            break;
+                                                        case 3:
+                                                            Operations.getActs().get(AdminAct.EDITADMIN).execute();
+                                                            break;
+                                                        case 4:
+                                                            Operations.registrationHuman(Role.ADMINISTRATOR);
+                                                            break;
+                                                        case 0:
+                                                            System.out.println("===========================================================");
+                                                            break workAdmin;
+                                                        default:
+                                                            System.out.println("Неверный выбор. Повторите");
+                                                    }
+                                                }
+                                                break;
+                                            case 2:
+                                                System.out.println("===========================================================");
+                                                workAdmin:
+                                                while (true) {
+                                                    System.out.println("1. Просмотр информации о покупателях");
+                                                    System.out.println("2. Удалить покупателя");
+                                                    System.out.println("3. Изменить бюджет покупателя");
+                                                    System.out.println("0. Выход");
+
+                                                    switch (Operations.inputNumber()) {
+                                                        case 1:
+                                                            Operations.getActs().get(AdminAct.VIEWCUSTOMERS).execute();
+                                                            break;
+                                                        case 2:
+                                                            Operations.getActs().get(AdminAct.REMOVECUSTOMER).execute();
+                                                            break;
+                                                        case 3:
+                                                            Operations.getActs().get(AdminAct.EDITCUSTOMER).execute();
+                                                            break;
+                                                        case 0:
+                                                            System.out.println("===========================================================");
+                                                            break workAdmin;
+                                                        default:
+                                                            System.out.println("Неверный выбор. Повторите");
+                                                    }
+                                                }
+                                                break;
+                                            case 3:
+                                                System.out.println("===========================================================");
+                                                break label;
+                                            default:
+                                                System.out.println("Неверный выбор. Повторите");
+                                        }
+                                    }
                                     break;
                                 case 0:
                                     System.out.println("===========================================================");
@@ -151,8 +236,15 @@ public class Menu {
 
                         switch (Operations.inputNumber()) {
                             case 1:
+                                System.out.println("Введите данные о покупателе");
                                 customer = (Customer) Operations.checkHuman(Role.CUSTOMER);
-                                flag++;
+                                if (customer == null) {
+                                    System.out.println("Неверно введены данные");
+                                    break out2;
+                                } else {
+                                    flag++;
+                                    System.out.println(customer);
+                                }
                                 break;
                             case 2:
                                 System.out.println("===========================================================");
@@ -178,6 +270,7 @@ public class Menu {
                         System.out.println("5. Сформировать заказ");
                         System.out.println("6. Оплата заказа");
                         System.out.println("7. Сортировка товара");
+                        System.out.println("8. Пополнить бюджет");
                         System.out.println("0. Назад");
                         System.out.println("===========================================================");
 
@@ -185,27 +278,27 @@ public class Menu {
                         switch (Operations.inputNumber()) {
                             case 1:
                                 System.out.println("===========================================================");
-                                Operations.doAction(CustomerAct.VIEW);
+                                Operations.doAction(CustomerAct.VIEW, customer);
                                 break;
                             case 2:
                                 System.out.println("===========================================================");
-                                Operations.doAction(CustomerAct.ADD);
+                                Operations.doAction(CustomerAct.ADD, customer);
                                 break;
                             case 3:
                                 System.out.println("===========================================================");
-                                Operations.doAction(CustomerAct.REMOVE);
+                                Operations.doAction(CustomerAct.REMOVE, customer);
                                 break;
                             case 4:
                                 System.out.println("===========================================================");
-                                Operations.doAction(CustomerAct.REMOVEALL);
+                                Operations.doAction(CustomerAct.REMOVEALL, customer);
                                 break;
                             case 5:
                                 System.out.println("===========================================================");
-                                Operations.doAction(CustomerAct.VIEWORDER);
+                                Operations.doAction(CustomerAct.VIEWORDER, customer);
                                 break;
                             case 6:
                                 System.out.println("===========================================================");
-                                Operations.doAction(CustomerAct.PAYORDER);
+                                Operations.doAction(CustomerAct.PAYORDER, customer);
                                 break;
                             case 7:
                                 System.out.println("===========================================================");
@@ -214,6 +307,7 @@ public class Menu {
                                     System.out.println("1. По цене");
                                     System.out.println("2. По наименованию");
                                     System.out.println("3. По количеству");
+                                    System.out.println("0. Назад");
 
                                     switch (Operations.inputNumber()) {
                                         case 1:
@@ -225,10 +319,17 @@ public class Menu {
                                         case 3:
                                             Operations.sortServices(SortingIndex.NUMBER);
                                             break label;
+                                        case 0:
+                                            System.out.println("===========================================================");
+                                            break label;
                                         default:
                                             System.out.println("Неверный выбор. Повторите");
                                     }
                                 }
+                                break;
+                            case 8:
+                                System.out.println("===========================================================");
+                                Operations.doAction(CustomerAct.RECHARGEBUDGET, customer);
                                 break;
                             case 0:
                                 System.out.println("===========================================================");

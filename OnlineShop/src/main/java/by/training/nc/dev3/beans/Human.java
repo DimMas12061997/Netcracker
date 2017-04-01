@@ -2,7 +2,7 @@ package by.training.nc.dev3.beans;
 
 import java.io.Serializable;
 
-public abstract class Human implements Serializable {
+public abstract class Human implements Serializable, Comparable<Human>  {
     private String name;
     private String surname;
 
@@ -47,5 +47,10 @@ public abstract class Human implements Serializable {
     public Human(String name, String surname) {
         this.name = name;
         this.surname = surname;
+    }
+
+    @Override
+    public int compareTo(Human obj) {
+        return this.getName().compareTo(obj.getName());
     }
 }

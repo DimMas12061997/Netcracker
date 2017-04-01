@@ -3,77 +3,24 @@ package by.training.nc.dev3.tools;
 
 import by.training.nc.dev3.beans.Customer;
 import by.training.nc.dev3.beans.Goods;
-import by.training.nc.dev3.exceptions.InvalidSerializationException;
 
 import java.io.*;
 import java.util.*;
 
 public class FileWorker {
-    private final static String filePath = "src//resources//";
+    private final static String filePath = "src//main//resources//";
 
     public static String getFilePath() {
         return filePath;
     }
 
-    public <T> boolean serialization(T s, String fileName) {
-        boolean flag = false;
-        File f = new File(fileName);
-        ObjectOutputStream ostream = null;
-        try {
-            FileOutputStream fos = new FileOutputStream(f);
-            if (fos != null) {
-                ostream = new ObjectOutputStream(fos);
-                ostream.writeObject(s);
-                flag = true;
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл не может быть создан");
-        } catch (NotSerializableException e) {
-            System.out.println("Класс не поддерживает сериализацию");
-        } catch (IOException e) {
-            System.out.println("Ошибка");
-        } finally {
-            try {
-                if (ostream != null) {
-                    ostream.close();
-                }
-            } catch (IOException e) {
-                System.out.println("Ошибка закрытия потока");
-            }
-        }
-        return flag;
-    }
-
-    public <T> T deserialization(String fileName) throws InvalidSerializationException {
-        File fr = new File(fileName);
-        ObjectInputStream istream = null;
-        try {
-            FileInputStream fis = new FileInputStream(fr);
-            istream = new ObjectInputStream(fis);
-            T st = (T) istream.readObject();
-            return st;
-        } catch (ClassNotFoundException ce) {
-            System.out.println("Класс не существует");
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл для десериализации не существует");
-        } catch (InvalidClassException ioe) {
-            System.out.println("Несовпадение версий классов");
-        } catch (IOException ioe) {
-            throw new InvalidSerializationException("Файл пуст");
-        } finally {
-            try {
-                if (istream != null) {
-                    istream.close();
-                }
-            } catch (IOException e) {
-                System.out.println("Ошибка закрытия потока ");
-            }
-        }
-        throw new InvalidSerializationException("Файл пуст");
-    }
-
 
     public static List<?> readObject(String fileName) {
+//        ObjectInputStream istream = null;
+//        List<?> st = new ArrayList<>();
+//        try {
+//            istream =  new ObjectInputStream(new FileWorker().getClass().getClassLoader().getResourceAsStream(fileName));
+//            st = (List<?>) istream.readObject();
         File fr = new File(fileName);
         ObjectInputStream istream = null;
         List<?> st = new ArrayList<>();
@@ -81,7 +28,6 @@ public class FileWorker {
             FileInputStream fis = new FileInputStream(fr);
             istream = new ObjectInputStream(fis);
             st = (List<?>) istream.readObject();
-
         } catch (ClassNotFoundException ce) {
             System.out.println("Класс не существует");
         } catch (
@@ -90,7 +36,7 @@ public class FileWorker {
         } catch (InvalidClassException ioe) {
             System.out.println("Несовпадение версий классов");
         } catch (IOException ioe) {
-            System.out.println("Файл пуст!");
+            System.out.println("");
         } finally {
             try {
                 if (istream != null) {
@@ -174,7 +120,7 @@ public class FileWorker {
         } catch (InvalidClassException ioe) {
             System.out.println("Несовпадение версий классов");
         } catch (IOException ioe) {
-            System.out.println("Файл пуст!");
+            System.out.println("");
         } finally {
             try {
                 if (istream != null) {

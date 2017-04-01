@@ -3,20 +3,24 @@ package by.training.nc.dev3.beans;
 
 import java.io.Serializable;
 
-public class Goods implements Serializable {
+public class Goods implements Serializable{
     private String name;
     private int number;
     private double unitPrice;
+    private String producer;
+    private String description;
     private static int numberObjects;
 
     public Goods() {
         numberObjects++;
     }
 
-    public Goods(String name, int number, double unitPrice) {
+    public Goods(String name, int number, double unitPrice, String producer, String description) {
         this.name = name;
         this.number = number;
         this.unitPrice = unitPrice;
+        this.producer = producer;
+        this.description = description;
         numberObjects++;
     }
 
@@ -26,8 +30,25 @@ public class Goods implements Serializable {
                 "name='" + name + '\'' +
                 ", number=" + number +
                 ", unitPrice=" + unitPrice +
-                ", numberObjects=" + numberObjects +
+                ", producer='" + producer + '\'' +
+                ", description='" + description + '\'' +
                 '}';
+    }
+
+    public String getProducer() {
+        return producer;
+    }
+
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {

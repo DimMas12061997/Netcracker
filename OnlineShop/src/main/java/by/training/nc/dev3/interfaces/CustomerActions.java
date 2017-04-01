@@ -15,4 +15,6 @@ public interface CustomerActions {
     void removeAllGoodsOrder();
 
     void viewGoods();
+
+    void rechargeBudget();
 }

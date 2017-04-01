@@ -17,4 +17,16 @@ public interface AdminActions {
     void viewBlackList();
 
     void viewOrder();
+
+    void viewAdmins();
+
+    void editAdmin();
+
+    void removeAdmin();
+
+    void viewCustomers();
+
+    void editCustomer();
+
+    void removeCustomer();
 }

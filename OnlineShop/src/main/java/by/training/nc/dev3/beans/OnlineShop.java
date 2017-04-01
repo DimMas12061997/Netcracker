@@ -3,12 +3,12 @@ package by.training.nc.dev3.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class OnlineShop {
+public final class OnlineShop {
     private final static String name = "SPORTIX";
     private static List<Goods> goodList = new ArrayList<>();
     private static double profit;
 
-    public OnlineShop() {
+    private OnlineShop() {
     }
 
     public static String getName() {
