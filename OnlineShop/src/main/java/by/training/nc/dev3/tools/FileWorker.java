@@ -14,13 +14,13 @@ public class FileWorker {
         return filePath;
     }
 
-
+    /**
+     * Reads to the list
+     *
+     * @param fileName - file name
+     * @return - list of services
+     */
     public static List<?> readObject(String fileName) {
-//        ObjectInputStream istream = null;
-//        List<?> st = new ArrayList<>();
-//        try {
-//            istream =  new ObjectInputStream(new FileWorker().getClass().getClassLoader().getResourceAsStream(fileName));
-//            st = (List<?>) istream.readObject();
         File fr = new File(fileName);
         ObjectInputStream istream = null;
         List<?> st = new ArrayList<>();
@@ -49,6 +49,12 @@ public class FileWorker {
         return st;
     }
 
+    /**
+     * Writes a list to a file
+     *
+     * @param list - list of services
+     * @param file - output file
+     */
     public static void writeObject(List<?> list, File file) {
         boolean flag = false;
         ObjectOutputStream ostream = null;
@@ -76,6 +82,12 @@ public class FileWorker {
         }
     }
 
+    /**
+     * Writes a map to a file
+     *
+     * @param list - map of order
+     * @param file - output file
+     */
     public static void writeOrder(Map<Customer, List<Goods>> list, File file) {
         boolean flag = false;
         ObjectOutputStream ostream = null;
@@ -103,6 +115,12 @@ public class FileWorker {
         }
     }
 
+    /**
+     * Reads to the map
+     *
+     * @param fileName - file name
+     * @return -  map of order
+     */
     public static Map<Customer, List<Goods>> readOrder(String fileName) {
         File fr = new File(fileName);
         ObjectInputStream istream = null;
@@ -133,6 +151,12 @@ public class FileWorker {
         return st;
     }
 
+    /**
+     * Reads the profit of the store
+     *
+     * @param file - Object file
+     * @return - Online store profits
+     */
     public static double readFile(File file) {
         double str = 0;
         try (Scanner sc = new Scanner(new BufferedReader(new FileReader(file)))) {
@@ -144,6 +168,12 @@ public class FileWorker {
         return str;
     }
 
+    /**
+     * Records the profit of the store
+     *
+     * @param info - profit
+     * @param file - output file
+     */
     public static void write(double info, File file) {
         try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
             pw.println(info);
@@ -152,9 +182,16 @@ public class FileWorker {
         }
     }
 
-    public static boolean writeByteFile(String price, File file) {
+    /**
+     * Writes string to file in bytes
+     *
+     * @param info - string with information about the customer
+     * @param file - output file
+     * @return - true, if successful record, otherwise false
+     */
+    public static boolean writeByteFile(String info, File file) {
         try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file, true))) {
-            bos.write(price.getBytes());
+            bos.write(info.getBytes());
             return true;
         } catch (FileNotFoundException e) {
             System.out.println("Ошибка записи. Невозможно создать файл \"" + file.getName() + "\"");
@@ -164,6 +201,12 @@ public class FileWorker {
         }
     }
 
+    /**
+     * Reads string from file in bytes
+     *
+     * @param file - input file
+     * @return - string with information about customers
+     */
     public static String readByteFile(File file) {
         String str = "";
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {

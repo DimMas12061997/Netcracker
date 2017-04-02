@@ -27,6 +27,9 @@ public final class Operations {
         return acts;
     }
 
+    /**
+     * Fills in the administrator's map
+     */
     public static void fillMap() {
         acts.put(AdminAct.ADD, new AddGoodsAdmin());
         acts.put(AdminAct.VIEW, new ViewGoodsAdmin());
@@ -44,6 +47,9 @@ public final class Operations {
         acts.put(AdminAct.EDITCUSTOMER, new EditCustomer());
     }
 
+    /**
+     * Fills in the customer's map
+     */
     public static void fillMapCustomer() {
         actsCustomer.put(CustomerAct.ADD, new AddOrderCustomer());
         actsCustomer.put(CustomerAct.VIEW, new ViewGoodsCustomer());
@@ -54,6 +60,12 @@ public final class Operations {
         actsCustomer.put(CustomerAct.RECHARGEBUDGET, new RechargeBudgetCustomer());
     }
 
+    /**
+     * Calls a method by type of map value
+     *
+     * @param act      - Action from the enum (CustomerAct)
+     * @param customer
+     */
     public static void doAction(CustomerAct act, Customer customer) {
         String customers = FileWorker.getFilePath() + "customers.txt";
         new CustomerActs(customer);
@@ -64,11 +76,21 @@ public final class Operations {
         }
     }
 
+    /**
+     * String input
+     *
+     * @return string
+     */
     public static String inputString() {
         input = new Scanner(System.in);
         return input.next();
     }
 
+    /**
+     * Sorts and displays list of services
+     *
+     * @param index - sorting index
+     */
     public static void sortServices(SortingIndex index) {
         OnlineShop.setGoodList((List<Goods>) FileWorker.readObject(FileWorker.getFilePath() + "OnlineShop.txt"));
         Collections.sort(OnlineShop.getGoodList(), new ServiceComparator(index));
@@ -76,6 +98,11 @@ public final class Operations {
             System.out.println(product);
     }
 
+    /**
+     * Factory method for creating a child of the class human by role
+     *
+     * @param role - human role
+     */
     public static Human getHuman(Role role) {
         Human human = null;
         switch (role) {
@@ -91,6 +118,11 @@ public final class Operations {
         return human;
     }
 
+    /**
+     * Writes a person to a file by role
+     *
+     * @param role - human role
+     */
     public static Human registrationHuman(Role role) {
         String fileName = "";
         Human human = getHuman(role);
@@ -105,6 +137,12 @@ public final class Operations {
         return human;
     }
 
+    /**
+     * Authorization
+     *
+     * @param role - human role
+     * @return	- human, if successful authorization, otherwise null
+     */
     public static Human checkHuman(Role role) {
         int flag = 0;
         String fileName = "";
@@ -125,6 +163,11 @@ public final class Operations {
             return null;
     }
 
+    /**
+     * Checks the right input of numbers
+     *
+     * @return integer number above zero
+     */
     public static int inputNumber() {
         int number = -1;
         while (number < 0) {
@@ -145,6 +188,11 @@ public final class Operations {
         return 0;
     }
 
+    /**
+     * Checks the right input of numbers
+     *
+     * @return double number above zero
+     */
     public static double inputPrice() {
         double number = -1.0;
         while (number < 0) {
