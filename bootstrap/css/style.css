@@ -4,6 +4,7 @@ body {
 
 .navbar-my {
     background: #252a2f;
+    border-radius: 0px;
 }
 
 .dropdown-menu {
@@ -22,33 +23,6 @@ body {
     color: white;
 }
 
-.enter {
-    width: 35%;
-    margin-top: 12%;
-    margin-left: 30%;
-    border-radius: 5px;
-    background-color: #fffafa;
-    border: 4px double black;
-    padding-top: 3%;
-}
-
-.registration {
-    width: 35%;
-    margin-top: 12%;
-    margin-left: 30%;
-    border-radius: 5px;
-    background-color: #fffafa;
-    border: 4px double black;
-    padding-top: 3%;
-}
-
-label {
-    margin: 2%;
-    width: 10%;
-    font-family: Century Gothic;
-    font-size: 25px;
-}
-
 .but {
     margin-left: 2%;
     margin-bottom: 2%;
@@ -63,32 +37,17 @@ label {
     color: white;
 }
 
-.entrance {
-    float: left;
-    margin-top: 5%;
-    margin-left: 30%;
-    font-size: 30px;
-    color: #ffa91c;
-}
-
-.reg {
-    float: left;
-    margin-top: 5%;
-    margin-left: 30%;
-    font-size: 30px;
-    color: #ffa91c;
-}
-
-.reg_ul {
-    margin-top: 2%;
-    margin-left: 55%;
-    font-size: 25px;
-    color: #252a2f;
+.container {
+    margin-top: 40px;
+    margin-bottom: 80px;
 }
 
 .form {
-    width: 250px;
+    max-width: 380px;
+    padding: 15px 45px 45px;
     margin: 0 auto;
+    background-color: #fff;
+    border: 2px solid #616161;
 }
 
 .form-title {
@@ -128,14 +87,12 @@ label {
 }
 
 label.error {
-    width: 150px;
     display: block;
-    padding-left: 10px;
     font-size: 12px;
     color: #e85656;
-    position: absolute;
-    left: 100%;
-    top: 10px;
+    position: relative;
+    top: 5px;
+    bottom: 5px;
     z-index: 1;
 }
 

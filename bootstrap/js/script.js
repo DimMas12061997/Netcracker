@@ -1,77 +1,79 @@
-$(function() {
-    $("#reg").validate({
+$(function () {
+    $("#js-register-form").validate({
         rules: {
-            email: {
-                required: true,
-                email: true
+            form_name: {
+                required: true
             },
-            pass: {
+            form_surname: {
+                required: true,
+            },
+            form_login: {
+                required: true,
+            },
+            form_pswd1: {
                 required: true,
                 minlength: 6
             },
-            pass2: {
+            form_pswd2: {
                 required: true,
                 minlength: 6,
-                equalTo: "#pass"
+                equalTo: "#form_pswd1"
             }
         },
         messages: {
-            email: {
-                required: "Поле E-mail обязательное для заполнения",
-                email: "Введите пожалуйста корректный e-mail"
+            form_name: {
+                required: "Поле Имя обязательное для заполнения."
+            },
+            form_surname: {
+                required: "Поле Фамилия обязательное для заполнения.",
+            },
+            form_login: {
+                required: "Поле Логин обязательное для заполнения."
+            },
+            form_pswd1: {
+                required: "Поле Пароль обязательное для заполнения."
+            },
+            form_pswd2: {
+                required: "Повторите введенный пароль."
             }
         },
         focusCleanup: true,
         focusInvalid: false,
-        invalidHandler: function(event, validator) {
-            $(".reg").text("Исправьте пожалуйста все ошибки.");
+        invalidHandler: function (event, validator) {
+            $(".js-form-message").text("Исправьте пожалуйста все ошибки.");
         },
-        onkeyup: function(element) {
-            $(".reg").text("");
+        onkeyup: function (element) {
+            $(".js-form-message").text("");
         },
-        errorPlacement: function(error, element) {
-            return true;
-        },
-        errorClass: "form-input_error",
-        validClass: "form-input_success"
     });
 });
 
-$(function() {
-    $("#entrance").validate({
-
-        rules: {
-            email: {
-                required: true,
-                email: true
-            },
-            pass:{
-                required: true,
-                minlength: 6
-            },
+$(function () {
+$("#js-entrance-form").validate({
+    rules: {
+        form_login: {
+            required: true,
         },
-        messages: {
-            email: {
-                required: "Поле E-mail обязательное для заполнения",
-                email: "Введите пожалуйста корректный e-mail"
-            },
-            pass:{
-                required: "Это поле обязательно для заполнения",
-                minlength: "Пароль должен быть минимум 6 символа"
-            },
+        form_pswd1: {
+            required: true,
+            minlength: 6
+        }
+    },
+    messages: {
+        form_login: {
+            required: "Поле Логин обязательное для заполнения."
         },
-        focusCleanup: true,
-        focusInvalid: false,
-        invalidHandler: function(event, validator) {
-            $(".entrance").text("Исправьте пожалуйста все ошибки.");
-        },
-        onkeyup: function(element) {
-            $(".entrance").text("");
-        },
-        errorPlacement: function(error, element) {
-            return true;
-        },
-        errorClass: "form-input_error",
-        validClass: "form-input_success"
-    });
+        form_pswd1: {
+            required: "Поле Пароль обязательное для заполнения."
+        }
+    },
+    focusCleanup: true,
+    focusInvalid: false,
+    invalidHandler: function (event, validator) {
+        $(".js-form-message").text("Исправьте пожалуйста все ошибки.");
+    },
+    onkeyup: function (element) {
+        $(".js-form-message").text("");
+    },
+});
 });
