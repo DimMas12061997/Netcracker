@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -50,12 +50,47 @@
                 </button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" class="glyphicon glyphicon-user"> ${user}</a></li>
-                <li><a href="controller?command=logout" class="glyphicon glyphicon-share"> </a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" class="glyphicon glyphicon-user" data-toggle="dropdown"> ${user}<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="controller?command=adminprofilepage">Мой профиль</a></li>
+                        <li><a href="controller?command=editpage">Редактировать</a></li>
+                        <li class="divider"></li>
+                        <li><a href="controller?command=logout">Выйти</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
-ЮЗЕЕЕЕЕЕЕЕЕЕР
+<div class="container">
+    <form action="controller" method="POST" class="form" id="edit-form">
+        <h3 class="form-title">Изменение данных</h3>
+        <div class="message js-form-message"></div>
+        <input type="hidden" name="command" value="edit_main_data" />
+        <div class="form-group">
+            Имя: <input type="text" name="name" class="form-input" value = ${first_name}>
+        </div>
+        <div class="form-group">
+            Фамилия: <input type="text" name="surname" class="form-input" value = ${last_name}>
+        </div>
+        <div class="form-group">
+            Логин: <input type="text" name="login" class="form-input" value = ${login}>
+        </div>
+        <div class="form-group">
+            Пароль: <input type="text" name="password" value = ${password} class="form-input">
+        </div>
+        Дата регистрации: ${date}
+        ${errorLoginPassMessage}
+        <br/>
+        ${wrongAction}
+        <br/>
+        ${nullPage}
+        <div class="form-group">
+            <button type="submit" class="form-btn">Сохранить</button>
+        </div>
+    </form>
+</div>
+${userType}
 </body>
 </html>

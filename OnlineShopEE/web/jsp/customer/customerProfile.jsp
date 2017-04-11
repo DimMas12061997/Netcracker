@@ -50,12 +50,45 @@
                 </button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" class="glyphicon glyphicon-user"> ${user}</a></li>
-                <li><a href="controller?command=logout" class="glyphicon glyphicon-share"> </a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" class="glyphicon glyphicon-user" data-toggle="dropdown"> ${user}<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="controller?command=adminprofilepage">Мой профиль</a></li>
+                        <li><a href="controller?command=editpage">Редактировать</a></li>
+                        <li class="divider"></li>
+                        <li><a href="controller?command=logout">Выйти</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
-АДминннннннннннннннн
+<div class="container">
+    <form action="controller" method="POST" class="form" id="profile-form">
+        <h3 class="form-title">Личные данные:</h3>
+        <div class="message js-form-message"></div>
+        <input type="hidden" name="command" value="fillprofile" />
+        <div class="form-group">
+            E-mail <input type="email" name="email" class="form-input" value = ${email}>
+        </div>
+        <div class="form-group">
+            Адрес <input type="text" name="address" class="form-input" value = ${address}>
+        </div>
+        <div class="form-group">
+            Бюджет <input type="text" name="budget" class="form-input" value = ${budget}>
+        </div>
+        <div class="form-group">
+            Номер кредитки <input type="text"name="credit_card" class="form-input" value = ${creditCard}>
+        </div>
+        ${errorLoginPassMessage}
+        <br/>
+        ${wrongAction}
+        <br/>
+        ${nullPage}
+        <div class="form-group">
+            <button type="submit" class="form-btn">Сохранить</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

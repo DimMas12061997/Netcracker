@@ -31,6 +31,7 @@ public class RegistrationCommand implements ActionCommand {
             request.setAttribute("user", login);
             HttpSession session = request.getSession(true);
             session.setAttribute("userType", ClientType.CUSTOMER);
+            session.setAttribute("user", login);
             page = ConfigurationManager.getProperty("path.page.user");
         } catch (SQLException e) {
             request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.regerror"));

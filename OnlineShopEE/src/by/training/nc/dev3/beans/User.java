@@ -1,6 +1,7 @@
 package by.training.nc.dev3.beans;
 
 public class User extends Entity{
+	private int userId;
 	private String firstName;
 	private String lastName;
 	private String login;
@@ -8,6 +9,14 @@ public class User extends Entity{
 	private int roleId;
 	private int shopId;
     private String createdDate;
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	public User(String firstName, String lastName, String login, String password, int roleId, int shopId) {
 		this.firstName = firstName;
@@ -63,6 +72,7 @@ public class User extends Entity{
     @Override
     public String toString() {
         return "User{" +
+				"user_id='" + userId + '\'' +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", login='" + login + '\'' +

@@ -24,11 +24,13 @@ public class LoginCommand implements ActionCommand {
                     request.setAttribute("user", login);
                     HttpSession session = request.getSession(true);
                     session.setAttribute("userType", ClientType.ADMINISTRATOR);
+                    session.setAttribute("user", login);
                     page = ConfigurationManager.getProperty("path.page.main");
                 } else if (role.equals("customer")) {
                     request.setAttribute("user", login);
                     HttpSession session = request.getSession(true);
                     session.setAttribute("userType", ClientType.CUSTOMER);
+                    session.setAttribute("user", login);
                     page = ConfigurationManager.getProperty("path.page.user");
                 }
             } else {

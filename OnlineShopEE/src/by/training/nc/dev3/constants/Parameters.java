@@ -6,6 +6,10 @@ public class Parameters {
 	public static final String LAST_NAME = "surname";
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
-	
+	public static final String EMAIL = "email";
+	public static final String ADDRESS = "address";
+	public static final String BUDGET = "budget";
+	public static final String CREDIT_CARD = "credit_card";
+
 	private Parameters(){}
 }

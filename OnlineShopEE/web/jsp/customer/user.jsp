@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -50,12 +50,22 @@
                 </button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" class="glyphicon glyphicon-user"> ${user}</a></li>
-                <li><a href="controller?command=logout" class="glyphicon glyphicon-share"> </a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" class="glyphicon glyphicon-user" data-toggle="dropdown"> ${user}<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <%--<li><a href="controller?command=customerprofilepage">Мой профиль</a></li>--%>
+                        <%--<li><a href="controller?command=customereditpage">Редактировать</a></li>--%>
+                        <li><a href="controller?command=adminprofilepage">Мой профиль</a></li>
+                        <li><a href="controller?command=editpage">Редактировать</a></li>
+                        <li class="divider"></li>
+                        <li><a href="controller?command=logout">Выйти</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
-АДминннннннннннннннн
+${userType}
 </body>
 </html>
