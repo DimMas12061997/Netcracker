@@ -10,6 +10,7 @@ public class Parameters {
 	public static final String ADDRESS = "address";
 	public static final String BUDGET = "budget";
 	public static final String CREDIT_CARD = "credit_card";
+	public static final String USER_LIST = "userList";
 
 	private Parameters(){}
 }

@@ -67,6 +67,5 @@
     </div>
 </nav>
 ${userType}
-ЮЗЕЕЕЕЕЕЕЕЕЕР
 </body>
 </html>

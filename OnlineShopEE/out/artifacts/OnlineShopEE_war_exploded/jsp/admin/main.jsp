@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -56,17 +57,17 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="controller?command=adminprofilepage">Мой профиль</a></li>
                         <li><a href="controller?command=editpage">Редактировать</a></li>
+                        <c:if test="${userType == 'ADMINISTRATOR'}">
+                            <li><a href="controller?command=show_customers">Пользователи</a></li>
+                        </c:if>
                         <li class="divider"></li>
                         <li><a href="controller?command=logout">Выйти</a></li>
                     </ul>
                 </li>
-                <%--<li><a href="#" class="glyphicon glyphicon-user"> ${user}</a></li>--%>
-                <%--<li><a href="controller?command=logout" class="glyphicon glyphicon-share"> </a></li>--%>
             </ul>
         </div>
     </div>
 </nav>
 ${userType}
-АДминннннннннннннннн
 </body>
 </html>

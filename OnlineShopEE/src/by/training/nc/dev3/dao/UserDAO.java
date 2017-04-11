@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,8 +17,20 @@ public class UserDAO implements AbstractDAO<User> {
 
     @Override
     public List<User> findAll() throws SQLException {
-
-        return null;
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_ALL_CLIENTS);
+        ResultSet result = statement.executeQuery();
+        List<User> list = new ArrayList<>();
+        while(result.next()){
+            User user = new User();
+            user.setFirstName(result.getString(ColumnNames.USER_FIRST_NAME));
+            user.setLastName(result.getString(ColumnNames.USER_LAST_NAME));
+            user.setLogin(result.getString(ColumnNames.USER_LOGIN));
+            user.setRoleId(result.getInt(ColumnNames.ROLE_ID));
+            list.add(user);
+        }
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+        return list;
     }
 
     public boolean isAuthorized(String login, String password) throws SQLException {

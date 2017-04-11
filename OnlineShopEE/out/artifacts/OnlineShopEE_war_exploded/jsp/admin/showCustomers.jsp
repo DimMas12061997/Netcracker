@@ -52,12 +52,13 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" class="glyphicon glyphicon-user" data-toggle="dropdown"> ${user}<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" class="glyphicon glyphicon-user" data-toggle="dropdown"> ${user}<span
+                            class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="controller?command=adminprofilepage">Мой профиль</a></li>
                         <li><a href="controller?command=editpage">Редактировать</a></li>
                         <c:if test="${userType == 'ADMINISTRATOR'}">
-                        <li><a href="controller?command=show_customers">Пользователи</a></li>
+                            <li><a href="controller?command=show_customers">Пользователи</a></li>
                         </c:if>
                         <li class="divider"></li>
                         <li><a href="controller?command=logout">Выйти</a></li>
@@ -67,33 +68,33 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <form action="controller" method="POST" class="form" id="profile-form">
-        <h3 class="form-title">Личные данные:</h3>
-        <div class="message js-form-message"></div>
-        <input type="hidden" name="command" value="fillprofile" />
-        <div class="form-group">
-            E-mail <input type="email" name="email" class="form-input" value = ${email}>
-        </div>
-        <div class="form-group">
-          Адрес <input type="text" name="address" class="form-input" value = ${address}>
-        </div>
-        <div class="form-group">
-           Бюджет <input type="text" name="budget" class="form-input" value = ${budget}>
-        </div>
-        <div class="form-group">
-           Номер кредитки <input type="text"name="credit_card" class="form-input" value = ${creditCard}>
-        </div>
-        ${errorLoginPassMessage}
-        <br/>
-        ${wrongAction}
-        <br/>
-        ${nullPage}
-        <div class="form-group">
-            <button type="submit" class="form-btn">Сохранить</button>
-        </div>
-    </form>
-</div>
-${userType}
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Логин</th>
+        <th>Роль</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var = "user" items="${userList}" varStatus="i">
+        <tr>
+            <td>${i.count}</td>
+            <td><c:out value="${ user.lastName }" /></td>
+            <td><c:out value="${ user.firstName }" /></td>
+            <td><c:out value="${ user.login }" /></td>
+            <%--<td><c:out value="${ user.roleId }" /></td>--%>
+            <c:if test="${user.roleId == '1'}">
+                <td>Администратор</td>
+            </c:if>
+            <c:if test="${user.roleId == '2'}">
+                <td>Покупатель</td>
+            </c:if>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 </body>
 </html>

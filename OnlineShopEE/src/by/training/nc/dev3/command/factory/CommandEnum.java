@@ -3,6 +3,7 @@ package by.training.nc.dev3.command.factory;
 import by.training.nc.dev3.command.ActionCommand;
 import by.training.nc.dev3.command.admin.AdminEditPageCommand;
 import by.training.nc.dev3.command.admin.AdminProfilePageCommand;
+import by.training.nc.dev3.command.admin.ShowCustomersCommand;
 import by.training.nc.dev3.command.customer.CustomerProfilePageCommand;
 import by.training.nc.dev3.command.user.*;
 
@@ -50,6 +51,11 @@ public enum CommandEnum {
     EDIT_MAIN_DATA {
         {
             this.command = new EditMainDataCommand();
+        }
+    },
+    SHOW_CUSTOMERS{
+        {
+            this.command = new ShowCustomersCommand();
         }
     },
     LOGOUT {

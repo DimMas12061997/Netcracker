@@ -12,6 +12,9 @@ public class SqlRequests {
     public static final String GET_USERPROFILE_BY_ID = "SELECT * FROM online_shop.user_profil WHERE user_id = ?;";
     public static final String UPDATE_USER_PROFILE = "UPDATE online_shop.user_profil SET email = ?, address = ?, budget = ?, credit_card_number = ? WHERE user_id = ?";
     public static final String UPDATE_USER = "UPDATE online_shop.user SET first_name = ?, last_name = ?, login = ?, password = ? WHERE user_id = ?";
+    public static final String GET_ALL_CLIENTS = "SELECT first_name, last_name, login, role_id FROM online_shop.user ORDER BY last_name";
+
+
     private SqlRequests() {
     }
 }

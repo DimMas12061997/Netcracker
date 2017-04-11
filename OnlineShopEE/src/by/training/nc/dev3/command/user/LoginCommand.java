@@ -35,7 +35,7 @@ public class LoginCommand implements ActionCommand {
                 }
             } else {
                 request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
-                request.getSession().setAttribute("userType", ClientType.GUEST);
+//                request.getSession().setAttribute("userType", ClientType.GUEST);
                 page = ConfigurationManager.getProperty("path.page.login");
             }
         } catch (SQLException e) {
