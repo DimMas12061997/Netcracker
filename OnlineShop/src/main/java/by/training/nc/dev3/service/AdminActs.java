@@ -82,7 +82,7 @@ public class AdminActs implements AdminActions {
     public void viewGoods() {
         List<Goods> list = (List<Goods>) FileWorker.readObject(FileWorker.getFilePath() + "OnlineShop.txt");
         ListIterator<Goods> listIter = list.listIterator();
-        while(listIter.hasNext())
+        while (listIter.hasNext())
             System.out.println((listIter.next()));
     }
 
@@ -178,18 +178,21 @@ public class AdminActs implements AdminActions {
         int flag = 0;
         String fileName = FileWorker.getFilePath() + "admins.txt";
         List<Administrator> adminList = (List<Administrator>) FileWorker.readObject(fileName);
-        System.out.println("Введите имя, фамилию, e-mail:");
-        Administrator admin = new Administrator(Operations.inputString(), Operations.inputString(), Operations.inputString());
-        for (int i = 0; i < adminList.size(); i++) {
-            if (adminList.get(i).equals(admin)) {
-                flag++;
-                adminList.remove(adminList.get(i));
-                System.out.println("Администратор успешно удален");
-                FileWorker.writeObject(adminList, new File(fileName));
+        if (adminList.size() != 0) {
+            System.out.println("Введите имя, фамилию, e-mail:");
+            Administrator admin = new Administrator(Operations.inputString(), Operations.inputString(), Operations.inputString());
+            for (int i = 0; i < adminList.size(); i++) {
+                if (adminList.get(i).equals(admin)) {
+                    flag++;
+                    adminList.remove(adminList.get(i));
+                    System.out.println("Администратор успешно удален");
+                    FileWorker.writeObject(adminList, new File(fileName));
+                }
             }
-        }
-        if (flag == 0)
-            System.out.println("Такого администратора не существует");
+            if (flag == 0)
+                System.out.println("Такого администратора не существует");
+        } else
+            System.out.println("Нет ни одного администратора!");
 
     }
 
@@ -210,24 +213,27 @@ public class AdminActs implements AdminActions {
         int flag = 0;
         String fileName = FileWorker.getFilePath() + "customers.txt";
         List<Customer> customerList = (List<Customer>) FileWorker.readObject(fileName);
-        System.out.println("Введите имя, фамилию, номер кредитной карточки, адрес, бюджет:");
-        Customer customer = new Customer(Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputNumber());
-        for (int i = 0; i < customerList.size(); i++) {
-            if (customerList.get(i).equals(customer)) {
-                flag++;
-                System.out.println("Введите новый бюджет:");
-                double newBudget = Operations.inputNumber();
-                if (newBudget == customer.getBudget())
-                    System.out.println("Введите другой бюджет");
-                else {
-                    customerList.get(i).setBudget(newBudget);
-                    System.out.println("бюджет успешно изменен");
-                    FileWorker.writeObject(customerList, new File(fileName));
+        if (customerList.size() != 0) {
+            System.out.println("Введите имя, фамилию, номер кредитной карточки, адрес, бюджет:");
+            Customer customer = new Customer(Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputNumber());
+            for (int i = 0; i < customerList.size(); i++) {
+                if (customerList.get(i).equals(customer)) {
+                    flag++;
+                    System.out.println("Введите новый бюджет:");
+                    double newBudget = Operations.inputNumber();
+                    if (newBudget == customer.getBudget())
+                        System.out.println("Введите другой бюджет");
+                    else {
+                        customerList.get(i).setBudget(newBudget);
+                        System.out.println("бюджет успешно изменен");
+                        FileWorker.writeObject(customerList, new File(fileName));
+                    }
                 }
             }
-        }
-        if (flag == 0)
-            System.out.println("Такого покупателя не существует");
+            if (flag == 0)
+                System.out.println("Такого покупателя не существует");
+        } else
+            System.out.println("Нет ни одного покупателя");
     }
 
     @Override
@@ -235,17 +241,20 @@ public class AdminActs implements AdminActions {
         int flag = 0;
         String fileName = FileWorker.getFilePath() + "customers.txt";
         List<Customer> customerList = (List<Customer>) FileWorker.readObject(fileName);
-        System.out.println("Введите имя, фамилию, номер кредитной карточки, адрес, бюджет:");
-        Customer customer = new Customer(Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputNumber());
-        for (int i = 0; i < customerList.size(); i++) {
-            if (customerList.get(i).equals(customer)) {
-                flag++;
-                customerList.remove(customerList.get(i));
-                System.out.println("Покупатель успешно удален");
-                FileWorker.writeObject(customerList, new File(fileName));
+        if (customerList.size() != 0) {
+            System.out.println("Введите имя, фамилию, номер кредитной карточки, адрес, бюджет:");
+            Customer customer = new Customer(Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputString(), Operations.inputNumber());
+            for (int i = 0; i < customerList.size(); i++) {
+                if (customerList.get(i).equals(customer)) {
+                    flag++;
+                    customerList.remove(customerList.get(i));
+                    System.out.println("Покупатель успешно удален");
+                    FileWorker.writeObject(customerList, new File(fileName));
+                }
             }
-        }
-        if (flag == 0)
-            System.out.println("Такого покупателя не существует");
+            if (flag == 0)
+                System.out.println("Такого покупателя не существует");
+        } else
+            System.out.println("Нет ни одного покупателя");
     }
 }

@@ -162,10 +162,13 @@ public class CustomerActs implements Serializable, CustomerActions {
                 sz.writeObject(list, new File(FileWorker.getFilePath() + "non-payers.txt"));
                 double budget = customer.getBudget() - Order.getOrderCost();
                 editBudget(budget, sz);
+                Order.getMap().remove(customer);
                 customer.setBudget(budget);
                 OnlineShop.setProfit(Order.getOrderCost());
                 writeProfitOnlineShop(OnlineShop.getProfit());
-                Order.getMap().clear();
+//                Order.getMap().clear();
+//                Order.getMap().remove(customer);
+
                 FileWorker.writeOrder(Order.getMap(), new File(FileWorker.getFilePath() + "Order.txt"));
                 String str = "Покупатель: " + customer.getName() + " " + customer.getSurname() + " " + ", Стоимость заказа = " + Order.getOrderCost() + "\n";
                 FileWorker.writeByteFile(str, new File(FileWorker.getFilePath() + "InfoOrder.txt"));

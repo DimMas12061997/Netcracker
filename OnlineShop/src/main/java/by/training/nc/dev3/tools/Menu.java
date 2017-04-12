@@ -9,6 +9,8 @@ import by.training.nc.dev3.enums.Role;
 import by.training.nc.dev3.enums.SortingIndex;
 import by.training.nc.dev3.exceptions.MyException;
 
+import java.util.List;
+
 public class Menu {
     private static Administrator admin;
     private static Customer customer;
@@ -63,22 +65,22 @@ public class Menu {
                         }
                     }
                     out:
-                    try {
-                        while (true) {
-                            System.out.println("===========================================================");
-                            System.out.println("1. Просмотр товара магазина");
-                            System.out.println("2. Добавить товар");
-                            System.out.println("3. Удалить товар");
-                            System.out.println("4. Просмотр заказов потенциальных покупателей");
-                            System.out.println("5. Проверка оплаты заказа");
-                            System.out.println("6. Просмотр черного списка");
-                            System.out.println("7. Удалить весь товар");
-                            System.out.println("8. Сортировка товара");
-                            System.out.println("9. Прибыль магазина и данные о покупателях");
-                            System.out.println("10. Работа с администраторами/покупателями");
-                            System.out.println("0. Назад");
-                            System.out.println("===========================================================");
 
+                    while (true) {
+                        System.out.println("===========================================================");
+                        System.out.println("1. Просмотр товара магазина");
+                        System.out.println("2. Добавить товар");
+                        System.out.println("3. Удалить товар");
+                        System.out.println("4. Просмотр заказов потенциальных покупателей");
+                        System.out.println("5. Проверка оплаты заказа");
+                        System.out.println("6. Просмотр черного списка");
+                        System.out.println("7. Удалить весь товар");
+                        System.out.println("8. Сортировка товара");
+                        System.out.println("9. Прибыль магазина и данные о покупателях");
+                        System.out.println("10. Работа с администраторами/покупателями");
+                        System.out.println("0. Назад");
+                        System.out.println("===========================================================");
+                        try {
                             switch (Operations.inputNumber()) {
                                 case 1:
                                     Operations.getActs().get(AdminAct.VIEW).execute();
@@ -119,13 +121,13 @@ public class Menu {
                                         switch (Operations.inputNumber()) {
                                             case 1:
                                                 Operations.sortServices(SortingIndex.PRICE);
-                                                break label;
+                                                break;
                                             case 2:
                                                 Operations.sortServices(SortingIndex.NAME);
-                                                break label;
+                                                break;
                                             case 3:
                                                 Operations.sortServices(SortingIndex.NUMBER);
-                                                break label;
+                                                break;
                                             case 0:
                                                 System.out.println("===========================================================");
                                                 break label;
@@ -163,7 +165,12 @@ public class Menu {
                                                             break;
                                                         case 2:
                                                             Operations.getActs().get(AdminAct.REMOVEADMIN).execute();
-                                                            break;
+                                                            List<Administrator> adminList = (List<Administrator>) FileWorker.readObject(FileWorker.getFilePath() + "admins.txt");
+                                                            if (adminList.size() == 0) {
+                                                                flag = 0;
+                                                                break out2;
+                                                            } else
+                                                                break;
                                                         case 3:
                                                             Operations.getActs().get(AdminAct.EDITADMIN).execute();
                                                             break;
@@ -221,10 +228,11 @@ public class Menu {
                                     System.out.println("===========================================================");
                                     System.out.println("Неверный выбор либо формат. Повторите...");
                             }
+                        } catch (MyException e) {
+                            System.out.println(e.getMessage());
                         }
-                    } catch (MyException e) {
-                        System.out.println(e.getMessage());
                     }
+
                     break;
                 case 2:
                     while (flag == 0) {
@@ -312,13 +320,13 @@ public class Menu {
                                     switch (Operations.inputNumber()) {
                                         case 1:
                                             Operations.sortServices(SortingIndex.PRICE);
-                                            break label;
+                                            break;
                                         case 2:
                                             Operations.sortServices(SortingIndex.NAME);
-                                            break label;
+                                            break;
                                         case 3:
                                             Operations.sortServices(SortingIndex.NUMBER);
-                                            break label;
+                                            break;
                                         case 0:
                                             System.out.println("===========================================================");
                                             break label;

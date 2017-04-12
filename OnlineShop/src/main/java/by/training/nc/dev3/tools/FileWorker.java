@@ -8,9 +8,13 @@ import java.io.*;
 import java.util.*;
 
 public class FileWorker {
-    private final static String filePath = "src//main//resources//";
+    private static StringBuffer filePath;
 
-    public static String getFilePath() {
+    public static void setFilePath(){
+        filePath.append("resources").append(File.separator);
+    }
+
+    public static StringBuffer getFilePath() {
         return filePath;
     }
 

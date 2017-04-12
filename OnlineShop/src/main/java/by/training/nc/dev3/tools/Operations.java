@@ -153,7 +153,6 @@ public final class Operations {
             fileName = FileWorker.getFilePath() + "admins.txt";
         List<Human> humanList = (List<Human>) sz.readObject(fileName);
         for (Human user : humanList) {
-            System.out.println(user);
             if (user.equals(human))
                 flag++;
         }
