@@ -23,37 +23,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">SPORTIX</a>
+            <a class="navbar-brand" href="#"><img src="/image/logo2.png" width="150" height="30" alt=""></a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Пункт 1</a></li>
-                <li><a href="#">Пункт 2</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Выпадающий пункт <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Подпункт</a></li>
-                        <li><a href="#">Еще подпункт</a></li>
-                        <li><a href="#">Еще что-то</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">И еще</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Пункт 4</a></li>
-                <li><a href="#">Пункт 5</a></li>
+                <li class="active"><a href="#">О магазине</a></li>
+                <li><a href="controller?command=catalog">Каталог</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Искать">
                 </div>
-                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Искать
+                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
+                    Искать
                 </button>
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" class="glyphicon glyphicon-user" data-toggle="dropdown"> ${user}<span
-                            class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> ${user}<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="controller?command=adminprofilepage">Мой профиль</a></li>
                         <li><a href="controller?command=editpage">Редактировать</a></li>
@@ -85,7 +72,6 @@
             <td><c:out value="${ user.lastName }" /></td>
             <td><c:out value="${ user.firstName }" /></td>
             <td><c:out value="${ user.login }" /></td>
-            <%--<td><c:out value="${ user.roleId }" /></td>--%>
             <c:if test="${user.roleId == '1'}">
                 <td>Администратор</td>
             </c:if>

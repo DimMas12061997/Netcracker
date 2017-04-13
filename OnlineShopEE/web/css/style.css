@@ -2,6 +2,17 @@ body {
     background: #9baeb7;
 }
 
+h1{
+    color: #ffe80d;
+    margin-left:4%;
+}
+
+.shop_descriprion{
+    font-size: 20px;
+    color: #ffe80d;
+    margin-left:2%;
+}
+
 .navbar-my {
     background: #252a2f;
     border-radius: 0px;

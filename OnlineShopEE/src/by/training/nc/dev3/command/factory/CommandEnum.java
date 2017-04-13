@@ -58,6 +58,16 @@ public enum CommandEnum {
             this.command = new ShowCustomersCommand();
         }
     },
+    CATALOG{
+        {
+            this.command = new CatalogCommand();
+        }
+    },
+    SHOW_GOODS{
+        {
+            this.command = new ShowGoodsCommand();
+        }
+    },
     LOGOUT {
         {
             this.command = new LogoutCommand();

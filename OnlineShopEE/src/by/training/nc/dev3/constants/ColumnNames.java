@@ -17,6 +17,16 @@ public class ColumnNames {
 	public static final String BUDGET = "budget";
 	public static final String CREDIT_CARD_NUMBER = "credit_card_number";
 	public static final String ID_USER = "user_id";
-	
+	public static final String CATEGORY_ID = "id_category";
+	public static final String CATEGORY_NAME = "category_name";
+
+	public static final String GOODS_ID = "goods_id";
+	public static final String GOODS_NAME = "goods_name";
+	public static final String GOODS_NUMBER = "goods_number";
+	public static final String GOODS_PRICE = "unit_price";
+	public static final String GOODS_PRODUCER = "producer";
+	public static final String GOODS_DESCRIPTION = "description";
+	public static final String GOODS_CATEGORY_ID = "category_id";
+
 	private ColumnNames(){}
 }

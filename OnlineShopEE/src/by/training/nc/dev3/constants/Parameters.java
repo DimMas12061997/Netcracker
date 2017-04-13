@@ -11,6 +11,8 @@ public class Parameters {
 	public static final String BUDGET = "budget";
 	public static final String CREDIT_CARD = "credit_card";
 	public static final String USER_LIST = "userList";
+	public static final String CATEGORY_LIST = "categoryList";
+	public static final String GOODS_LIST = "goodsList";
 
 	private Parameters(){}
 }
