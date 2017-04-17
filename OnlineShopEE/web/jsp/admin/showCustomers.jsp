@@ -39,6 +39,10 @@
                 </button>
             </form>
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="controller?command=show_order">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span
+                        class="badge"> ${goodsOrder}</span></a>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> ${user}<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -55,7 +59,8 @@
         </div>
     </div>
 </nav>
-<table class="table table-hover">
+<div class="container">
+<table  class="table table-bordered table table-hover">
     <thead>
     <tr>
         <th>#</th>
@@ -82,5 +87,6 @@
     </c:forEach>
     </tbody>
 </table>
+</div>
 </body>
 </html>

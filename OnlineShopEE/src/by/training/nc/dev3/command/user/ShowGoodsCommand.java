@@ -20,7 +20,6 @@ public class ShowGoodsCommand implements ActionCommand {
         session.setAttribute("id", request.getParameter("id"));
         String idString = String.valueOf(session.getAttribute("id"));
         int id = Integer.parseInt(idString);
-        System.out.println(id);
             GoodsDAO goodsDAO = new GoodsDAO();
         try {
             List<Goods> list = goodsDAO.getGoodsByCategoryId(id);
@@ -29,11 +28,6 @@ public class ShowGoodsCommand implements ActionCommand {
         } catch (SQLException e) {
             System.out.println("error");
         }
-//            session.setAttribute(Parameters.USER_LIST, list);
-//            page = ConfigurationManager.getProperty("path.page.showCustomers");
-//        } catch (SQLException e) {
-//            System.out.println("SQLException");
-//        }
         return page;
     }
 }

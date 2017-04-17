@@ -37,6 +37,16 @@ public class CategoryDAO implements AbstractDAO<Category> {
 
     @Override
     public Category getEntityById(int id) throws SQLException {
-        throw new UnsupportedOperationException();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_GATEGORY_BY_ID);
+        statement.setInt(1, id);
+        ResultSet result = statement.executeQuery();
+        Category category = new Category();
+        while(result.next()){
+            category.setIdCategory(result.getInt(ColumnNames.CATEGORY_ID));
+            category.setCategoryName(result.getString(ColumnNames.CATEGORY_NAME));
+        }
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+        return category;
     }
 }

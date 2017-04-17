@@ -15,6 +15,20 @@ public class SqlRequests {
     public static final String GET_ALL_CLIENTS = "SELECT first_name, last_name, login, role_id FROM online_shop.user ORDER BY last_name";
     public static final String GET_ALL_CATEGORIES = "SELECT * FROM online_shop.category";
     public static final String GET_GOODS_BY_CATEGORY_ID = "SELECT * FROM online_shop.goods WHERE category_id = ?";
+    public static final String GET_GOODS_ID = "SELECT * FROM online_shop.goods WHERE goods_id = ?";
+    public static final String GET_GATEGORY_BY_ID = "SELECT * FROM online_shop.category WHERE id_category = ?";
+    public static final String UPDATE_NUMBER_GOODS = "UPDATE online_shop.goods SET goods_number = ? WHERE goods_name = ?";
+    public static final String GET_ORDER_ID = "SELECT order_id FROM online_shop.order WHERE id_user = ?;";
+    public static final String ADD_ORDER = "INSERT INTO online_shop.order(order_cost, id_user) VALUES (?, ?)";
+    public static final String UPDATE_ORDER = "UPDATE online_shop.order SET order_cost = ? WHERE id_user = ?";
+    public static final String GET_GOODS_BY_NAME = "SELECT * FROM online_shop.goods WHERE goods_name = ?;";
+    public static final String GET_ORDER_BY_USER_ID = "SELECT * FROM online_shop.order WHERE id_user = ?;";
+    public static final String ADD_GOODS_ORDER = "INSERT INTO online_shop.order_goods(id_order, id_goods, number) VALUES (?, ?, ?)";
+    public static final String GET_ALL_GOODS_ORDER = "SELECT * FROM online_shop.order_goods";
+    public static final String UPDATE_NUMBER_GOODS_ORDER = "UPDATE online_shop.order_goods SET number = ? WHERE id_order = ? AND id_goods = ?";
+    public static final String GET_COUNT_NUMBER = "SELECT sum(number) FROM online_shop.order_goods where id_order = ?";
+    public static final String GET_ALL_GOODS_ORDER_BY_ID = "SELECT goods_name, unit_price, number FROM online_shop.order_goods og INNER JOIN online_shop.goods g ON og.id_goods = g.goods_id WHERE id_order = ?";
+
     private SqlRequests() {
     }
 }

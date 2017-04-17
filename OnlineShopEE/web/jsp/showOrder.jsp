@@ -71,68 +71,39 @@
         </div>
     </nav>
 </div>
-<div class="i-main c">
-    <div class="left-menu">
-        <div class="left-menu-title">
-            <div class="left-menu-title-text"><span class="glyphicon glyphicon-list"></span> МЕНЮ</div>
-        </div>
-        <div class="left-menu-block">
-            <ul>
-                <c:forEach var="catalog" items="${categoryList}">
-                    <li><a href="controller?command=show_goods&id=${catalog.idCategory}">
-                        <c:out value="${ catalog.categoryName }"/>
-                    </a></li>
-                </c:forEach>
-            </ul>
-        </div>
-    </div>
-    <div class="right right404 right-catalog">
-        <div class="i-right-title">
-            <div class="i-right-title-label i-right-title-label-10"></div>
-            <div class="i-right-title-text">Каталог</div>
-        </div>
-        <div class="r-cat">
-            <c:forEach var="goods" items="${goodsList}">
-                <div class="r-cat-box  shk-item">
-                    <form method="post">
-                        <fieldset>
-                            <div class="r-cat-acii">
-                            </div>
-                            <a href="controller?command=show_description&idGoods=${goods.idGoods}" class="r-cat-img">
-                                <img class="shk-image"
-                                     src="assets/images/gejnery-belkovo-uglevodnye-smesi/dymatize-super-mass-gainer-chocolate-6-lbs.jpg"
-                                     alt=${goods.name} title=${goods.name}>
-                            </a>
-                            <div class="r-cat-other">
-                                <div class="r-cat-other-title">
-                                    <div><a href="controller?command=show_description&idGoods=${goods.idGoods}"
-                                            style="color:#efc400;">${goods.name}</a></div>
-                                    <p></p>
-                                </div>
-                                <div class="r-cat-other-price">
-                                    <div>
-                                        <span class="r-cat-other-price-true shk-price">${goods.unitPrice}</span>
-                                    </div>
-                                    <%--<button type="submit"><span class="glyphicon glyphicon-shopping-cart"--%>
-                                                                <%--style="font-size: 30px; color: #252a2f;"></span>--%>
-                                    <%--</button>--%>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-            </c:forEach>
-        </div>
-        <%--<div class="pagination pagination-centered" style="margin-left:200px;">--%>
-        <%--<li class="disabled"><span><<</span></li>--%>
-        <%--<li class="active"><span>1</span></li>--%>
-        <%--<li><a href="#">2</a></li>--%>
-        <%--<li><a href="#">3</a></li>--%>
-        <%--<li><a href="#">4</a></li>--%>
-        <%--<li><a href="#">5</a></li>--%>
-        <%--<li><a href="#">>></a></li>--%>
-        <%--</div>--%>
-    </div>
+<div class="container">
+    <table class="table table-bordered table table-hover">
+        <thead>
+        <tr>
+            <th>№</th>
+            <th>Наименование</th>
+            <th>Стоимость</th>
+            <th>Количество</th>
+            <th>Сумма</th>
+            <th>Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="order" items="${orderList}" varStatus="i">
+            <tr>
+                <td>${i.count}</td>
+                <td><c:out value="${order.name}"/></td>
+                <td><c:out value="${order.unitPrice}"/></td>
+                <td><c:out value="${order.number}"/></td>
+                <td><c:out value="${order.number*order.unitPrice}"/></td>
+                <td><c:out value=""/></td>
+            </tr>
+        </c:forEach>
+        <tr>
+            <td><c:out value=""/></td>
+            <td><c:out value=""/></td>
+            <td><c:out value=""/></td>
+            <td><c:out value="К оплате: "/></td>
+            <td><c:out value="${orderCost}"/></td>
+            <td><c:out value=""/></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

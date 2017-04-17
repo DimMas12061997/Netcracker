@@ -68,6 +68,21 @@ public enum CommandEnum {
             this.command = new ShowGoodsCommand();
         }
     },
+    MAKE_ORDER{
+        {
+            this.command = new MakeOrderCommand();
+        }
+    },
+    SHOW_DESCRIPTION{
+        {
+            this.command = new ShowDescriptionCommand();
+        }
+    },
+    SHOW_ORDER{
+        {
+            this.command = new ShowOrderCommand();
+        }
+    },
     LOGOUT {
         {
             this.command = new LogoutCommand();

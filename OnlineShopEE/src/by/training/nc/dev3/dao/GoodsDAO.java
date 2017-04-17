@@ -26,7 +26,54 @@ public class GoodsDAO implements AbstractDAO<Goods> {
 
     @Override
     public Goods getEntityById(int id) throws SQLException {
-        throw new UnsupportedOperationException();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_GOODS_ID);
+        statement.setInt(1, id);
+        ResultSet result = statement.executeQuery();
+        Goods goods = new Goods();
+        while(result.next()){
+            goods.setIdGoods(result.getInt(ColumnNames.GOODS_ID));
+            goods.setName(result.getString(ColumnNames.GOODS_NAME));
+            goods.setNumber(result.getInt(ColumnNames.GOODS_NUMBER));
+            goods.setUnitPrice(result.getDouble(ColumnNames.GOODS_PRICE));
+            goods.setProducer(result.getString(ColumnNames.GOODS_PRODUCER));
+            goods.setDescription(result.getString(ColumnNames.GOODS_DESCRIPTION));
+            goods.setCreatedDate(result.getString(ColumnNames.DATE));
+            goods.setShopId(result.getInt(ColumnNames.SHOP_ID));
+            goods.setCategoryId(result.getInt(ColumnNames.GOODS_CATEGORY_ID));
+        }
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+        return goods;
+    }
+
+    public Goods getGoodsByName(String name) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_GOODS_BY_NAME);
+        statement.setString(1, name);
+        ResultSet result = statement.executeQuery();
+        Goods goods = new Goods();
+        while(result.next()){
+            goods.setIdGoods(result.getInt(ColumnNames.GOODS_ID));
+            goods.setName(result.getString(ColumnNames.GOODS_NAME));
+            goods.setNumber(result.getInt(ColumnNames.GOODS_NUMBER));
+            goods.setUnitPrice(result.getDouble(ColumnNames.GOODS_PRICE));
+            goods.setProducer(result.getString(ColumnNames.GOODS_PRODUCER));
+            goods.setDescription(result.getString(ColumnNames.GOODS_DESCRIPTION));
+            goods.setCreatedDate(result.getString(ColumnNames.DATE));
+            goods.setShopId(result.getInt(ColumnNames.SHOP_ID));
+            goods.setCategoryId(result.getInt(ColumnNames.GOODS_CATEGORY_ID));
+        }
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+        return goods;
+    }
+
+    public void updateNumberGoods(Goods goods) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.UPDATE_NUMBER_GOODS);
+        statement.setInt(1, goods.getNumber());
+        statement.setString(2, goods.getName());
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
     }
 
     public List<Goods> getGoodsByCategoryId(int id) throws SQLException {

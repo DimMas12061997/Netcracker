@@ -7,12 +7,17 @@
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.min.js"></script>
+    <%--<script src="js/bootstrap-3.3.2-dist/js/bootstrap.js"></script>--%>
     <script src="js/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/jquery-validation/dist/jquery.validate.min.js"></script>
     <link rel="stylesheet" href="css/product_content.css"/>
     <link href="css/style.css" rel="stylesheet">
-
+    <%--<script type="text/javascript">--%>
+        <%--$("document").ready(function(){--%>
+            <%--$('#modal').modal();--%>
+        <%--});--%>
+    <%--</script>--%>
 </head>
 <div>
     <nav class="navbar navbar-my" role="navigation">
@@ -89,50 +94,69 @@
     <div class="right right404 right-catalog">
         <div class="i-right-title">
             <div class="i-right-title-label i-right-title-label-10"></div>
-            <div class="i-right-title-text">Каталог</div>
+            <div class="i-right-title-text">Каталог - <c:out value="${categoryName}"/></div>
         </div>
-        <div class="r-cat">
-            <c:forEach var="goods" items="${goodsList}">
-                <div class="r-cat-box  shk-item">
-                    <form method="post">
-                        <fieldset>
-                            <div class="r-cat-acii">
-                            </div>
-                            <a href="controller?command=show_description&idGoods=${goods.idGoods}" class="r-cat-img">
-                                <img class="shk-image"
-                                     src="assets/images/gejnery-belkovo-uglevodnye-smesi/dymatize-super-mass-gainer-chocolate-6-lbs.jpg"
-                                     alt=${goods.name} title=${goods.name}>
-                            </a>
-                            <div class="r-cat-other">
-                                <div class="r-cat-other-title">
-                                    <div><a href="controller?command=show_description&idGoods=${goods.idGoods}"
-                                            style="color:#efc400;">${goods.name}</a></div>
-                                    <p></p>
-                                </div>
-                                <div class="r-cat-other-price">
-                                    <div>
-                                        <span class="r-cat-other-price-true shk-price">${goods.unitPrice}</span>
-                                    </div>
-                                    <%--<button type="submit"><span class="glyphicon glyphicon-shopping-cart"--%>
-                                                                <%--style="font-size: 30px; color: #252a2f;"></span>--%>
-                                    <%--</button>--%>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
+        <c:set var="goods" value="${goodsDescription}"/>
+        <div class="product content">
+            <div class="shs-tocart shk-item">
+                <div class="product-img-wrp">
+                    <div class="product-img">
+                        <div class="product-acii">
+                            <div class="prod_new1">NEW</div>
+                        </div>
+                        <a href="assets/images/energetiki/no-xplode_30serv_blueraz.jpg" class="fancybox"><img
+                                class="shk-image" alt=" <c:out value="${ goods.name }"/>"
+                                src="assets/images/energetiki/no-xplode_30serv_blueraz.jpg"></a>
+                    </div>
                 </div>
-            </c:forEach>
+                <div class="product-other">
+                    <div class="product-title"><c:out value="${goods.name }"/></div>
+                    <div style="margin-top: 20px;">
+                        <form action="controller" method="POST">
+                            <input type="hidden" name="command" value="make_order"/>
+                            <input type="hidden" name="idGoods" value="${goods.idGoods}"/>
+                            <input type="hidden" name="name" value="${goods.name}"/>
+                            <input type="hidden" name="unitPrice" value="${goods.unitPrice}"/>
+                            <div class="col-10" style="width:60px;"><input
+                                    style="margin-left:10px; color:#efc400; background-color: #4f4f4f"
+                                    class="form-control" name="number" type="number" value="0" min="1"
+                                    max="${goods.number}"
+                                    id="example-number-input">
+                            </div>
+                           <p><div class="r-cat-other-price">
+                                <div class="r-cat-other-price-cell-wrp">
+                                    <div class="r-cat-other-price-cell">
+                                    <span class="r-cat-other-price-true shk-price" id="stuff_2618_price"> Цена: <c:out
+                                            value="${ goods.unitPrice }"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" value="Добавить в корзину"
+                                   style="background-color: #4f4f4f; color:#efc400; font-size: 20px; text-align: center;">
+                            </input>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="product-text content">
+                <div class="product-text-title">ПРОИЗВОДИТЕЛЬ:</div>
+                <p><c:out value="${ goods.producer }"/></p>
+                <div class="product-text-title">ОПИСАНИЕ:</div>
+                <p><c:out value="${ goods.description }"/></p>
+            </div>
         </div>
-        <%--<div class="pagination pagination-centered" style="margin-left:200px;">--%>
-        <%--<li class="disabled"><span><<</span></li>--%>
-        <%--<li class="active"><span>1</span></li>--%>
-        <%--<li><a href="#">2</a></li>--%>
-        <%--<li><a href="#">3</a></li>--%>
-        <%--<li><a href="#">4</a></li>--%>
-        <%--<li><a href="#">5</a></li>--%>
-        <%--<li><a href="#">>></a></li>--%>
-        <%--</div>--%>
     </div>
+    <%--<div class="pagination pagination-centered" style="margin-left:200px;">--%>
+    <%--<li class="disabled"><span><<</span></li>--%>
+    <%--<li class="active"><span>1</span></li>--%>
+    <%--<li><a href="#">2</a></li>--%>
+    <%--<li><a href="#">3</a></li>--%>
+    <%--<li><a href="#">4</a></li>--%>
+    <%--<li><a href="#">5</a></li>--%>
+    <%--<li><a href="#">>></a></li>--%>
+    <%--</div>--%>
+</div>
 </div>
 </body>
 </html>
