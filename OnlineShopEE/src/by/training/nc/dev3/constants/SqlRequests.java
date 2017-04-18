@@ -27,7 +27,11 @@ public class SqlRequests {
     public static final String GET_ALL_GOODS_ORDER = "SELECT * FROM online_shop.order_goods";
     public static final String UPDATE_NUMBER_GOODS_ORDER = "UPDATE online_shop.order_goods SET number = ? WHERE id_order = ? AND id_goods = ?";
     public static final String GET_COUNT_NUMBER = "SELECT sum(number) FROM online_shop.order_goods where id_order = ?";
-    public static final String GET_ALL_GOODS_ORDER_BY_ID = "SELECT goods_name, unit_price, number FROM online_shop.order_goods og INNER JOIN online_shop.goods g ON og.id_goods = g.goods_id WHERE id_order = ?";
+    public static final String GET_ALL_GOODS_ORDER_BY_ID = "SELECT goods_id, goods_name, unit_price, goods_number, number FROM online_shop.order_goods og INNER JOIN online_shop.goods g ON og.id_goods = g.goods_id WHERE id_order = ?";
+    public static final String REMOVE_ORDER_BY_ID = "DELETE FROM online_shop.order_goods WHERE id_goods = ?";
+    public static final String REMOVE_ORDER = "DELETE FROM online_shop.order WHERE id_user = ?";
+    public static final String GET_SHOP_BY_ID = "SELECT * FROM online_shop.shop WHERE id_shop = ?";
+    public static final String UPDATE_SHOP = "UPDATE online_shop.shop SET profit = ? WHERE id_shop = ?";
 
     private SqlRequests() {
     }

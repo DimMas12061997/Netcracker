@@ -38,6 +38,10 @@ public class ColumnNames {
     public static final String NUMBER = "number";
     public static final String SUM_NUMBER = "sum(number)";
 
+    public static final String ID_SHOP = "id_shop";
+    public static final String NAME_SHOP = "name_shop";
+    public static final String PROFIT_SHOP = "profit";
+    public static final String DESCRIPTION_SHOP = "description";
 
     private ColumnNames() {
     }

@@ -32,6 +32,14 @@ public class GoodsOrderDAO implements AbstractDAO<GoodsOrder> {
         return list;
     }
 
+    public void removeEntity(int id) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.REMOVE_ORDER_BY_ID);
+        statement.setInt(1, id);
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+    }
+
     @Override
     public void createEntity(GoodsOrder entity) throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -79,9 +87,11 @@ public class GoodsOrderDAO implements AbstractDAO<GoodsOrder> {
         List<Goods> list = new ArrayList<>();
         while (result.next()) {
             Goods goods = new Goods();
+            goods.setIdGoods(result.getInt(ColumnNames.GOODS_ID));
             goods.setName(result.getString(ColumnNames.GOODS_NAME));
             goods.setUnitPrice(result.getDouble(ColumnNames.GOODS_PRICE));
-            goods.setNumber(result.getInt(ColumnNames.NUMBER));
+            goods.setNumber(result.getInt(ColumnNames.GOODS_NUMBER));
+            goods.setShopId(result.getInt(ColumnNames.NUMBER));
             list.add(goods);
         }
         ConnectionPool.INSTANCE.releaseConnection(connection);

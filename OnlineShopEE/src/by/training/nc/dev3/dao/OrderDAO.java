@@ -76,6 +76,14 @@ public class OrderDAO implements AbstractDAO<Order>{
         return null;
     }
 
+    public void removeOrderById(int id) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.REMOVE_ORDER);
+        statement.setInt(1, id);
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+    }
+
     public Boolean isCreated(int userId) throws SQLException {
         boolean isLogIn = false;
         Connection connection = ConnectionPool.INSTANCE.getConnection();

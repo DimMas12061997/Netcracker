@@ -78,6 +78,21 @@ public enum CommandEnum {
             this.command = new ShowDescriptionCommand();
         }
     },
+    REMOVE_ORDER{
+        {
+            this.command = new RemoveOrderCommand();
+        }
+    },
+    UPDATE_ORDER{
+        {
+            this.command = new UpdateOrderCommand();
+        }
+    },
+    BUY_ORDER{
+        {
+            this.command = new BuyOrderCommand();
+        }
+    },
     SHOW_ORDER{
         {
             this.command = new ShowOrderCommand();

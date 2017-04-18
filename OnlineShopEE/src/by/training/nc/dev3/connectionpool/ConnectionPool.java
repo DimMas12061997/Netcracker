@@ -21,7 +21,7 @@ public enum ConnectionPool {
 			dataSource = (DataSource) initContext.lookup(ConfigsConstants.DATABASE_SOURCE);
 		}
 		catch(NamingException e){
-			//PaymentSystemLogger.INSTANCE.logError(getClass(), e.getMessage());
+			System.out.println("error");
 		}
 	}
 
@@ -36,7 +36,7 @@ public enum ConnectionPool {
 				connection.close();
 			}
 			catch (SQLException e) {
-				//PaymentSystemLogger.INSTANCE.logError(getClass(), e.getMessage());
+				System.out.println("error");
 			}
 		}
 	}

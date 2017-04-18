@@ -54,7 +54,7 @@ public class RegistrationCommand implements ActionCommand {
         user.setLogin(login);
         user.setPassword(password);
         user.setRoleId(dao.getRoleIdByName());
-        user.setShopId(dao.getShopIdByName(OnlineShop.getName()));
+        user.setShopId(dao.getShopIdByName(new OnlineShop().getName()));
         dao.createEntity(user);
     }
 }

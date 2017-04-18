@@ -1,21 +1,44 @@
 package by.training.nc.dev3.beans;
 
-public final class OnlineShop {
-    private final static String name = "sportix";
-    private static double profit;
 
-    private OnlineShop() {
+public class OnlineShop extends Entity {
+    private int id_shop;
+    private String name = "sportix";
+    private double profit;
+    private String description;
+
+    public OnlineShop() {
     }
 
-    public static String getName() {
+    public int getId_shop() {
+        return id_shop;
+    }
+
+    public void setId_shop(int id_shop) {
+        this.id_shop = id_shop;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public static double getProfit() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getProfit() {
         return profit;
     }
 
-    public static void setProfit(double profit) {
-        OnlineShop.profit = profit;
+    public void setProfit(double profit) {
+        this.profit = profit;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

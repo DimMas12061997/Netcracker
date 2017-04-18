@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="css/product_content.css"/>
     <link href="css/style.css" rel="stylesheet">
     <%--<script type="text/javascript">--%>
-        <%--$("document").ready(function(){--%>
-            <%--$('#modal').modal();--%>
-        <%--});--%>
+    <%--$("document").ready(function(){--%>
+    <%--$('#modal').modal();--%>
+    <%--});--%>
     <%--</script>--%>
 </head>
 <div>
@@ -113,6 +113,18 @@
                     <div class="product-title"><c:out value="${goods.name }"/></div>
                     <div style="margin-top: 20px;">
                         <form action="controller" method="POST">
+                            <c:choose>
+                            <c:when test="${userType == 'GUEST'}">
+                            <div class="r-cat-other-price">
+                                <div class="r-cat-other-price-cell-wrp">
+                                    <div class="r-cat-other-price-cell">
+                                    <span class="r-cat-other-price-true shk-price"> Цена: <c:out
+                                            value="${ goods.unitPrice }"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                            </c:when>
+                            <c:otherwise>
                             <input type="hidden" name="command" value="make_order"/>
                             <input type="hidden" name="idGoods" value="${goods.idGoods}"/>
                             <input type="hidden" name="name" value="${goods.name}"/>
@@ -123,7 +135,8 @@
                                     max="${goods.number}"
                                     id="example-number-input">
                             </div>
-                           <p><div class="r-cat-other-price">
+                            <p>
+                            <div class="r-cat-other-price">
                                 <div class="r-cat-other-price-cell-wrp">
                                     <div class="r-cat-other-price-cell">
                                     <span class="r-cat-other-price-true shk-price" id="stuff_2618_price"> Цена: <c:out
@@ -135,27 +148,30 @@
                                    style="background-color: #4f4f4f; color:#efc400; font-size: 20px; text-align: center;">
                             </input>
                             </p>
-                        </form>
+                            </c:otherwise>
+                            </c:choose>
+                    </form>
                     </div>
                 </div>
             </div>
-            <div class="product-text content">
-                <div class="product-text-title">ПРОИЗВОДИТЕЛЬ:</div>
-                <p><c:out value="${ goods.producer }"/></p>
-                <div class="product-text-title">ОПИСАНИЕ:</div>
-                <p><c:out value="${ goods.description }"/></p>
-            </div>
+        </div>
+        <div class="product-text content">
+            <div class="product-text-title">ПРОИЗВОДИТЕЛЬ:</div>
+            <p><c:out value="${ goods.producer }"/></p>
+            <div class="product-text-title">ОПИСАНИЕ:</div>
+            <p><c:out value="${ goods.description }"/></p>
         </div>
     </div>
-    <%--<div class="pagination pagination-centered" style="margin-left:200px;">--%>
-    <%--<li class="disabled"><span><<</span></li>--%>
-    <%--<li class="active"><span>1</span></li>--%>
-    <%--<li><a href="#">2</a></li>--%>
-    <%--<li><a href="#">3</a></li>--%>
-    <%--<li><a href="#">4</a></li>--%>
-    <%--<li><a href="#">5</a></li>--%>
-    <%--<li><a href="#">>></a></li>--%>
-    <%--</div>--%>
+</div>
+<%--<div class="pagination pagination-centered" style="margin-left:200px;">--%>
+<%--<li class="disabled"><span><<</span></li>--%>
+<%--<li class="active"><span>1</span></li>--%>
+<%--<li><a href="#">2</a></li>--%>
+<%--<li><a href="#">3</a></li>--%>
+<%--<li><a href="#">4</a></li>--%>
+<%--<li><a href="#">5</a></li>--%>
+<%--<li><a href="#">>></a></li>--%>
+<%--</div>--%>
 </div>
 </div>
 </body>

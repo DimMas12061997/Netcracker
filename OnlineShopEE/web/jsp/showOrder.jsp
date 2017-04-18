@@ -72,9 +72,9 @@
     </nav>
 </div>
 <div class="container">
-    <table class="table table-bordered table table-hover">
+    <table class="table table-bordered">
         <thead>
-        <tr>
+        <tr class="warning" align="center">
             <th>№</th>
             <th>Наименование</th>
             <th>Стоимость</th>
@@ -85,25 +85,49 @@
         </thead>
         <tbody>
         <c:forEach var="order" items="${orderList}" varStatus="i">
-            <tr>
+            <tr class="success" align="center">
                 <td>${i.count}</td>
                 <td><c:out value="${order.name}"/></td>
                 <td><c:out value="${order.unitPrice}"/></td>
-                <td><c:out value="${order.number}"/></td>
-                <td><c:out value="${order.number*order.unitPrice}"/></td>
-                <td><c:out value=""/></td>
+                <form action="controller" method="POST">
+                    <input type="hidden" name="command" value="update_order"/>
+                    <input type="hidden" name="idOrder" value="${order.idGoods}"/>
+                    <input type="hidden" name="unitPrice" value="${order.unitPrice}"/>
+                    <input type="hidden" name="numberGoods" value="${order.shopId}"/>
+                    <td>
+                        <input type="submit" value="Изменить"
+                              style="background-color: #4f4f4f; width:30%; float: left; color:#efc400; font-size: 12px; text-align: center;"/>
+                        <input
+                                style="width:40%; color:#efc400; background-color: #4f4f4f"
+                                class="form-control" name="number" type="number" value="${order.shopId}" min="0"
+                                max="${order.number+order.shopId}"
+                                id="example-number-input"></td>
+
+                </form>
+                <td><c:out value="${order.shopId*order.unitPrice}"/></td>
+                <td>
+                    <a href="controller?command=remove_order&idOrder=${order.idGoods}&cost=${order.shopId*order.unitPrice}&number=${order.shopId}"
+                       class="glyphicon glyphicon-trash"></a></td>
             </tr>
         </c:forEach>
-        <tr>
+        <tr class="warning" align="center">
             <td><c:out value=""/></td>
             <td><c:out value=""/></td>
             <td><c:out value=""/></td>
-            <td><c:out value="К оплате: "/></td>
+            <td><c:out value="    К оплате: "/></td>
             <td><c:out value="${orderCost}"/></td>
-            <td><c:out value=""/></td>
+            <td></td>
         </tr>
         </tbody>
     </table>
+    <c:if test="${orderCost > 0}">
+    <form action="controller" method="POST">
+        <input type="hidden" name="command" value="buy_order"/>
+        <input type="hidden" name="orderCost" value="${orderCost}"/>
+        <input type="submit" value="Купить" style="margin-left:50%;"  class="btn btn-success btn btn-primary btn-lg"/>
+        <%--<button style="margin-left:50%;" type="button" class="btn btn-success btn btn-primary btn-lg">Купить</button>--%>
+    </form>
+    </c:if>
 </div>
 </body>
 </html>
