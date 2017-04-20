@@ -11,6 +11,7 @@
     <script src="js/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/jquery-validation/dist/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="css/product_content.css"/>
 </head>
 <body>
 <nav class="navbar navbar-my" role="navigation">
@@ -62,33 +63,33 @@
         </div>
     </div>
 </nav>
+</div>
 <div class="container">
-    <form action="controller" method="POST" class="form" id="edit-form">
-        <h3 class="form-title">Изменение данных</h3>
-        <div class="message js-form-message"></div>
-        <input type="hidden" name="command" value="edit_main_data" />
-        <div class="form-group">
-            Имя: <input type="text" name="name" class="form-input" value = ${first_name}>
-        </div>
-        <div class="form-group">
-            Фамилия: <input type="text" name="surname" class="form-input" value = ${last_name}>
-        </div>
-        <div class="form-group">
-            Логин: <input type="text" name="login" class="form-input" value = ${login}>
-        </div>
-        <div class="form-group">
-            Пароль: <input type="text" name="password" value = ${password} class="form-input">
-        </div>
-        Дата регистрации: ${date}
-        ${errorLoginPassMessage}
-        <br/>
-        ${wrongAction}
-        <br/>
-        ${nullPage}
-        <div class="form-group">
-            <button type="submit" class="form-btn">Сохранить</button>
-        </div>
-    </form>
+    <div class="i-right-title-text" style="margin-left: 50%; margin-bottom: 20px;">История покупок и прибыль магазина</div>
+    <table class="table table-bordered">
+        <thead>
+        <tr align="center" class="warning">
+            <th>№</th>
+            <th>Логин</th>
+            <th>Стоимость заказа</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="order" items="${orderList}" varStatus="i">
+            <tr class="success" align="center">
+                <td>${i.count}</td>
+                <td><c:out value="${order.createdDate}"/></td>
+                <td><c:out value="${order.orderCost}"/></td>
+            </tr>
+        </c:forEach>
+        <tr class="warning" align="center">
+            <td><c:out value=""/></td>
+            <td><c:out value="    Прибыль магазина: "/></td>
+            <td><c:out value="${shopProfit}"/></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
+

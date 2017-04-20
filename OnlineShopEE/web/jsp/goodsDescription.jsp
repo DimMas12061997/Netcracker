@@ -37,9 +37,10 @@
                     <li class="active"><a href="#">О магазине</a></li>
                     <li><a href="controller?command=catalog">Каталог</a></li>
                 </ul>
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search" action="controller" method="POST" id="find-form">
+                    <input type="hidden" name="command" value="find_goods"/>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Искать">
+                        <input type="text" class="form-control" name="find" placeholder="Искать товар">
                     </div>
                     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
                         Искать
@@ -94,7 +95,7 @@
     <div class="right right404 right-catalog">
         <div class="i-right-title">
             <div class="i-right-title-label i-right-title-label-10"></div>
-            <div class="i-right-title-text">Каталог - <c:out value="${categoryName}"/></div>
+            <div class="i-right-title-text">Каталог - ${notFound}<c:out value="${categoryName}"/></div>
         </div>
         <c:set var="goods" value="${goodsDescription}"/>
         <div class="product content">
@@ -114,43 +115,43 @@
                     <div style="margin-top: 20px;">
                         <form action="controller" method="POST">
                             <c:choose>
-                            <c:when test="${userType == 'GUEST'}">
-                            <div class="r-cat-other-price">
-                                <div class="r-cat-other-price-cell-wrp">
-                                    <div class="r-cat-other-price-cell">
+                                <c:when test="${userType == 'GUEST'}">
+                                    <div class="r-cat-other-price">
+                                        <div class="r-cat-other-price-cell-wrp">
+                                            <div class="r-cat-other-price-cell">
                                     <span class="r-cat-other-price-true shk-price"> Цена: <c:out
                                             value="${ goods.unitPrice }"/></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            </c:when>
-                            <c:otherwise>
-                            <input type="hidden" name="command" value="make_order"/>
-                            <input type="hidden" name="idGoods" value="${goods.idGoods}"/>
-                            <input type="hidden" name="name" value="${goods.name}"/>
-                            <input type="hidden" name="unitPrice" value="${goods.unitPrice}"/>
-                            <div class="col-10" style="width:60px;"><input
-                                    style="margin-left:10px; color:#efc400; background-color: #4f4f4f"
-                                    class="form-control" name="number" type="number" value="0" min="1"
-                                    max="${goods.number}"
-                                    id="example-number-input">
-                            </div>
-                            <p>
-                            <div class="r-cat-other-price">
-                                <div class="r-cat-other-price-cell-wrp">
-                                    <div class="r-cat-other-price-cell">
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="hidden" name="command" value="make_order"/>
+                                    <input type="hidden" name="idGoods" value="${goods.idGoods}"/>
+                                    <input type="hidden" name="name" value="${goods.name}"/>
+                                    <input type="hidden" name="unitPrice" value="${goods.unitPrice}"/>
+                                    <div class="col-10" style="width:60px;"><input
+                                            style="margin-left:10px; color:#efc400; background-color: #4f4f4f"
+                                            class="form-control" name="number" type="number" value="0" min="1"
+                                            max="${goods.number}"
+                                            id="example-number-input">
+                                    </div>
+                                    <p>
+                                    <div class="r-cat-other-price">
+                                        <div class="r-cat-other-price-cell-wrp">
+                                            <div class="r-cat-other-price-cell">
                                     <span class="r-cat-other-price-true shk-price" id="stuff_2618_price"> Цена: <c:out
                                             value="${ goods.unitPrice }"/></span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <input type="submit" value="Добавить в корзину"
-                                   style="background-color: #4f4f4f; color:#efc400; font-size: 20px; text-align: center;">
-                            </input>
-                            </p>
-                            </c:otherwise>
+                                    <input type="submit" value="Добавить в корзину"
+                                           style="background-color: #4f4f4f; color:#efc400; font-size: 20px; text-align: center;">
+                                    </input>
+                                    </p>
+                                </c:otherwise>
                             </c:choose>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -162,17 +163,6 @@
             <p><c:out value="${ goods.description }"/></p>
         </div>
     </div>
-</div>
-<%--<div class="pagination pagination-centered" style="margin-left:200px;">--%>
-<%--<li class="disabled"><span><<</span></li>--%>
-<%--<li class="active"><span>1</span></li>--%>
-<%--<li><a href="#">2</a></li>--%>
-<%--<li><a href="#">3</a></li>--%>
-<%--<li><a href="#">4</a></li>--%>
-<%--<li><a href="#">5</a></li>--%>
-<%--<li><a href="#">>></a></li>--%>
-<%--</div>--%>
-</div>
 </div>
 </body>
 </html>

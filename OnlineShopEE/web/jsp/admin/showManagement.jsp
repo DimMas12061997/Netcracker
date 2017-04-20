@@ -11,6 +11,7 @@
     <script src="js/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/jquery-validation/dist/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="css/product_content.css"/>
 </head>
 <body>
 <nav class="navbar navbar-my" role="navigation">
@@ -62,33 +63,59 @@
         </div>
     </div>
 </nav>
+</div>
 <div class="container">
-    <form action="controller" method="POST" class="form" id="edit-form">
-        <h3 class="form-title">Изменение данных</h3>
-        <div class="message js-form-message"></div>
-        <input type="hidden" name="command" value="edit_main_data" />
-        <div class="form-group">
-            Имя: <input type="text" name="name" class="form-input" value = ${first_name}>
-        </div>
-        <div class="form-group">
-            Фамилия: <input type="text" name="surname" class="form-input" value = ${last_name}>
-        </div>
-        <div class="form-group">
-            Логин: <input type="text" name="login" class="form-input" value = ${login}>
-        </div>
-        <div class="form-group">
-            Пароль: <input type="text" name="password" value = ${password} class="form-input">
-        </div>
-        Дата регистрации: ${date}
-        ${errorLoginPassMessage}
-        <br/>
-        ${wrongAction}
-        <br/>
-        ${nullPage}
-        <div class="form-group">
-            <button type="submit" class="form-btn">Сохранить</button>
-        </div>
-    </form>
+    <table class="table table-bordered">
+        <thead>
+        <tr class="warning" align="center">
+            <th>№</th>
+            <th>Наименование товара</th>
+            <th>Количество</th>
+            <th>Цена</th>
+            <th>Производитель</th>
+            <th>Описание</th>
+            <th>Удалить товар</th>
+            <th>Изменить товар</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="goods" items="${goodsList}" varStatus="i">
+            <tr class="success" align="center">
+                <td>${i.count}</td>
+                <td><c:out value="${goods.name}"/></td>
+                <td><c:out value="${goods.number}"/></td>
+                <td><c:out value="${goods.unitPrice}"/></td>
+                <td><c:out value="${goods.producer}"/></td>
+                <td><c:out value="${goods.description}"/></td>
+                <td>
+                    <a href="controller?command=remove_order&idOrder=${order.idGoods}"
+                       class="glyphicon glyphicon-trash"></a>
+                </td>
+                <td>
+                    <a href="controller?command=remove_order&idOrder=${order.idGoods}"
+                       class="glyphicon glyphicon-pencil"></a>
+                </td>
+            </tr>
+        </c:forEach>
+        <tr class="warning" align="center">
+            <td><c:out value=""/></td>
+            <td><c:out value=""/></td>
+            <td><c:out value=""/></td>
+            <td><c:out value="    К оплате: "/></td>
+            <td><c:out value="${orderCost}"/></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <c:if test="${orderCost > 0}">
+        <form action="controller" method="POST">
+            <input type="hidden" name="command" value="buy_order"/>
+            <input type="hidden" name="orderCost" value="${orderCost}"/>
+            <input type="submit" value="Купить" style="margin-left:50%;"  class="btn btn-success btn btn-primary btn-lg"/>
+                <%--<button style="margin-left:50%;" type="button" class="btn btn-success btn btn-primary btn-lg">Купить</button>--%>
+                ${errorPayment}
+        </form>
+    </c:if>
 </div>
 </body>
 </html>

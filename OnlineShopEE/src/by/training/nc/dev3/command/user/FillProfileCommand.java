@@ -36,6 +36,7 @@ public class FillProfileCommand implements ActionCommand {
             else {
                 edit(profile.getUserId());
             }
+//            int budgetInt = (int) budget;
             request.setAttribute("email", email);
             request.setAttribute("address", address);
             request.setAttribute("budget", budget);

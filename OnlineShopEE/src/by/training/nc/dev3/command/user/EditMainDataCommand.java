@@ -25,20 +25,24 @@ public class EditMainDataCommand implements ActionCommand {
         lastName = request.getParameter(Parameters.LAST_NAME);
         login = request.getParameter(Parameters.LOGIN);
         password = request.getParameter(Parameters.PASSWORD);
+        User user = null;
+        HttpSession session = request.getSession();
         try {
-            HttpSession session = request.getSession();
             String name = (String) session.getAttribute("user");
             UserDAO userDAO = new UserDAO();
-            User user = userDAO.getUserByLogin(name);
-            edit(user.getUserId());
+            user = userDAO.getUserByLogin(name);
             session.setAttribute("user", login);
             request.setAttribute("first_name", firstName);
             request.setAttribute("last_name", lastName);
             request.setAttribute("login", login);
             request.setAttribute("password", password);
             request.setAttribute("date", user.getCreatedDate());
+            edit(user.getUserId());
+
             page = ConfigurationManager.getProperty("path.page.adminEditPage");
         } catch (SQLException e) {
+            session.setAttribute("user", user.getLogin());
+            request.setAttribute("login", user.getLogin());
             request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.errorfillprofile"));
             page = ConfigurationManager.getProperty("path.page.adminEditPage");
         }

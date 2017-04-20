@@ -32,9 +32,10 @@
                     <li class="active"><a href="#">О магазине</a></li>
                     <li><a href="controller?command=catalog">Каталог</a></li>
                 </ul>
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search" action="controller" method="POST" id="find-form">
+                    <input type="hidden" name="command" value="find_goods" />
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Искать">
+                        <input type="text" class="form-control" name = "find" placeholder="Искать товар">
                     </div>
                     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
                         Искать
@@ -125,7 +126,7 @@
         <input type="hidden" name="command" value="buy_order"/>
         <input type="hidden" name="orderCost" value="${orderCost}"/>
         <input type="submit" value="Купить" style="margin-left:50%;"  class="btn btn-success btn btn-primary btn-lg"/>
-        <%--<button style="margin-left:50%;" type="button" class="btn btn-success btn btn-primary btn-lg">Купить</button>--%>
+          ${errorPayment}
     </form>
     </c:if>
 </div>

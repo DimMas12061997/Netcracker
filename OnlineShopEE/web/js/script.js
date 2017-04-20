@@ -129,10 +129,12 @@ $("#js-entrance-form").validate({
                 },
                 budget: {
                     required: true,
-                    digits: true
+                    digits: true,
+                    number: true
                 },
                 credit_card: {
                     required: true,
+                    digits: true,
                     minlength: 5,
                 }
             },
@@ -149,7 +151,8 @@ $("#js-entrance-form").validate({
                     digits: "Поле budget должно содержать только цифры."
                 },
                 credit_card: {
-                    required: "Поле credit_card обязательное для заполнения."
+                    required: "Поле credit_card обязательное для заполнения.",
+                    digits: "Поле credit_card должно содержать только цифры."
                 }
             },
             focusCleanup: true,

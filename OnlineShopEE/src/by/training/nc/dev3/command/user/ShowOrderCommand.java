@@ -23,7 +23,11 @@ public class ShowOrderCommand implements ActionCommand {
             HttpSession session = request.getSession();
             String login = String.valueOf(session.getAttribute("user"));
             Order order = new OrderDAO().getOrderByIdUser(new UserDAO().getUserIdByName(login));
-            List<Goods> goods = new GoodsOrderDAO().getAllById(order.getOrderId());
+            List<Goods> goods = null;
+            if (order.getStatus() == false)
+                goods = new GoodsOrderDAO().getAllById(order.getOrderId());
+            else
+                session.setAttribute("goodsOrder", 0);
             session.setAttribute(Parameters.ORDER_LIST, goods);
             session.setAttribute(Parameters.ORDER_COST, order.getOrderCost());
             page = ConfigurationManager.getProperty("path.page.showOrder");

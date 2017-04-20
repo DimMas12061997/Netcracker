@@ -2,6 +2,7 @@ package by.training.nc.dev3.command.user;
 
 
 import by.training.nc.dev3.beans.Goods;
+import by.training.nc.dev3.beans.GoodsOrder;
 import by.training.nc.dev3.beans.Order;
 import by.training.nc.dev3.command.ActionCommand;
 import by.training.nc.dev3.constants.Parameters;
@@ -45,6 +46,9 @@ public class RemoveOrderCommand implements ActionCommand {
             List<Goods> products = new GoodsOrderDAO().getAllById(order.getOrderId());
             session.setAttribute(Parameters.ORDER_LIST, products);
             session.setAttribute(Parameters.ORDER_COST, order.getOrderCost());
+            GoodsOrder goodsOrder = new GoodsOrder();
+            goodsOrder.setIdOrder(order.getOrderId());
+            session.setAttribute("goodsOrder", new GoodsOrderDAO().countNumber(goodsOrder.getIdOrder()));
             page = ConfigurationManager.getProperty("path.page.showOrder");
         } catch (SQLException e) {
             System.out.println("error");

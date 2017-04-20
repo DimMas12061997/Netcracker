@@ -31,15 +31,9 @@ public class UpdateOrderCommand implements ActionCommand {
             int num = Integer.parseInt(number);
             String numberGoods = request.getParameter("numberGoods");
             int numGoods = Integer.parseInt(numberGoods);
-            System.out.println(request.getParameter("idOrder"));
-            System.out.println(request.getParameter("unitPrice"));
-            System.out.println(request.getParameter("number"));
-            System.out.println(request.getParameter("numberGoods"));
             GoodsDAO goodsDAO = new GoodsDAO();
             Goods goods = goodsDAO.getEntityById(id);
-            System.out.println(goods);
             int numb = num - numGoods;
-            System.out.println(numb);
             goods.setNumber(goods.getNumber() - numb);
             goodsDAO.updateNumberGoods(goods);
             double cost1 = num * price;
@@ -59,6 +53,7 @@ public class UpdateOrderCommand implements ActionCommand {
             List<Goods> products = new GoodsOrderDAO().getAllById(order.getOrderId());
             session.setAttribute(Parameters.ORDER_LIST, products);
             session.setAttribute(Parameters.ORDER_COST, order.getOrderCost());
+            session.setAttribute("goodsOrder", new GoodsOrderDAO().countNumber(goodsOrder.getIdOrder()));
             page = ConfigurationManager.getProperty("path.page.showOrder");
         } catch (SQLException e) {
             System.out.println("error");

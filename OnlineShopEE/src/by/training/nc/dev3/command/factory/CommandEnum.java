@@ -1,9 +1,7 @@
 package by.training.nc.dev3.command.factory;
 
 import by.training.nc.dev3.command.ActionCommand;
-import by.training.nc.dev3.command.admin.AdminEditPageCommand;
-import by.training.nc.dev3.command.admin.AdminProfilePageCommand;
-import by.training.nc.dev3.command.admin.ShowCustomersCommand;
+import by.training.nc.dev3.command.admin.*;
 import by.training.nc.dev3.command.customer.CustomerProfilePageCommand;
 import by.training.nc.dev3.command.user.*;
 
@@ -96,6 +94,26 @@ public enum CommandEnum {
     SHOW_ORDER{
         {
             this.command = new ShowOrderCommand();
+        }
+    },
+    FIND_GOODS{
+        {
+            this.command = new FindGoodsCommand();
+        }
+    },
+    SORT_BY_PRICE{
+        {
+            this.command = new SortPriceGoodsCommand();
+        }
+    },
+    SHOP_MANAGEMENT{
+        {
+            this.command = new ShopManagementCommand();
+        }
+    },
+    SHOW_PURCHASE_HISTORY{
+        {
+            this.command = new ShowPurchaseHistoryCommand();
         }
     },
     LOGOUT {

@@ -32,9 +32,10 @@
                     <li class="active"><a href="#">О магазине</a></li>
                     <li><a href="controller?command=catalog">Каталог</a></li>
                 </ul>
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search" action="controller" method="POST" id="find-form">
+                    <input type="hidden" name="command" value="find_goods"/>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Искать">
+                        <input type="text" class="form-control" name="find" placeholder="Искать товар">
                     </div>
                     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
                         Искать
@@ -91,6 +92,7 @@
             <div class="i-right-title-label i-right-title-label-10"></div>
             <div class="i-right-title-text">Каталог</div>
         </div>
+        <%--<div style="margin-left:20px;" class="product-text-title"><a href="controller?command=sort_by_price&idGoods">Сортировать по цене</a></div>--%>
         <div class="r-cat">
             <c:forEach var="goods" items="${goodsList}">
                 <div class="r-cat-box  shk-item">
@@ -113,9 +115,6 @@
                                     <div>
                                         <span class="r-cat-other-price-true shk-price">${goods.unitPrice}</span>
                                     </div>
-                                    <%--<button type="submit"><span class="glyphicon glyphicon-shopping-cart"--%>
-                                                                <%--style="font-size: 30px; color: #252a2f;"></span>--%>
-                                    <%--</button>--%>
                                 </div>
                             </div>
                         </fieldset>
@@ -123,15 +122,6 @@
                 </div>
             </c:forEach>
         </div>
-        <%--<div class="pagination pagination-centered" style="margin-left:200px;">--%>
-        <%--<li class="disabled"><span><<</span></li>--%>
-        <%--<li class="active"><span>1</span></li>--%>
-        <%--<li><a href="#">2</a></li>--%>
-        <%--<li><a href="#">3</a></li>--%>
-        <%--<li><a href="#">4</a></li>--%>
-        <%--<li><a href="#">5</a></li>--%>
-        <%--<li><a href="#">>></a></li>--%>
-        <%--</div>--%>
     </div>
 </div>
 </body>

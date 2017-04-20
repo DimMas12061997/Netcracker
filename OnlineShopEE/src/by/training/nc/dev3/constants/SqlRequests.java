@@ -32,6 +32,11 @@ public class SqlRequests {
     public static final String REMOVE_ORDER = "DELETE FROM online_shop.order WHERE id_user = ?";
     public static final String GET_SHOP_BY_ID = "SELECT * FROM online_shop.shop WHERE id_shop = ?";
     public static final String UPDATE_SHOP = "UPDATE online_shop.shop SET profit = ? WHERE id_shop = ?";
+    public static final String UPDATE_ORDER_STATUS = "UPDATE online_shop.order SET order_status = ? WHERE id_user = ?";
+    public static final String GET_ALL_ORDERS = "SELECT order_id,order_cost,login FROM online_shop.`order` o INNER JOIN online_shop.user u ON o.id_user=u.user_id WHERE order_status = 1";
+    //    public static final String GET_ALL_GOODS = "SELECT goods_id, goods_name, goods_number, unit_price, producer, description, category_name FROM online_shop.goods g INNER JOIN online_shop.category c ON g.category_id = c.id_category";
+    public static final String GET_ALL_GOODS = "SELECT * FROM online_shop.goods";
+
 
     private SqlRequests() {
     }

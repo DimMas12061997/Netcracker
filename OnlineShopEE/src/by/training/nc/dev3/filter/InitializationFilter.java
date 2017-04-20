@@ -20,9 +20,6 @@ public class InitializationFilter implements Filter {
             type = ClientType.GUEST;
             session.setAttribute("userType", type);
         }
-//        int number = (int) session.getAttribute("goodsOrder");
-//        if (number == 0)
-//            session.setAttribute("userType", 0);
         chain.doFilter(request, response);
         return;
     }
