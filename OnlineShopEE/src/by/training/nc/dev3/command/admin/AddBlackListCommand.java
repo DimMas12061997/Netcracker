@@ -2,18 +2,18 @@ package by.training.nc.dev3.command.admin;
 
 
 import by.training.nc.dev3.beans.BlackList;
+import by.training.nc.dev3.beans.Goods;
 import by.training.nc.dev3.beans.Order;
 import by.training.nc.dev3.beans.User;
 import by.training.nc.dev3.command.ActionCommand;
 import by.training.nc.dev3.constants.Parameters;
-import by.training.nc.dev3.dao.BlackListDAO;
-import by.training.nc.dev3.dao.OrderDAO;
-import by.training.nc.dev3.dao.UserDAO;
+import by.training.nc.dev3.dao.*;
 import by.training.nc.dev3.resource.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
 
 public class AddBlackListCommand implements ActionCommand {
     @Override
@@ -30,8 +30,16 @@ public class AddBlackListCommand implements ActionCommand {
             blackListDAO.createEntity(blackList);
             OrderDAO orderDAO = new OrderDAO();
             Order order1 = orderDAO.getOrderByIdUser(user.getUserId());
-            order1.setStatus(true);
-            orderDAO.updateOrderStatus(order1);
+            GoodsOrderDAO goodsOrderDAO = new GoodsOrderDAO();
+            List<Goods> goodsList = goodsOrderDAO.getAllById(order1.getOrderId());
+            GoodsDAO goodsDAO = new GoodsDAO();
+            for(Goods goods : goodsList) {
+                goods.setNumber(goods.getNumber() + goods.getShopId());
+                goodsDAO.updateNumberGoods(goods);
+            }
+            orderDAO.removeOrderById(user.getUserId());
+            List<Order> orderList = new OrderDAO().getOrdersById(0);
+            session.setAttribute(Parameters.ORDER_LIST, orderList);
             session.setAttribute(Parameters.BLACKLIST, blackListDAO.getAllUsers());
             page = ConfigurationManager.getProperty("path.page.blackList");
         } catch (SQLException e) {

@@ -32,7 +32,6 @@ public class Controller extends HttpServlet {
       RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
       dispatcher.forward(request, response);
     } else {
-      // установка страницы c cообщением об ошибке
       page = ConfigurationManager.getProperty("path.page.index");
       request.getSession().setAttribute("nullPage", MessageManager.getProperty("message.nullpage"));
       response.sendRedirect(request.getContextPath() + page);

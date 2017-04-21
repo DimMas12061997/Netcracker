@@ -95,6 +95,7 @@
             <div class="i-right-title-label i-right-title-label-10"></div>
             <div class="i-right-title-text">Каталог</div>
         </div>
+        <a style="color:yellow; font-size:16px;"href="controller?command=sort_by_price&id=${categoryId}">Сортировка</a>
         <div class="r-cat">
             <c:forEach var="goods" items="${goodsList}">
                 <div class="r-cat-box  shk-item">

@@ -92,6 +92,9 @@ public class GoodsOrderDAO implements AbstractDAO<GoodsOrder> {
             goods.setUnitPrice(result.getDouble(ColumnNames.GOODS_PRICE));
             goods.setNumber(result.getInt(ColumnNames.GOODS_NUMBER));
             goods.setShopId(result.getInt(ColumnNames.NUMBER));
+            goods.setProducer(result.getString(ColumnNames.GOODS_PRODUCER));
+            goods.setDescription(result.getString(ColumnNames.GOODS_DESCRIPTION));
+            goods.setCategoryId(result.getInt(ColumnNames.GOODS_CATEGORY_ID));
             list.add(goods);
         }
         ConnectionPool.INSTANCE.releaseConnection(connection);

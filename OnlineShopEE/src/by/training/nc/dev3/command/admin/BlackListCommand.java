@@ -6,7 +6,6 @@ import by.training.nc.dev3.command.ActionCommand;
 import by.training.nc.dev3.constants.Parameters;
 import by.training.nc.dev3.dao.BlackListDAO;
 import by.training.nc.dev3.dao.OrderDAO;
-import by.training.nc.dev3.dao.UserDAO;
 import by.training.nc.dev3.resource.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +20,6 @@ public class BlackListCommand implements ActionCommand {
         try {
             HttpSession session = request.getSession();
             List<Order> orderList = new OrderDAO().getOrdersById(0);
-            UserDAO userDAO = new UserDAO();
-            String userLogin = (String) session.getAttribute("user");
             session.setAttribute(Parameters.ORDER_LIST, orderList);
             session.setAttribute(Parameters.BLACKLIST, new BlackListDAO().getAllUsers());
             page = ConfigurationManager.getProperty("path.page.blackList");

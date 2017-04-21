@@ -15,13 +15,17 @@ public class SortPriceGoodsCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest request) {
         String page = null;
-        HttpSession session = request.getSession();
-        session.setAttribute("id", request.getParameter("id"));
-        String idString = String.valueOf(session.getAttribute("id"));
-        int id = Integer.parseInt(idString);
-        GoodsDAO goodsDAO = new GoodsDAO();
         try {
-            List<Goods> list = goodsDAO.getGoodsByCategoryId(id);
+            HttpSession session = request.getSession();
+            session.setAttribute("id", request.getParameter("id"));
+            String idString = String.valueOf(session.getAttribute("id"));
+            int id = Integer.parseInt(idString);
+            GoodsDAO goodsDAO = new GoodsDAO();
+            List<Goods> list = null;
+            if (id != 0)
+                list = goodsDAO.getGoodsByCategoryIdSortByPrice(id);
+            else
+                list = goodsDAO.findAllSortByPrice();
             session.setAttribute(Parameters.GOODS_LIST, list);
             page = ConfigurationManager.getProperty("path.page.catalog");
         } catch (SQLException e) {

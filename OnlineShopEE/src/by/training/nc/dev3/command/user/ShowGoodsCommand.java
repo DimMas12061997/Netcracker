@@ -24,6 +24,7 @@ public class ShowGoodsCommand implements ActionCommand {
         try {
             List<Goods> list = goodsDAO.getGoodsByCategoryId(id);
             session.setAttribute(Parameters.GOODS_LIST, list);
+            session.setAttribute(Parameters.CATEGORY_ID, id);
             page = ConfigurationManager.getProperty("path.page.catalog");
         } catch (SQLException e) {
             System.out.println("error");

@@ -15,6 +15,7 @@ public class SqlRequests {
     public static final String GET_ALL_CLIENTS = "SELECT first_name, last_name, login, role_id FROM online_shop.user ORDER BY last_name";
     public static final String GET_ALL_CATEGORIES = "SELECT * FROM online_shop.category";
     public static final String GET_GOODS_BY_CATEGORY_ID = "SELECT * FROM online_shop.goods WHERE category_id = ?";
+    public static final String GET_GOODS_BY_CATEGORY_ID_SORT_BY_PRICE = "SELECT * FROM online_shop.goods WHERE category_id = ? ORDER BY unit_price";
     public static final String GET_GOODS_ID = "SELECT * FROM online_shop.goods WHERE goods_id = ?";
     public static final String GET_GATEGORY_BY_ID = "SELECT * FROM online_shop.category WHERE id_category = ?";
     public static final String UPDATE_NUMBER_GOODS = "UPDATE online_shop.goods SET goods_number = ? WHERE goods_name = ?";
@@ -27,14 +28,15 @@ public class SqlRequests {
     public static final String GET_ALL_GOODS_ORDER = "SELECT * FROM online_shop.order_goods";
     public static final String UPDATE_NUMBER_GOODS_ORDER = "UPDATE online_shop.order_goods SET number = ? WHERE id_order = ? AND id_goods = ?";
     public static final String GET_COUNT_NUMBER = "SELECT sum(number) FROM online_shop.order_goods where id_order = ?";
-    public static final String GET_ALL_GOODS_ORDER_BY_ID = "SELECT goods_id, goods_name, unit_price, goods_number, number FROM online_shop.order_goods og INNER JOIN online_shop.goods g ON og.id_goods = g.goods_id WHERE id_order = ?";
+    public static final String GET_ALL_GOODS_ORDER_BY_ID = "SELECT goods_id, goods_name, unit_price, goods_number, number, producer, description, category_id FROM online_shop.order_goods og INNER JOIN online_shop.goods g ON og.id_goods = g.goods_id WHERE id_order = ?";
     public static final String REMOVE_ORDER_BY_ID = "DELETE FROM online_shop.order_goods WHERE id_goods = ?";
     public static final String REMOVE_ORDER = "DELETE FROM online_shop.order WHERE id_user = ?";
     public static final String GET_SHOP_BY_ID = "SELECT * FROM online_shop.shop WHERE id_shop = ?";
     public static final String UPDATE_SHOP = "UPDATE online_shop.shop SET profit = ? WHERE id_shop = ?";
     public static final String UPDATE_ORDER_STATUS = "UPDATE online_shop.order SET order_status = ? WHERE id_user = ?";
-    public static final String GET_ALL_ORDERS = "SELECT order_id,order_cost,login FROM online_shop.`order` o INNER JOIN online_shop.user u ON o.id_user=u.user_id WHERE order_status = ?";
+    public static final String GET_ALL_ORDERS = "SELECT order_id,order_cost,login FROM online_shop.`order` o INNER JOIN online_shop.user u ON o.id_user = u.user_id WHERE order_status = ? AND u.role_id = 2";
     public static final String GET_ALL_GOODS = "SELECT * FROM online_shop.goods g INNER JOIN online_shop.category c ON g.category_id = c.id_category";
+    public static final String GET_ALL_GOODS_SORT_BY_PRICE = "SELECT * FROM online_shop.goods g INNER JOIN online_shop.category c ON g.category_id = c.id_category ORDER BY unit_price";
     public static final String GET_ALL_GOODS_BY_CATEGORY_ID = "SELECT * FROM online_shop.goods g INNER JOIN online_shop.category c ON g.category_id = c.id_category WHERE category_id = ?";
     public static final String REMOVE_CATEGORY = "DELETE FROM online_shop.category WHERE id_category = ?";
     public static final String ADD_USER_BLACK_LIST = "INSERT INTO online_shop.black_list(user_id) VALUES (?)";

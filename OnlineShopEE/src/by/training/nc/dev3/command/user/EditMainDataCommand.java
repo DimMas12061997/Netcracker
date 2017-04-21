@@ -38,7 +38,6 @@ public class EditMainDataCommand implements ActionCommand {
             request.setAttribute("password", password);
             request.setAttribute("date", user.getCreatedDate());
             edit(user.getUserId());
-
             page = ConfigurationManager.getProperty("path.page.adminEditPage");
         } catch (SQLException e) {
             session.setAttribute("user", user.getLogin());

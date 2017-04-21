@@ -25,6 +25,7 @@ public class CatalogCommand implements ActionCommand {
             List<Goods> goodsList = new GoodsDAO().findAll();
             session.setAttribute(Parameters.GOODS_LIST, goodsList);
             session.setAttribute(Parameters.CATEGORY_LIST, list);
+            session.setAttribute(Parameters.CATEGORY_ID, 0);
             page = ConfigurationManager.getProperty("path.page.catalog");
         } catch (SQLException e) {
             System.out.println("SQLException");
