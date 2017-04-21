@@ -28,7 +28,7 @@ public class GoodsDAO implements AbstractDAO<Goods> {
             goods.setUnitPrice(result.getDouble(ColumnNames.GOODS_PRICE));
             goods.setProducer(result.getString(ColumnNames.GOODS_PRODUCER));
             goods.setDescription(result.getString(ColumnNames.GOODS_DESCRIPTION));
-            goods.setCreatedDate(result.getString(ColumnNames.DATE));
+            goods.setCreatedDate(result.getString(ColumnNames.CATEGORY_NAME));
             goods.setShopId(result.getInt(ColumnNames.SHOP_ID));
             goods.setCategoryId(result.getInt(ColumnNames.GOODS_CATEGORY_ID));
             list.add(goods);
@@ -39,7 +39,17 @@ public class GoodsDAO implements AbstractDAO<Goods> {
 
     @Override
     public void createEntity(Goods entity) throws SQLException {
-        throw new UnsupportedOperationException();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.ADD_GOODS);
+        statement.setString(1, entity.getName());
+        statement.setInt(2, entity.getNumber());
+        statement.setDouble(3, entity.getUnitPrice());
+        statement.setString(4, entity.getProducer());
+        statement.setString(5, entity.getDescription());
+        statement.setInt(6, entity.getShopId());
+        statement.setInt(7, entity.getCategoryId());
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
     }
 
     @Override
@@ -115,5 +125,36 @@ public class GoodsDAO implements AbstractDAO<Goods> {
         }
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return list;
+    }
+
+    public List<Goods> getAllGoodsByCategoryId(int id) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_ALL_GOODS_BY_CATEGORY_ID);
+        statement.setInt(1, id);
+        ResultSet result = statement.executeQuery();
+        List<Goods> list = new ArrayList<>();
+        while(result.next()){
+            Goods goods = new Goods();
+            goods.setIdGoods(result.getInt(ColumnNames.GOODS_ID));
+            goods.setName(result.getString(ColumnNames.GOODS_NAME));
+            goods.setNumber(result.getInt(ColumnNames.GOODS_NUMBER));
+            goods.setUnitPrice(result.getDouble(ColumnNames.GOODS_PRICE));
+            goods.setProducer(result.getString(ColumnNames.GOODS_PRODUCER));
+            goods.setDescription(result.getString(ColumnNames.GOODS_DESCRIPTION));
+            goods.setCreatedDate(result.getString(ColumnNames.CATEGORY_NAME));
+            goods.setShopId(result.getInt(ColumnNames.SHOP_ID));
+            goods.setCategoryId(result.getInt(ColumnNames.GOODS_CATEGORY_ID));
+            list.add(goods);
+        }
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+        return list;
+    }
+
+    public void removeGoodsByID(int id) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.REMOVE_GOODS);
+        statement.setInt(1, id);
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
     }
 }

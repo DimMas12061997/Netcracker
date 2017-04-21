@@ -29,7 +29,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">О магазине</a></li>
+                    <%--<li class="active"><a href="#">О магазине</a></li>--%>
                     <li><a href="controller?command=catalog">Каталог</a></li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search" action="controller" method="POST" id="find-form">
@@ -60,6 +60,9 @@
                                     <li><a href="controller?command=editpage">Редактировать</a></li>
                                     <c:if test="${userType == 'ADMINISTRATOR'}">
                                         <li><a href="controller?command=show_customers">Пользователи</a></li>
+                                        <li><a href="controller?command=black_list">Управление черным списком</a></li>
+                                        <li><a href="controller?command=show_purchase_history">История покупок</a></li>
+                                        <li><a href="controller?command=shop_management">Управление магазином</a></li>
                                     </c:if>
                                     <li class="divider"></li>
                                     <li><a href="controller?command=logout">Выйти</a></li>
@@ -92,7 +95,6 @@
             <div class="i-right-title-label i-right-title-label-10"></div>
             <div class="i-right-title-text">Каталог</div>
         </div>
-        <%--<div style="margin-left:20px;" class="product-text-title"><a href="controller?command=sort_by_price&idGoods">Сортировать по цене</a></div>--%>
         <div class="r-cat">
             <c:forEach var="goods" items="${goodsList}">
                 <div class="r-cat-box  shk-item">

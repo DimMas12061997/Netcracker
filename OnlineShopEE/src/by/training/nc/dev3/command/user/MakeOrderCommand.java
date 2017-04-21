@@ -1,16 +1,15 @@
 package by.training.nc.dev3.command.user;
 
 
+import by.training.nc.dev3.beans.BlackList;
 import by.training.nc.dev3.beans.Goods;
 import by.training.nc.dev3.beans.GoodsOrder;
 import by.training.nc.dev3.beans.Order;
 import by.training.nc.dev3.command.ActionCommand;
 import by.training.nc.dev3.constants.Parameters;
-import by.training.nc.dev3.dao.GoodsDAO;
-import by.training.nc.dev3.dao.GoodsOrderDAO;
-import by.training.nc.dev3.dao.OrderDAO;
-import by.training.nc.dev3.dao.UserDAO;
+import by.training.nc.dev3.dao.*;
 import by.training.nc.dev3.resource.ConfigurationManager;
+import by.training.nc.dev3.resource.MessageManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,14 +26,21 @@ public class MakeOrderCommand implements ActionCommand {
         double price = Double.parseDouble(request.getParameter(Parameters.UNIT_PRICE));
         HttpSession session = request.getSession(true);
         String userLogin = (String) session.getAttribute("user");
+        BlackListDAO blackListDAO = new BlackListDAO();
+        BlackList blackList = new BlackList();
         try {
             GoodsDAO goodsDAO = new GoodsDAO();
-            Goods goods = goodsDAO.getGoodsByName(name);
-            goods.setNumber(goods.getNumber() - number);
-            goodsDAO.updateNumberGoods(goods);
-            createOrder(price, number, userLogin, id, session);
-            goods = goodsDAO.getEntityById(id);
-            session.setAttribute(Parameters.GOODS_DESCRIPTION, goods);
+            int idUser = new UserDAO().getUserIdByName(userLogin);
+            blackList = blackListDAO.getEntityById(idUser);
+            if (blackList.getUserId() == 0) {
+                Goods goods = goodsDAO.getGoodsByName(name);
+                goods.setNumber(goods.getNumber() - number);
+                goodsDAO.updateNumberGoods(goods);
+                createOrder(price, number, userLogin, id, session);
+                goods = goodsDAO.getEntityById(id);
+                session.setAttribute(Parameters.GOODS_DESCRIPTION, goods);
+            } else
+                request.setAttribute("userBlackList", MessageManager.getProperty("message.userBlackList"));
         } catch (SQLException e) {
             System.out.println("SQL exception");
         }

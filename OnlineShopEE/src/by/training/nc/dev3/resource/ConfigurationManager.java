@@ -3,7 +3,7 @@ package by.training.nc.dev3.resource;
 import java.util.ResourceBundle;
 
 public class ConfigurationManager {
-  private final static ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+  private final static ResourceBundle resourceBundle = ResourceBundle.getBundle("configs");
 
   private ConfigurationManager() {
   }

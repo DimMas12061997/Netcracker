@@ -14,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO implements AbstractDAO<Order>{
-    @Override
-    public List<Order> findAll() throws SQLException {
+
+    public List<Order> getOrdersById(int id) throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_ALL_ORDERS);
+        statement.setInt(1, id);
         ResultSet result = statement.executeQuery();
         List<Order> list = new ArrayList<>();
         while(result.next()){
@@ -29,6 +30,11 @@ public class OrderDAO implements AbstractDAO<Order>{
         }
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return list;
+    }
+
+    @Override
+    public List<Order> findAll() throws SQLException {
+        return null;
     }
 
     @Override

@@ -32,7 +32,11 @@ public class CategoryDAO implements AbstractDAO<Category> {
 
     @Override
     public void createEntity(Category entity) throws SQLException {
-        throw new UnsupportedOperationException();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.ADD_CATEGORY);
+        statement.setString(1, entity.getCategoryName());
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
     }
 
     @Override
@@ -48,5 +52,27 @@ public class CategoryDAO implements AbstractDAO<Category> {
         }
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return category;
+    }
+
+    public Category getEntityByName(String name) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_GATEGORY_BY_NAME);
+        statement.setString(1, name);
+        ResultSet result = statement.executeQuery();
+        Category category = new Category();
+        while(result.next()){
+            category.setIdCategory(result.getInt(ColumnNames.CATEGORY_ID));
+            category.setCategoryName(result.getString(ColumnNames.CATEGORY_NAME));
+        }
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+        return category;
+    }
+
+    public void removeCategoryByID(int id) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.REMOVE_CATEGORY);
+        statement.setInt(1, id);
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
     }
 }

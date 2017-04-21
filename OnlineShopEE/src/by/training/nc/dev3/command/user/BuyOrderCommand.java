@@ -43,13 +43,11 @@ public class BuyOrderCommand implements ActionCommand {
                 if (order.getStatus() == false) {
                     goods = new GoodsOrderDAO().getAllById(order.getOrderId());
                     session.setAttribute(Parameters.ORDER_COST, order.getOrderCost());
-                }
-                else{
+                    session.setAttribute(Parameters.ORDER_LIST, goods);
+                } else {
                     session.setAttribute("goodsOrder", 0);
                     session.setAttribute(Parameters.ORDER_COST, 0);
                 }
-                session.setAttribute(Parameters.ORDER_LIST, goods);
-                session.setAttribute("goodsOrder", 0);
             } else
                 request.setAttribute("errorPayment", MessageManager.getProperty("message.buyerror"));
             page = ConfigurationManager.getProperty("path.page.showOrder");

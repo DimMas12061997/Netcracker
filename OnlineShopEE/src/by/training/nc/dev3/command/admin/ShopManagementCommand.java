@@ -1,9 +1,11 @@
 package by.training.nc.dev3.command.admin;
 
 
+import by.training.nc.dev3.beans.Category;
 import by.training.nc.dev3.beans.Goods;
 import by.training.nc.dev3.command.ActionCommand;
 import by.training.nc.dev3.constants.Parameters;
+import by.training.nc.dev3.dao.CategoryDAO;
 import by.training.nc.dev3.dao.GoodsDAO;
 import by.training.nc.dev3.resource.ConfigurationManager;
 
@@ -18,8 +20,17 @@ public class ShopManagementCommand implements ActionCommand {
         String page = null;
         try {
             HttpSession session = request.getSession();
-            String login = String.valueOf(session.getAttribute("user"));
-            List<Goods> goods = new GoodsDAO().findAll();
+            String categoryId = request.getParameter(Parameters.CATEGORY_ID);
+            List<Goods> goods = null;
+            GoodsDAO goodsDAO = new GoodsDAO();
+            if (categoryId == null)
+               goods = goodsDAO.findAll();
+            else {
+                int id = Integer.parseInt(categoryId);
+                goods = goodsDAO.getAllGoodsByCategoryId(id);
+            }
+            List<Category> categoryList = new CategoryDAO().findAll();
+            session.setAttribute(Parameters.CATEGORY_LIST, categoryList);
             session.setAttribute(Parameters.GOODS_LIST, goods);
             page = ConfigurationManager.getProperty("path.page.showManagement");
         } catch (SQLException e) {

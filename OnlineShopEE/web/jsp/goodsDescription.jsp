@@ -7,17 +7,11 @@
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.min.js"></script>
-    <%--<script src="js/bootstrap-3.3.2-dist/js/bootstrap.js"></script>--%>
     <script src="js/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/jquery-validation/dist/jquery.validate.min.js"></script>
     <link rel="stylesheet" href="css/product_content.css"/>
     <link href="css/style.css" rel="stylesheet">
-    <%--<script type="text/javascript">--%>
-    <%--$("document").ready(function(){--%>
-    <%--$('#modal').modal();--%>
-    <%--});--%>
-    <%--</script>--%>
 </head>
 <div>
     <nav class="navbar navbar-my" role="navigation">
@@ -34,7 +28,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">О магазине</a></li>
+                    <%--<li class="active"><a href="#">О магазине</a></li>--%>
                     <li><a href="controller?command=catalog">Каталог</a></li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search" action="controller" method="POST" id="find-form">
@@ -65,6 +59,9 @@
                                     <li><a href="controller?command=editpage">Редактировать</a></li>
                                     <c:if test="${userType == 'ADMINISTRATOR'}">
                                         <li><a href="controller?command=show_customers">Пользователи</a></li>
+                                        <li><a href="controller?command=black_list">Управление черным списком</a></li>
+                                        <li><a href="controller?command=show_purchase_history">История покупок</a></li>
+                                        <li><a href="controller?command=shop_management">Управление магазином</a></li>
                                     </c:if>
                                     <li class="divider"></li>
                                     <li><a href="controller?command=logout">Выйти</a></li>
@@ -148,6 +145,7 @@
                                     <input type="submit" value="Добавить в корзину"
                                            style="background-color: #4f4f4f; color:#efc400; font-size: 20px; text-align: center;">
                                     </input>
+                                    ${userBlackList}
                                     </p>
                                 </c:otherwise>
                             </c:choose>

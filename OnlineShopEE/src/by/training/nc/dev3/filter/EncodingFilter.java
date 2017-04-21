@@ -23,7 +23,7 @@ public class EncodingFilter implements Filter{
     request.setCharacterEncoding("UTF-8");
     filterChain.doFilter(request, response);
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */

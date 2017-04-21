@@ -38,6 +38,12 @@ public class LoginCommand implements ActionCommand {
                     session.setAttribute("user", login);
                     page = ConfigurationManager.getProperty("path.page.user");
                 }
+                if (order.getOrderId() != 0)
+                    if (order.getStatus())
+                        session.setAttribute("goodsOrder", 0);
+//                GoodsOrder goodsOrder = new GoodsOrder();
+//                goodsOrder.setIdOrder(order.getOrderId());
+//                session.setAttribute("goodsOrder", new GoodsOrderDAO().countNumber(goodsOrder.getIdOrder()));
             } else {
                 request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
                 page = ConfigurationManager.getProperty("path.page.login");

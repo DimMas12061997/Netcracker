@@ -43,6 +43,7 @@ public class ColumnNames {
     public static final String PROFIT_SHOP = "profit";
     public static final String DESCRIPTION_SHOP = "description";
 
+    public static final String BLACKLIST_ID = "id_blacklist";
     private ColumnNames() {
     }
 }

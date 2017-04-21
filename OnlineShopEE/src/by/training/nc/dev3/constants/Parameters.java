@@ -13,7 +13,6 @@ public class Parameters {
 	public static final String USER_LIST = "userList";
 	public static final String CATEGORY_LIST = "categoryList";
 	public static final String GOODS_LIST = "goodsList";
-	public static final String GOODS_DESCRIPTION = "goodsDescription";
 	public static final String CATEGORY_NAME = "categoryName";
 	public static final String NUMBER = "number";
 	public static final String GOODS_NAME = "name";
@@ -21,6 +20,15 @@ public class Parameters {
 	public static final String ID_GOODS = "idGoods";
 	public static final String ORDER_LIST = "orderList";
 	public static final String ORDER_COST = "orderCost";
+	public static final String CATEGORY_ID = "categoryId";
+	public static final String USER = "userLogin";
+	public static final String BLACKLIST = "blackList";
+
+	public static final String NAME_GOODS = "goodsName";
+	public static final String GOODS_NUMBER = "goodsNumber";
+	public static final String GOODS_PRICE = "goodsPrice";
+	public static final String GOODS_PRODUCER = "goodsProducer";
+	public static final String GOODS_DESCRIPTION = "goodsDescription";
 
 	private Parameters(){}
 }

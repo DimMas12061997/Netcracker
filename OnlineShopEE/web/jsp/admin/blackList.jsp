@@ -11,6 +11,7 @@
     <script src="js/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/jquery-validation/dist/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="css/product_content.css"/>
 </head>
 <body>
 <nav class="navbar navbar-my" role="navigation">
@@ -63,34 +64,55 @@
         </div>
     </div>
 </nav>
+</div>
 <div class="container">
-<table  class="table table-bordered table table-hover">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Логин</th>
-        <th>Роль</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var = "user" items="${userList}" varStatus="i">
-        <tr>
-            <td>${i.count}</td>
-            <td><c:out value="${ user.lastName }" /></td>
-            <td><c:out value="${ user.firstName }" /></td>
-            <td><c:out value="${ user.login }" /></td>
-            <c:if test="${user.roleId == '1'}">
-                <td>Администратор</td>
-            </c:if>
-            <c:if test="${user.roleId == '2'}">
-                <td>Покупатель</td>
-            </c:if>
+    <div class="i-right-title-text">Неплательщики</div>
+    <table class="table table-bordered">
+        <thead>
+        <tr align="center" class="warning">
+            <th>№</th>
+            <th>Логин</th>
+            <th>Стоимость предварительного заказа</th>
+            <th>Добавить в ЧС</th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <c:forEach var="order" items="${orderList}" varStatus="i">
+            <tr class="success" align="center">
+                <td>${i.count}</td>
+                <td><c:out value="${order.createdDate}"/></td>
+                <td><c:out value="${order.orderCost}"/></td>
+                <td>
+                    <a href="controller?command=add_black_list&userLogin=${order.createdDate}"
+                       class="glyphicon glyphicon-ok"></a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+
+    <div class="i-right-title-text">Черный список</div>
+    <table class="table table-bordered">
+        <thead>
+        <tr align="center" class="warning">
+            <th>№</th>
+            <th>Логин</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="blackList" items="${blackList}" varStatus="i">
+            <tr class="success" align="center">
+                <td>${i.count}</td>
+                <td><c:out value="${blackList.login}"/></td>
+                <td><c:out value="${blackList.lastName}"/></td>
+                <td><c:out value="${blackList.firstName}"/></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
+

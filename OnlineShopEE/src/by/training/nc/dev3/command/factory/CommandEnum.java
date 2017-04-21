@@ -116,6 +116,41 @@ public enum CommandEnum {
             this.command = new ShowPurchaseHistoryCommand();
         }
     },
+    BLACK_LIST{
+        {
+            this.command = new BlackListCommand();
+        }
+    },
+    ADD_BLACK_LIST{
+        {
+            this.command = new AddBlackListCommand();
+        }
+    },
+    ADD_CATEGORY{
+        {
+            this.command = new AddCategoryCommand();
+        }
+    },
+    UPDATE_CATEGORY{
+        {
+            this.command = new UpdateCategoryCommand();
+        }
+    },
+    REMOVE_CATEGORY{
+        {
+            this.command = new RemoveCategoryCommand();
+        }
+    },
+    ADD_GOODS{
+        {
+            this.command = new AddGoodsCommand();
+        }
+    },
+    REMOVE_GOODS{
+        {
+            this.command = new RemoveGoodsCommand();
+        }
+    },
     LOGOUT {
         {
             this.command = new LogoutCommand();
