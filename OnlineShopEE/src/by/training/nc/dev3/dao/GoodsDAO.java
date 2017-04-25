@@ -4,6 +4,8 @@ import by.training.nc.dev3.beans.Goods;
 import by.training.nc.dev3.connectionpool.ConnectionPool;
 import by.training.nc.dev3.constants.ColumnNames;
 import by.training.nc.dev3.constants.SqlRequests;
+import by.training.nc.dev3.dao.interfaces.AbstractDAO;
+import by.training.nc.dev3.dao.interfaces.GoodsI;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GoodsDAO implements AbstractDAO<Goods> {
+public class GoodsDAO implements AbstractDAO<Goods>, GoodsI {
     @Override
     public List<Goods> findAll() throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -57,6 +59,7 @@ public class GoodsDAO implements AbstractDAO<Goods> {
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return list;
     }
+
     @Override
     public void createEntity(Goods entity) throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -68,6 +71,21 @@ public class GoodsDAO implements AbstractDAO<Goods> {
         statement.setString(5, entity.getDescription());
         statement.setInt(6, entity.getShopId());
         statement.setInt(7, entity.getCategoryId());
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+    }
+
+    public void updateGoods(Goods goods) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.UPDATE_GOODS);
+        statement.setString(1, goods.getName());
+        statement.setInt(2, goods.getNumber());
+        statement.setDouble(3, goods.getUnitPrice());
+        statement.setString(4, goods.getProducer());
+        statement.setString(5, goods.getDescription());
+        statement.setInt(6, goods.getShopId());
+        statement.setInt(7, goods.getCategoryId());
+        statement.setInt(8, goods.getIdGoods());
         statement.executeUpdate();
         ConnectionPool.INSTANCE.releaseConnection(connection);
     }

@@ -56,7 +56,7 @@ public class UpdateOrderCommand implements ActionCommand {
             session.setAttribute("goodsOrder", new GoodsOrderDAO().countNumber(goodsOrder.getIdOrder()));
             page = ConfigurationManager.getProperty("path.page.showOrder");
         } catch (SQLException e) {
-            System.out.println("error");
+            System.out.println("SQLException");
         }
         return page;
     }

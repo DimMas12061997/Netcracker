@@ -5,6 +5,8 @@ import by.training.nc.dev3.beans.Order;
 import by.training.nc.dev3.connectionpool.ConnectionPool;
 import by.training.nc.dev3.constants.ColumnNames;
 import by.training.nc.dev3.constants.SqlRequests;
+import by.training.nc.dev3.dao.interfaces.AbstractDAO;
+import by.training.nc.dev3.dao.interfaces.OrderI;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDAO implements AbstractDAO<Order>{
+public class OrderDAO implements AbstractDAO<Order>, OrderI {
 
     public List<Order> getOrdersById(int id) throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -32,9 +34,25 @@ public class OrderDAO implements AbstractDAO<Order>{
         return list;
     }
 
+    public List<Order> getOrderCostsById() throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_ALL_ORDERS_COSTS);
+        ResultSet result = statement.executeQuery();
+        List<Order> list = new ArrayList<>();
+        while(result.next()){
+            Order order = new Order();
+            order.setOrderId(result.getInt(ColumnNames.ORDER_ID));
+            order.setOrderCost(result.getDouble(ColumnNames.ORDER_COST));
+            order.setCreatedDate(result.getString(ColumnNames.USER_LOGIN));
+            list.add(order);
+        }
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+        return list;
+    }
+
     @Override
     public List<Order> findAll() throws SQLException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -64,23 +82,6 @@ public class OrderDAO implements AbstractDAO<Order>{
         return order;
     }
 
-//    public Order getOrderByUserId(int userId) throws SQLException {
-//        Connection connection = ConnectionPool.INSTANCE.getConnection();
-//        PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_ORDER_BY_USER_ID);
-//        statement.setInt(1, userId);
-//        ResultSet result = statement.executeQuery();
-//        Order order = new Order();
-//        while(result.next()){
-//            order.setOrderId(result.getInt(ColumnNames.ORDER_ID));
-//            order.setOrderCost(result.getDouble(ColumnNames.ORDER_COST));
-//            order.setCreatedDate(result.getString(ColumnNames.DATE));
-//            order.setStatus(result.getBoolean(ColumnNames.ORDER_STATUS));
-//            order.setIdUser(result.getInt(ColumnNames.USER_ID_ORDER));
-//        }
-//        ConnectionPool.INSTANCE.releaseConnection(connection);
-//        return order;
-//    }
-
     public void updateOrder(Order order) throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = connection.prepareStatement(SqlRequests.UPDATE_ORDER);
@@ -101,7 +102,7 @@ public class OrderDAO implements AbstractDAO<Order>{
 
     @Override
     public Order getEntityById(int id) throws SQLException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public void removeOrderById(int id) throws SQLException {

@@ -22,13 +22,15 @@ public class Parameters {
 	public static final String ORDER_COST = "orderCost";
 	public static final String CATEGORY_ID = "categoryId";
 	public static final String USER = "userLogin";
+    public static final String USER_ID = "userId";
 	public static final String BLACKLIST = "blackList";
-
+	public static final String GOODS_ORDER = "goodsOrder";
 	public static final String NAME_GOODS = "goodsName";
 	public static final String GOODS_NUMBER = "goodsNumber";
 	public static final String GOODS_PRICE = "goodsPrice";
 	public static final String GOODS_PRODUCER = "goodsProducer";
 	public static final String GOODS_DESCRIPTION = "goodsDescription";
+	public static final String LANGUAGE = "language";
 
 	private Parameters(){}
 }

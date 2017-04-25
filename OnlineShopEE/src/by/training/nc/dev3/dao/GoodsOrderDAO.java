@@ -6,6 +6,8 @@ import by.training.nc.dev3.beans.GoodsOrder;
 import by.training.nc.dev3.connectionpool.ConnectionPool;
 import by.training.nc.dev3.constants.ColumnNames;
 import by.training.nc.dev3.constants.SqlRequests;
+import by.training.nc.dev3.dao.interfaces.AbstractDAO;
+import by.training.nc.dev3.dao.interfaces.GoodsOrderI;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodsOrderDAO implements AbstractDAO<GoodsOrder> {
+public class GoodsOrderDAO implements AbstractDAO<GoodsOrder>, GoodsOrderI{
     @Override
     public List<GoodsOrder> findAll() throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -53,7 +55,7 @@ public class GoodsOrderDAO implements AbstractDAO<GoodsOrder> {
 
     @Override
     public GoodsOrder getEntityById(int id) throws SQLException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public void updateNumber(GoodsOrder goodsOrder) throws SQLException {

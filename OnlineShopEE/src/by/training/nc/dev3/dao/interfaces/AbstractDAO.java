@@ -1,4 +1,4 @@
-package by.training.nc.dev3.dao;
+package by.training.nc.dev3.dao.interfaces;
 
 import by.training.nc.dev3.beans.Entity;
 

@@ -27,7 +27,7 @@ public class ShowGoodsCommand implements ActionCommand {
             session.setAttribute(Parameters.CATEGORY_ID, id);
             page = ConfigurationManager.getProperty("path.page.catalog");
         } catch (SQLException e) {
-            System.out.println("error");
+            System.out.println("SQLException");
         }
         return page;
     }

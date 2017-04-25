@@ -12,8 +12,10 @@ import by.training.nc.dev3.resource.ConfigurationManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
 
-public class AddGoodsCommand implements ActionCommand {
+public class UpdateGoodsCommand implements ActionCommand {
+    private static int goods_id;
     private static String goods_name;
     private static int number;
     private static double price;
@@ -26,17 +28,20 @@ public class AddGoodsCommand implements ActionCommand {
         String page = null;
         try {
             HttpSession session = request.getSession();
+            String goodsId = request.getParameter(Parameters.ID_GOODS);
+            goods_id = Integer.parseInt(goodsId);
             goods_name = request.getParameter(Parameters.NAME_GOODS);
-            String goods_number = request.getParameter(Parameters.GOODS_NUMBER);
-            number = Integer.parseInt(goods_number);
-            String goods_price = request.getParameter(Parameters.GOODS_PRICE);
-            price = Double.parseDouble(goods_price);
+            String goodsNumber = request.getParameter(Parameters.GOODS_NUMBER);
+            number = Integer.parseInt(goodsNumber);
+            String goodsPrice = request.getParameter(Parameters.GOODS_PRICE);
+            price = Double.parseDouble(goodsPrice);
             goods_producer = request.getParameter(Parameters.GOODS_PRODUCER);
             goods_description = request.getParameter(Parameters.GOODS_DESCRIPTION);
             category_name = request.getParameter(Parameters.CATEGORY_NAME);
             GoodsDAO goodsDAO = new GoodsDAO();
-            createGoods(goodsDAO);
-            session.setAttribute(Parameters.GOODS_LIST, goodsDAO.findAll());
+            updateGoods(goodsDAO);
+            List<Goods> goods = goodsDAO.findAll();
+            session.setAttribute(Parameters.GOODS_LIST, goods);
             page = ConfigurationManager.getProperty("path.page.showManagement");
         } catch (SQLException e) {
             System.out.println("SQLException");
@@ -44,9 +49,10 @@ public class AddGoodsCommand implements ActionCommand {
         return page;
     }
 
-    public void createGoods(GoodsDAO goodsDAO) throws SQLException {
+    public void updateGoods(GoodsDAO goodsDAO) throws SQLException {
         Goods goods = new Goods();
         Category category = new CategoryDAO().getEntityByName(category_name);
+        goods.setIdGoods(goods_id);
         goods.setName(goods_name);
         goods.setNumber(number);
         goods.setUnitPrice(price);
@@ -54,6 +60,6 @@ public class AddGoodsCommand implements ActionCommand {
         goods.setDescription(goods_description);
         goods.setShopId(1);
         goods.setCategoryId(category.getIdCategory());
-        goodsDAO.createEntity(goods);
+        goodsDAO.updateGoods(goods);
     }
 }

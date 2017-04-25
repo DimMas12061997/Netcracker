@@ -22,7 +22,7 @@ public class ShowPurchaseHistoryCommand implements ActionCommand {
         String page = null;
         try {
             HttpSession session = request.getSession();
-            List<Order> orderList = new OrderDAO().getOrdersById(1);
+            List<Order> orderList = new OrderDAO().getOrderCostsById();
             UserDAO userDAO = new UserDAO();
             String userLogin = (String) session.getAttribute("user");
             ShopDAO shopDAO = new ShopDAO();

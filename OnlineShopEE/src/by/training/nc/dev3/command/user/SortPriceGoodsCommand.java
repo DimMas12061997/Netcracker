@@ -29,7 +29,7 @@ public class SortPriceGoodsCommand implements ActionCommand {
             session.setAttribute(Parameters.GOODS_LIST, list);
             page = ConfigurationManager.getProperty("path.page.catalog");
         } catch (SQLException e) {
-            System.out.println("error");
+            System.out.println("SQLException");
         }
         return page;
     }

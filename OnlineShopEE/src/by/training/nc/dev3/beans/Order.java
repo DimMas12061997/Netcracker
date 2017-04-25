@@ -10,6 +10,17 @@ public class Order extends Entity {
     public Order() {
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", orderCost=" + orderCost +
+                ", createdDate='" + createdDate + '\'' +
+                ", status=" + status +
+                ", idUser=" + idUser +
+                '}';
+    }
+
     public int getOrderId() {
         return orderId;
     }

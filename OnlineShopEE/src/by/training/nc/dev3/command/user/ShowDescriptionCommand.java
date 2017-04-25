@@ -30,7 +30,7 @@ public class ShowDescriptionCommand implements ActionCommand {
             session.setAttribute(Parameters.CATEGORY_NAME, category.getCategoryName());
             page = ConfigurationManager.getProperty("path.page.goodsDescription");
         } catch (SQLException e) {
-            System.out.println("error");
+            System.out.println("SQLException");
         }
         return page;
     }

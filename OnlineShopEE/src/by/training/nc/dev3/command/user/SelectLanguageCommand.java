@@ -1,35 +1,31 @@
-package by.training.nc.dev3.filter;
+package by.training.nc.dev3.command.user;
 
+
+import by.training.nc.dev3.command.ActionCommand;
+import by.training.nc.dev3.constants.Parameters;
+import by.training.nc.dev3.resource.ConfigurationManager;
 import by.training.nc.dev3.resource.LocaleManager;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
-
-@WebFilter(urlPatterns = {"/controller", "/index.jsp"}, servletNames = {"Controller"})
-public class InitializationFilter implements Filter {
-    public void destroy() {
-    }
-
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpSession session = req.getSession();
-        ClientType type = (ClientType) session.getAttribute("userType");
-        if (type == null) {
-            type = ClientType.GUEST;
-            session.setAttribute("userType", type);
-        }
-        Locale locale = (Locale) session.getAttribute("locale");
-        System.out.println(locale);
-        if (locale == null || new Locale("ru", "RU").equals(locale)) {
-            System.out.println(locale);
-            Locale russianLocale = new Locale("ru", "RU");
-            LocaleManager.setBundle(russianLocale);
-            session.setAttribute("locale", russianLocale);
+public class SelectLanguageCommand implements ActionCommand {
+    @Override
+    public String execute(HttpServletRequest request) {
+        String page = null;
+        HttpSession session = request.getSession();
+        String language = request.getParameter(Parameters.LANGUAGE);
+        String nextPage = request.getParameter("page");
+        Locale locale = null;
+        if ("RU".equals(language))
+            locale = new Locale("ru", "RU");
+        else if ("EN".equals(language))
+            locale = new Locale("en", "US");
+        session.setAttribute("locale", locale);
+        LocaleManager.setBundle((Locale) session.getAttribute("locale"));
+        try {
             session.setAttribute("title", new String((LocaleManager.getProperty("label.title").getBytes("ISO-8859-1")), "Cp1251"));
             session.setAttribute("submit", new String((LocaleManager.getProperty("button.submit").getBytes("ISO-8859-1")), "Cp1251"));
             session.setAttribute("catalog", new String((LocaleManager.getProperty("menu.catalog").getBytes("ISO-8859-1")), "Cp1251"));
@@ -59,11 +55,12 @@ public class InitializationFilter implements Filter {
             session.setAttribute("save", new String((LocaleManager.getProperty("button.save").getBytes("ISO-8859-1")), "Cp1251"));
             session.setAttribute("editData", new String((LocaleManager.getProperty("label.editData").getBytes("ISO-8859-1")), "Cp1251"));
             session.setAttribute("dateLabel", new String((LocaleManager.getProperty("label.date").getBytes("ISO-8859-1")), "Cp1251"));
-        }
-        chain.doFilter(request, response);
-        return;
-    }
 
-    public void init(FilterConfig fConfig) throws ServletException {
+
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("Encoding exception");
+        }
+        page = ConfigurationManager.getProperty(nextPage);
+        return page;
     }
 }

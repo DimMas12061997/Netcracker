@@ -75,45 +75,6 @@
         </div>
     </nav>
 </div>
-
-
-<%--<div class="modal fade" id="myModalGoods" tabindex="-1" role="dialog" aria-labelledby="myModalGoodsLabel"--%>
-     <%--aria-hidden="true">--%>
-    <%--<div class="modal-dialog" role="document">--%>
-        <%--<div class="modal-content">--%>
-            <%--<div class="modal-header">--%>
-                <%--<button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">--%>
-                    <%--<span aria-hidden="true">×</span>--%>
-                <%--</button>--%>
-                <%--<h4 class="modal-title" id="myModalGoodsLabel">Добавление товара</h4>--%>
-            <%--</div>--%>
-            <%--<div class="modal-body">--%>
-
-                <%--<form action="controller" method="POST" id="add_goods">--%>
-                    <%--<div class="message js-form-message"></div>--%>
-                    <%--<input type="hidden" name="command" value="add_goods"/>--%>
-                    <%--<input type="text" placeholder="Наименование товара" name="goodsName" class="form-input">--%>
-                    <%--<input type="number" placeholder="Количество товара" name="goodsNumber" class="form-input">--%>
-                    <%--<input type="text" placeholder="Цена единицы товара" name="goodsPrice" class="form-input">--%>
-                    <%--<input type="text" placeholder="Производитель" name="goodsProducer" class="form-input">--%>
-                    <%--<input type="text" placeholder="Описание" name="goodsDescription" class="form-input">--%>
-                    <%--<select id="categoryName" name="categoryName">--%>
-                        <%--<option value="">Выберите категорию: </option>--%>
-                        <%--<c:forEach var="category" items="${categoryList}">--%>
-                            <%--<option><c:out value="${category.categoryName}"/></option>--%>
-                        <%--</c:forEach>--%>
-                    <%--</select>--%>
-                    <%--<p>--%>
-                        <%--<input type="submit" value="Добавить" style="margin-left: 45%;margin-top: 3%"--%>
-                               <%--class="btn btn-success"/></p>--%>
-                    <%--<br/>--%>
-                <%--</form>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-
-
 <div class="container">
     ${userBlackList}
     <table class="table table-bordered">

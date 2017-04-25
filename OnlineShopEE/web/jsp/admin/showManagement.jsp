@@ -13,18 +13,22 @@
     <script src="js/jquery-validation/dist/jquery.validate.min.js"></script>
     <link rel="stylesheet" href="css/product_content.css"/>
     <script>
-        $('#myModalUpdate').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Кнопка, что спровоцировало модальное окно
-
-            var recipient = button.data('whatever') // Извлечение информации из данных-* атрибутов
-
-            // Если необходимо, вы могли бы начать здесь AJAX-запрос (и выполните обновление в обратного вызова).
-
-            // Обновление модальное окно Контента. Мы будем использовать jQuery здесь, но вместо него можно использовать привязки данных библиотеки или других методов.
-
-            var modal = $(this)
-            modal.find('.modal-body input').val(recipient)
+        window.onload = function () {
+            $('[data-target="#myModalUpdate"]').click(function () {
+                document.getElementById('idCategory').value = this.id;
+                document.getElementById('nameCategory').value = this.name;
+            })
+        $('[data-target="#myModalUpdateGoods"]').click(function () {
+            console.log(this.id);
+            document.getElementById('goodsId').value = this.id;
+//            document.getElementById('goodsName').value = (this.id).idname;
+//            document.getElementById('goodsNumber').value = (this.id).number;
+//            document.getElementById('goodsPrice').value = (this.id).unitPrice;
+//            document.getElementById('goodsProducer').value = (this.id).producer;
+//            document.getElementById('goodsDescription').value = (this.id).description;
+//            document.getElementById('name_category').value = (this.id).createdDate;
         })
+        };
     </script>
 </head>
 <body>
@@ -103,7 +107,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="myModalUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalUpdateLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -119,7 +122,8 @@
                 <form action="controller" method="POST" id="update_category">
                     <div class="message js-form-message"></div>
                     <input type="hidden" name="command" value="update_category"/>
-                    Наименование категории: <input type="text" name="categoryName" class="form-input">
+                    <input type="hidden" id="idCategory" name="categoryId" value=""/>
+                    Наименование категории: <input type="text" name="categoryName" id ="nameCategory" class="form-input">
                     <p>
                         <input type="submit" value="Изменить" style="margin-left: 45%;margin-top: 3%"
                                class="btn btn-success"/></p>
@@ -130,6 +134,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="myModalUpdateGoods" tabindex="-1" role="dialog" aria-labelledby="myModalUpdateGoodsLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalUpdateGoodsLabel">Изменение товара</h4>
+            </div>
+            <div class="modal-body">
+                <form action="controller" method="POST" id="update_goods">
+                    <div class="message js-form-message"></div>
+                    <input type="hidden" name="command" value="update_goods"/>
+                    <input type="hidden" name="idGoods" id="goodsId" value=""/>
+                    <input type="text" placeholder="Наименование товара" name="goodsName" class="form-input">
+                    <input type="number" min="0" placeholder="Количество товара" name="goodsNumber" class="form-input">
+                    <input type="text" placeholder="Цена единицы товара" name="goodsPrice" class="form-input">
+                    <input type="text" placeholder="Производитель" name="goodsProducer" class="form-input">
+                    <input type="text" placeholder="Описание"  name="goodsDescription" class="form-input">
+                    <select id="name_category" name="categoryName">
+                        <option value="">Выберите категорию:</option>
+                        <c:forEach var="category" items="${categoryList}">
+                            <option><c:out value="${category.categoryName}"/></option>
+                        </c:forEach>
+                    </select>
+                    <p>
+                        <input type="submit" value="Изменить" style="margin-left: 45%;margin-top: 3%"
+                               class="btn btn-success"/></p>
+                    <br/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="myModalGoods" tabindex="-1" role="dialog" aria-labelledby="myModalGoodsLabel"
      aria-hidden="true">
@@ -147,12 +186,12 @@
                     <div class="message js-form-message"></div>
                     <input type="hidden" name="command" value="add_goods"/>
                     <input type="text" placeholder="Наименование товара" name="goodsName" class="form-input">
-                    <input type="number" placeholder="Количество товара" name="goodsNumber" class="form-input">
+                    <input type="number" min="0" placeholder="Количество товара" name="goodsNumber" class="form-input">
                     <input type="text" placeholder="Цена единицы товара" name="goodsPrice" class="form-input">
                     <input type="text" placeholder="Производитель" name="goodsProducer" class="form-input">
                     <input type="text" placeholder="Описание" name="goodsDescription" class="form-input">
                     <select id="categoryName" name="categoryName">
-                        <option value="">Выберите категорию: </option>
+                        <option value="">Выберите категорию:</option>
                         <c:forEach var="category" items="${categoryList}">
                             <option><c:out value="${category.categoryName}"/></option>
                         </c:forEach>
@@ -166,7 +205,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="container">
     <table class="table table-bordered">
@@ -198,9 +236,9 @@
                        class="glyphicon glyphicon-trash"></a>
                 </td>
                 <td>
-                    <a href="controller?command=update_goods&idGoods=${goods.idGoods}"
-                       class="glyphicon glyphicon-pencil"></a>
-                </td>
+                    <a class="glyphicon glyphicon-pencil" data-toggle="modal"
+                       data-target="#myModalUpdateGoods" id="${goods.idGoods}" href="#"></a>
+                      </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -227,11 +265,8 @@
                 <td>${i.count}</td>
                 <td><c:out value="${category.categoryName}"/></td>
                 <td>
-                    <a href="#myModalUpdate" role="button" data-toggle="modal" data-whatever="${category.categoryName}"
-                       class="glyphicon glyphicon-pencil"></a>
-                        <%--<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalUpdate" data-whatever="123">--%>
-                        <%--Изменить категорию--%>
-                        <%--</button>--%>
+                    <a class="glyphicon glyphicon-pencil" data-toggle="modal"
+                       data-target="#myModalUpdate" name="${category.categoryName}" id="${category.idCategory}" href="#"></a>
                 </td>
                 <td>
                     <a href="controller?command=remove_category&categoryId=${category.idCategory}"

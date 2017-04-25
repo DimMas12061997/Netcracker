@@ -35,17 +35,21 @@ public class SqlRequests {
     public static final String UPDATE_SHOP = "UPDATE online_shop.shop SET profit = ? WHERE id_shop = ?";
     public static final String UPDATE_ORDER_STATUS = "UPDATE online_shop.order SET order_status = ? WHERE id_user = ?";
     public static final String GET_ALL_ORDERS = "SELECT order_id,order_cost,login FROM online_shop.`order` o INNER JOIN online_shop.user u ON o.id_user = u.user_id WHERE order_status = ? AND u.role_id = 2";
+    public static final String GET_ALL_ORDERS_COSTS = "SELECT order_id,order_cost,login FROM online_shop.`order` o INNER JOIN online_shop.user u ON o.id_user = u.user_id WHERE order_status = 1";
     public static final String GET_ALL_GOODS = "SELECT * FROM online_shop.goods g INNER JOIN online_shop.category c ON g.category_id = c.id_category";
     public static final String GET_ALL_GOODS_SORT_BY_PRICE = "SELECT * FROM online_shop.goods g INNER JOIN online_shop.category c ON g.category_id = c.id_category ORDER BY unit_price";
     public static final String GET_ALL_GOODS_BY_CATEGORY_ID = "SELECT * FROM online_shop.goods g INNER JOIN online_shop.category c ON g.category_id = c.id_category WHERE category_id = ?";
     public static final String REMOVE_CATEGORY = "DELETE FROM online_shop.category WHERE id_category = ?";
     public static final String ADD_USER_BLACK_LIST = "INSERT INTO online_shop.black_list(user_id) VALUES (?)";
-    public static final String GET_ALL_USER_IN_BLACK_LIST = "SELECT login, first_name, last_name FROM online_shop.black_list bl INNER JOIN online_shop.user u ON bl.user_id = u.user_id";
+    public static final String GET_ALL_USER_IN_BLACK_LIST = "SELECT u.user_id, login, first_name, last_name FROM online_shop.black_list bl INNER JOIN online_shop.user u ON bl.user_id = u.user_id";
     public static final String GET_BLACKLIST_BY_ID = "SELECT * FROM online_shop.black_list WHERE user_id = ?";
     public static final String ADD_CATEGORY = "INSERT INTO online_shop.category (category_name) VALUES (?)";
     public static final String GET_GATEGORY_BY_NAME = "SELECT * FROM online_shop.category WHERE category_name = ?";
     public static final String ADD_GOODS = "INSERT INTO online_shop.goods(goods_name, goods_number, unit_price, producer, description, shop_id, category_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     public static final String REMOVE_GOODS = "DELETE FROM online_shop.goods WHERE goods_id = ?";
+    public static final String REMOVE_USER_FROM_BLACKLIST = "DELETE FROM online_shop.black_list WHERE user_id = ?";
+    public static final String UPDATE_CATEGORY = "UPDATE online_shop.category SET category_name = ? WHERE id_category = ?";
+    public static final String UPDATE_GOODS = "UPDATE online_shop.goods SET goods_name = ?, goods_number = ?, unit_price = ?, producer = ?, description = ?, shop_id = ?, category_id = ?  WHERE goods_id = ?";
 
     private SqlRequests() {
     }

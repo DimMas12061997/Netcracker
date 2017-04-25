@@ -6,6 +6,8 @@ import by.training.nc.dev3.beans.User;
 import by.training.nc.dev3.connectionpool.ConnectionPool;
 import by.training.nc.dev3.constants.ColumnNames;
 import by.training.nc.dev3.constants.SqlRequests;
+import by.training.nc.dev3.dao.interfaces.AbstractDAO;
+import by.training.nc.dev3.dao.interfaces.BlackListI;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,10 +16,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackListDAO implements AbstractDAO<BlackList> {
+public class BlackListDAO implements AbstractDAO<BlackList>,BlackListI {
     @Override
     public List<BlackList> findAll() throws SQLException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -45,6 +47,14 @@ public class BlackListDAO implements AbstractDAO<BlackList> {
         return blackList;
     }
 
+    public void removeByUserId(int id) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.REMOVE_USER_FROM_BLACKLIST);
+        statement.setInt(1, id);
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+    }
+
     public List<User> getAllUsers() throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_ALL_USER_IN_BLACK_LIST);
@@ -52,6 +62,7 @@ public class BlackListDAO implements AbstractDAO<BlackList> {
         List<User> list = new ArrayList<>();
         while (result.next()) {
             User user = new User();
+            user.setUserId(result.getInt(ColumnNames.USER_ID));
             user.setFirstName(result.getString(ColumnNames.USER_FIRST_NAME));
             user.setLastName(result.getString(ColumnNames.USER_LAST_NAME));
             user.setLogin(result.getString(ColumnNames.USER_LOGIN));

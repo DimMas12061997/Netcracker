@@ -246,6 +246,64 @@ $(function () {
     });
 
     $(function () {
+                    $("#update_goods").validate({
+                        rules: {
+                            goodsName: {
+                                required: true
+                            },
+                            goodsNumber: {
+                                required: true,
+                                digits: true
+                            },
+                            goodsPrice: {
+                                required: true,
+                                number: true
+                            },
+                            goodsProducer: {
+                                required: true
+                            },
+                            goodsDescription: {
+                                required: true
+                            },
+                            categoryName: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            goodsName: {
+                                required: "Поле goodsName обязательное для заполнения."
+                            },
+                            goodsNumber: {
+                                required: "Поле goodsNumber обязательное для заполнения.",
+                                digits: "Поле goodsNumber должно содержать только цифры."
+                            },
+                            goodsPrice: {
+                                required: "Поле goodsPrice обязательное для заполнения.",
+                                number: "Поле goodsPrice должно содержать только знаки и цифры."
+                            },
+                            goodsProducer: {
+                                required: "Поле goodsProducer обязательное для заполнения."
+                            },
+                            goodsDescription: {
+                                required: "Поле goodsDescription обязательное для заполнения."
+                            },
+                            categoryName: {
+                    required: "Поле categoryName обязательное для заполнения."
+                }
+            },
+            focusCleanup: true,
+            focusInvalid: false,
+            invalidHandler: function (event, validator) {
+                $(".js-form-message").text("Исправьте пожалуйста все ошибки.");
+            },
+            onkeyup: function (element) {
+                $(".js-form-message").text("");
+            },
+        });
+    });
+
+
+    $(function () {
         $("#update_category").validate({
             rules: {
                 categoryName: {
@@ -268,16 +326,16 @@ $(function () {
         });
     });
 });
-$('#myModalUpdate').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Кнопка, что спровоцировало модальное окно
-
-    var recipient = button.data('whatever') // Извлечение информации из данных-* атрибутов
-    console.log(recipient);
-
-    // Если необходимо, вы могли бы начать здесь AJAX-запрос (и выполните обновление в обратного вызова).
-
-    // Обновление модальное окно Контента. Мы будем использовать jQuery здесь, но вместо него можно использовать привязки данных библиотеки или других методов.
-
-    var modal = $(this)
-    modal.find('.modal-body input').val(recipient)
-})
+// $('#myModalUpdate').on('show.bs.modal', function (event) {
+//     var button = $(event.relatedTarget) // Кнопка, что спровоцировало модальное окно
+//
+//     var recipient = button.data('whatever') // Извлечение информации из данных-* атрибутов
+//     console.log(recipient);
+//
+//     // Если необходимо, вы могли бы начать здесь AJAX-запрос (и выполните обновление в обратного вызова).
+//
+//     // Обновление модальное окно Контента. Мы будем использовать jQuery здесь, но вместо него можно использовать привязки данных библиотеки или других методов.
+//
+//     var modal = $(this)
+//     modal.find('.modal-body input').val(recipient)
+// })

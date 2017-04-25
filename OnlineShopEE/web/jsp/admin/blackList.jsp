@@ -99,6 +99,7 @@
             <th>Логин</th>
             <th>Фамилия</th>
             <th>Имя</th>
+            <th>Удалить из чс</th>
         </tr>
         </thead>
         <tbody>
@@ -108,6 +109,10 @@
                 <td><c:out value="${blackList.login}"/></td>
                 <td><c:out value="${blackList.lastName}"/></td>
                 <td><c:out value="${blackList.firstName}"/></td>
+                <td>
+                    <a href="controller?command=remove_from_blacklist&userId=${blackList.userId}"
+                       class="glyphicon glyphicon-trash"></a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

@@ -9,12 +9,14 @@ import by.training.nc.dev3.command.ActionCommand;
 import by.training.nc.dev3.constants.Parameters;
 import by.training.nc.dev3.dao.*;
 import by.training.nc.dev3.resource.ConfigurationManager;
-import by.training.nc.dev3.resource.MessageManager;
+import by.training.nc.dev3.resource.LocaleManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 
 public class MakeOrderCommand implements ActionCommand {
     @Override
@@ -39,12 +41,16 @@ public class MakeOrderCommand implements ActionCommand {
                 createOrder(price, number, userLogin, id, session);
                 goods = goodsDAO.getEntityById(id);
                 session.setAttribute(Parameters.GOODS_DESCRIPTION, goods);
-            } else
-                request.setAttribute("userBlackList", MessageManager.getProperty("message.userBlackList"));
+            } else{
+                LocaleManager.setBundle((Locale) session.getAttribute("locale"));
+                session.setAttribute("userBlackList", new String((LocaleManager.getProperty("message.userBlackList").getBytes("ISO-8859-1")), "Cp1251"));
+            }
         } catch (SQLException e) {
             System.out.println("SQL exception");
         }
-
+        catch (UnsupportedEncodingException e) {
+            System.out.println("Encoding exception");
+        }
         page = ConfigurationManager.getProperty("path.page.goodsDescription");
         return page;
     }

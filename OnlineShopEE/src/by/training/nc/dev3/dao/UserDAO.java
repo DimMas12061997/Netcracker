@@ -4,6 +4,8 @@ import by.training.nc.dev3.beans.User;
 import by.training.nc.dev3.connectionpool.ConnectionPool;
 import by.training.nc.dev3.constants.ColumnNames;
 import by.training.nc.dev3.constants.SqlRequests;
+import by.training.nc.dev3.dao.interfaces.AbstractDAO;
+import by.training.nc.dev3.dao.interfaces.UserI;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserDAO implements AbstractDAO<User> {
+public class UserDAO implements AbstractDAO<User>, UserI {
 
     @Override
     public List<User> findAll() throws SQLException {

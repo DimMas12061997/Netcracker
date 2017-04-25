@@ -4,6 +4,8 @@ import by.training.nc.dev3.beans.Category;
 import by.training.nc.dev3.connectionpool.ConnectionPool;
 import by.training.nc.dev3.constants.ColumnNames;
 import by.training.nc.dev3.constants.SqlRequests;
+import by.training.nc.dev3.dao.interfaces.AbstractDAO;
+import by.training.nc.dev3.dao.interfaces.CategoryI;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CategoryDAO implements AbstractDAO<Category> {
+public class CategoryDAO implements AbstractDAO<Category>, CategoryI {
     @Override
     public List<Category> findAll() throws SQLException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -66,6 +68,15 @@ public class CategoryDAO implements AbstractDAO<Category> {
         }
         ConnectionPool.INSTANCE.releaseConnection(connection);
         return category;
+    }
+
+    public void updateCategory(Category category) throws SQLException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.UPDATE_CATEGORY);
+        statement.setString(1, category.getCategoryName());
+        statement.setInt(2, category.getIdCategory());
+        statement.executeUpdate();
+        ConnectionPool.INSTANCE.releaseConnection(connection);
     }
 
     public void removeCategoryByID(int id) throws SQLException {

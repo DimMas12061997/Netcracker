@@ -26,7 +26,6 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <%--<li class="active"><a href="#">О магазине</a></li>--%>
                 <li><a href="controller?command=catalog">Каталог</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search" action="controller" method="POST" id="find-form">

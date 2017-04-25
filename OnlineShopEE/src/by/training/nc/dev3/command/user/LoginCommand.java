@@ -8,11 +8,13 @@ import by.training.nc.dev3.dao.OrderDAO;
 import by.training.nc.dev3.dao.UserDAO;
 import by.training.nc.dev3.filter.ClientType;
 import by.training.nc.dev3.resource.ConfigurationManager;
-import by.training.nc.dev3.resource.MessageManager;
+import by.training.nc.dev3.resource.LocaleManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class LoginCommand implements ActionCommand {
     @Override
@@ -26,7 +28,7 @@ public class LoginCommand implements ActionCommand {
             if (userDAO.isAuthorized(login, pass)) {
                 String role = userDAO.checkRole(login, pass);
                 Order order = new OrderDAO().getOrderByIdUser(userDAO.getUserIdByName(login));
-                session.setAttribute("goodsOrder", new GoodsOrderDAO().countNumber(order.getOrderId()));
+                session.setAttribute(Parameters.GOODS_ORDER, new GoodsOrderDAO().countNumber(order.getOrderId()));
                 if (role.equals("admin")) {
                     request.setAttribute("user", login);
                     session.setAttribute("userType", ClientType.ADMINISTRATOR);
@@ -40,13 +42,17 @@ public class LoginCommand implements ActionCommand {
                 }
                 if (order.getOrderId() != 0)
                     if (order.getStatus())
-                        session.setAttribute("goodsOrder", 0);
+                        session.setAttribute(Parameters.GOODS_ORDER, 0);
             } else {
-                request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
+                LocaleManager.setBundle((Locale) session.getAttribute("locale"));
+                session.setAttribute("errorLoginPassMessage", new String((LocaleManager.getProperty("message.loginerror").getBytes("ISO-8859-1")), "Cp1251"));
                 page = ConfigurationManager.getProperty("path.page.login");
             }
         } catch (SQLException e) {
-            System.out.println("err");
+            System.out.println("SQLException");
+        }
+        catch (UnsupportedEncodingException e) {
+            System.out.println("Encoding exception");
         }
         return page;
     }

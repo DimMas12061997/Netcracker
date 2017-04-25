@@ -21,7 +21,7 @@ public enum ConnectionPool {
 			dataSource = (DataSource) initContext.lookup(ConfigsConstants.DATABASE_SOURCE);
 		}
 		catch(NamingException e){
-			System.out.println("error");
+			System.out.println("SQLException");
 		}
 	}
 
@@ -36,7 +36,7 @@ public enum ConnectionPool {
 				connection.close();
 			}
 			catch (SQLException e) {
-				System.out.println("error");
+				System.out.println("SQLException");
 			}
 		}
 	}

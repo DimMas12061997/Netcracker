@@ -2,7 +2,6 @@ package by.training.nc.dev3.constants;
 
 
 public class ColumnNames {
-
     public static final String USER_ID = "user_id";
     public static final String USER_FIRST_NAME = "first_name";
     public static final String USER_LAST_NAME = "last_name";

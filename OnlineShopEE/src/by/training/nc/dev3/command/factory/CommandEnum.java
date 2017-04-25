@@ -151,6 +151,21 @@ public enum CommandEnum {
             this.command = new RemoveGoodsCommand();
         }
     },
+    UPDATE_GOODS{
+        {
+            this.command = new UpdateGoodsCommand();
+        }
+    },
+    REMOVE_FROM_BLACKLIST{
+        {
+            this.command = new RemoveFromBlackListCommand();
+        }
+    },
+    SELECT_LANGUAGE{
+        {
+            this.command = new SelectLanguageCommand();
+        }
+    },
     LOGOUT {
         {
             this.command = new LogoutCommand();

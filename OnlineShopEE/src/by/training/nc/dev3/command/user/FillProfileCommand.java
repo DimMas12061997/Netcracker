@@ -7,11 +7,13 @@ import by.training.nc.dev3.constants.Parameters;
 import by.training.nc.dev3.dao.UserDAO;
 import by.training.nc.dev3.dao.UserProfileDAO;
 import by.training.nc.dev3.resource.ConfigurationManager;
-import by.training.nc.dev3.resource.MessageManager;
+import by.training.nc.dev3.resource.LocaleManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class FillProfileCommand implements ActionCommand {
     private static String email;
@@ -26,8 +28,8 @@ public class FillProfileCommand implements ActionCommand {
         address = request.getParameter(Parameters.ADDRESS);
         budget = Double.parseDouble(request.getParameter(Parameters.BUDGET));
         creditCard = request.getParameter(Parameters.CREDIT_CARD);
+        HttpSession session = request.getSession();
         try {
-            HttpSession session = request.getSession();
             String name = (String) session.getAttribute("user");
             UserProfileDAO user = new UserProfileDAO();
             UserProfile profile = user.getEntityById(new UserDAO().getUserIdByName(name));
@@ -42,7 +44,12 @@ public class FillProfileCommand implements ActionCommand {
             request.setAttribute("creditCard", creditCard);
             page = ConfigurationManager.getProperty("path.page.adminProfile");
         } catch (SQLException e) {
-            request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.errorfillprofile"));
+            LocaleManager.setBundle((Locale) session.getAttribute("locale"));
+            try {
+                session.setAttribute("errorLoginPassMessage", new String((LocaleManager.getProperty("message.errorfillprofile").getBytes("ISO-8859-1")), "Cp1251"));
+            } catch (UnsupportedEncodingException e1) {
+                System.out.println("Encoding exception");
+            }
             page = ConfigurationManager.getProperty("path.page.adminProfile");
         }
         return page;
