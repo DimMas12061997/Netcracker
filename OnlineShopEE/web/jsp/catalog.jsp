@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Интернет магазин</title>
+    <title>${title}</title>
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.min.js"></script>
@@ -29,43 +29,46 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <%--<li class="active"><a href="#">О магазине</a></li>--%>
-                    <li><a href="controller?command=catalog">Каталог</a></li>
+                    <li><a href="controller?command=catalog">${catalog}</a></li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search" action="controller" method="POST" id="find-form">
                     <input type="hidden" name="command" value="find_goods"/>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="find" placeholder="Искать товар">
+                        <input type="text" class="form-control" name="find" placeholder="${searchGood}">
                     </div>
                     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
-                        Искать
+                        ${search}
                     </button>
                 </form>
+                <ul class="nav navbar-nav">
+                    <li><a href="controller?command=select_language&language=EN&page=path.page.catalog"><span class="bfh-languages" data-language="en_US" data-flags="true"></span>EN</a></li>
+                    <li><a href="controller?command=select_language&language=RU&page=path.page.catalog"><span class="bfh-languages" data-language="ru_RU" data-flags="true"></span>RU</a></li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:choose>
                         <c:when test="${userType == 'GUEST'}">
-                            <li><a href="controller?command=loginpage">Вход</a></li>
-                            <li><a href="controller?command=registrationpage">Регистрация</a></li>
+                            <li><a href="controller?command=loginpage">${entrance}</a></li>
+                            <li><a href="controller?command=registrationpage">${registration}</a></li>
                         </c:when>
                         <c:otherwise>
                             <li><a href="controller?command=show_order">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span
+                                <span class="glyphicon glyphicon-shopping-cart"></span>  ${basket} <span
                                     class="badge"> ${goodsOrder}</span></a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
                                         class="glyphicon glyphicon-user"></span> ${user}<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="controller?command=adminprofilepage">Мой профиль</a></li>
-                                    <li><a href="controller?command=editpage">Редактировать</a></li>
+                                    <li><a href="controller?command=adminprofilepage">${myProfile}</a></li>
+                                    <li><a href="controller?command=editpage">${edit}</a></li>
                                     <c:if test="${userType == 'ADMINISTRATOR'}">
-                                        <li><a href="controller?command=show_customers">Пользователи</a></li>
-                                        <li><a href="controller?command=black_list">Управление черным списком</a></li>
-                                        <li><a href="controller?command=show_purchase_history">История покупок</a></li>
-                                        <li><a href="controller?command=shop_management">Управление магазином</a></li>
+                                        <li><a href="controller?command=show_customers">${users}</a></li>
+                                        <li><a href="controller?command=black_list"> ${managingBlackList}</a></li>
+                                        <li><a href="controller?command=show_purchase_history">${purchaseHistory} </a></li>
+                                        <li><a href="controller?command=shop_management">${shopManagement} </a></li>
                                     </c:if>
                                     <li class="divider"></li>
-                                    <li><a href="controller?command=logout">Выйти</a></li>
+                                    <li><a href="controller?command=logout">${logout}</a></li>
                                 </ul>
                             </li>
                         </c:otherwise>
@@ -78,7 +81,7 @@
 <div class="i-main c">
     <div class="left-menu">
         <div class="left-menu-title">
-            <div class="left-menu-title-text"><span class="glyphicon glyphicon-list"></span> МЕНЮ</div>
+            <div class="left-menu-title-text"><span class="glyphicon glyphicon-list"></span> ${menuLabel}</div>
         </div>
         <div class="left-menu-block">
             <ul>
@@ -93,9 +96,9 @@
     <div class="right right404 right-catalog">
         <div class="i-right-title">
             <div class="i-right-title-label i-right-title-label-10"></div>
-            <div class="i-right-title-text">Каталог</div>
+            <div class="i-right-title-text">${catalog}</div>
         </div>
-        <a style="color:yellow; font-size:16px;"href="controller?command=sort_by_price&id=${categoryId}">Сортировка</a>
+        <a style="color:yellow; font-size:16px;"href="controller?command=sort_by_price&id=${categoryId}">${sortLabel}</a>
         <div class="r-cat">
             <c:forEach var="goods" items="${goodsList}">
                 <div class="r-cat-box  shk-item">

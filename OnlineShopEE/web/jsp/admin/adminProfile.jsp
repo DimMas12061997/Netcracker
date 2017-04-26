@@ -83,7 +83,7 @@
         <div class="form-group">
             ${creditNumberLabel} <input type="text"name="credit_card" class="form-input" value = ${creditCard}>
         </div>
-        ${errorLoginPassMessage}
+        ${errorProfile}
         <br/>
         ${wrongAction}
         <br/>

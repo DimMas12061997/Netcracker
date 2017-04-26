@@ -10,6 +10,7 @@
     <script src="js/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
     <script src="js/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="js/jquery-validation/src/localization/messages_de.js"> </script>
 </head>
 <body>
 <nav class="navbar navbar-my" role="navigation">

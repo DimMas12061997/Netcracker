@@ -27,11 +27,11 @@ public class ShowOrderCommand implements ActionCommand {
             String login = String.valueOf(session.getAttribute("user"));
             int idUser = new UserDAO().getUserIdByName(login);
             UserProfile profil = new UserProfileDAO().getEntityById(idUser);
-            if(profil != null) {
+            if (profil != null) {
                 Order order = new OrderDAO().getOrderByIdUser(new UserDAO().getUserIdByName(login));
                 BlackListDAO blackListDAO = new BlackListDAO();
                 BlackList blackList = blackListDAO.getEntityById(idUser);
-                if (blackList.getUserId() != 0){
+                if (blackList.getUserId() != 0) {
                     LocaleManager.setBundle((Locale) session.getAttribute("locale"));
                     session.setAttribute("userBlackList", new String((LocaleManager.getProperty("message.userBlackList").getBytes("ISO-8859-1")), "Cp1251"));
                 }
@@ -47,13 +47,11 @@ public class ShowOrderCommand implements ActionCommand {
                     }
                 }
                 page = ConfigurationManager.getProperty("path.page.showOrder");
-            }
-            else
+            } else
                 page = ConfigurationManager.getProperty("path.page.adminProfile");
         } catch (SQLException e) {
             System.out.println("SQLException");
-        }
-        catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             System.out.println("Encoding exception");
         }
         return page;

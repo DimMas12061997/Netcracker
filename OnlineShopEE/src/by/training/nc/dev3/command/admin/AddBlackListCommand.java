@@ -22,6 +22,8 @@ public class AddBlackListCommand implements ActionCommand {
         try {
             HttpSession session = request.getSession();
             String userLogin = request.getParameter(Parameters.USER);
+            String orderId = request.getParameter("orderId");
+            int idOrder = Integer.parseInt(orderId);
             UserDAO userDAO = new UserDAO();
             User user = userDAO.getUserByLogin(userLogin);
             BlackListDAO blackListDAO = new BlackListDAO();
@@ -29,7 +31,7 @@ public class AddBlackListCommand implements ActionCommand {
             blackList.setUserId(user.getUserId());
             blackListDAO.createEntity(blackList);
             OrderDAO orderDAO = new OrderDAO();
-            Order order1 = orderDAO.getOrderByIdUser(user.getUserId());
+            Order order1 = orderDAO.getEntityById(idOrder);
             GoodsOrderDAO goodsOrderDAO = new GoodsOrderDAO();
             List<Goods> goodsList = goodsOrderDAO.getAllById(order1.getOrderId());
             GoodsDAO goodsDAO = new GoodsDAO();
@@ -39,7 +41,7 @@ public class AddBlackListCommand implements ActionCommand {
             }
             orderDAO.removeOrderById(user.getUserId());
             List<Order> orderList = new OrderDAO().getOrdersById(0);
-            session.setAttribute(Parameters.ORDER_LIST, orderList);
+            session.setAttribute(Parameters.ORDER_LIST_PURCHASE, orderList);
             session.setAttribute(Parameters.BLACKLIST, blackListDAO.getAllUsers());
             page = ConfigurationManager.getProperty("path.page.blackList");
         } catch (SQLException e) {

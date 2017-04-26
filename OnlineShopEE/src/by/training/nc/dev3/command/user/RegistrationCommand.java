@@ -43,7 +43,7 @@ public class RegistrationCommand implements ActionCommand {
         } catch (SQLException e) {
             try {
                 LocaleManager.setBundle((Locale) session.getAttribute("locale"));
-                session.setAttribute("errorLoginPassMessage", new String((LocaleManager.getProperty("message.regerror").getBytes("ISO-8859-1")), "Cp1251"));
+                session.setAttribute("regError", new String((LocaleManager.getProperty("message.regerror").getBytes("ISO-8859-1")), "Cp1251"));
             } catch (UnsupportedEncodingException e1) {
                 System.out.println("Encoding exception");
             }

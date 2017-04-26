@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Интернет магазин</title>
+    <title>${title}</title>
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -28,62 +28,73 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <%--<li class="active"><a href="#">О магазине</a></li>--%>
-                <li><a href="controller?command=catalog">Каталог</a></li>
+                <li><a href="controller?command=catalog">${catalog}</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search" action="controller" method="POST" id="find-form">
-                <input type="hidden" name="command" value="find_goods" />
+                <input type="hidden" name="command" value="find_goods"/>
                 <div class="form-group">
-                    <input type="text" class="form-control" name = "find" placeholder="Искать товар">
+                    <input type="text" class="form-control" name="find" placeholder="${searchGood}">
                 </div>
                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
-                    Искать
+                    ${search}
                 </button>
             </form>
+            <ul class="nav navbar-nav">
+                <li><a href="controller?command=select_language&language=EN&page=path.page.blackList"><span class="bfh-languages" data-language="en_US" data-flags="true"></span>EN</a></li>
+                <li><a href="controller?command=select_language&language=RU&page=path.page.blackList"><span class="bfh-languages" data-language="ru_RU" data-flags="true"></span>RU</a></li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="controller?command=show_order">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span
-                        class="badge"> ${goodsOrder}</span></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> ${user}<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="controller?command=adminprofilepage">Мой профиль</a></li>
-                        <li><a href="controller?command=editpage">Редактировать</a></li>
-                        <c:if test="${userType == 'ADMINISTRATOR'}">
-                            <li><a href="controller?command=show_customers">Пользователи</a></li>
-                            <li><a href="controller?command=black_list">Управление черным списком</a></li>
-                            <li><a href="controller?command=show_purchase_history">История покупок</a></li>
-                            <li><a href="controller?command=shop_management">Управление магазином</a></li>
-                        </c:if>
-                        <li class="divider"></li>
-                        <li><a href="controller?command=logout">Выйти</a></li>
-                    </ul>
-                </li>
+                <c:choose>
+                    <c:when test="${userType == 'GUEST'}">
+                        <li><a href="controller?command=loginpage">${entrance}</a></li>
+                        <li><a href="controller?command=registrationpage">${registration}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="controller?command=show_order">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>  ${basket} <span
+                                class="badge"> ${goodsOrder}</span></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                                    class="glyphicon glyphicon-user"></span> ${user}<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="controller?command=adminprofilepage">${myProfile}</a></li>
+                                <li><a href="controller?command=editpage">${edit}</a></li>
+                                <c:if test="${userType == 'ADMINISTRATOR'}">
+                                    <li><a href="controller?command=show_customers">${users}</a></li>
+                                    <li><a href="controller?command=black_list"> ${managingBlackList}</a></li>
+                                    <li><a href="controller?command=show_purchase_history">${purchaseHistory} </a></li>
+                                    <li><a href="controller?command=shop_management">${shopManagement} </a></li>
+                                </c:if>
+                                <li class="divider"></li>
+                                <li><a href="controller?command=logout">${logout}</a></li>
+                            </ul>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>
 </nav>
-</div>
 <div class="container">
-    <div class="i-right-title-text">Неплательщики</div>
+    <div class="i-right-title-text">${nonPayers}</div>
     <table class="table table-bordered">
         <thead>
         <tr align="center" class="warning">
             <th>№</th>
-            <th>Логин</th>
-            <th>Стоимость предварительного заказа</th>
-            <th>Добавить в ЧС</th>
+            <th>${loginLabel}</th>
+            <th>${orderPrice}</th>
+            <th>${addBlackList}</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="order" items="${orderList}" varStatus="i">
+        <c:forEach var="order" items="${orderListPurchase}" varStatus="i">
             <tr class="success" align="center">
                 <td>${i.count}</td>
                 <td><c:out value="${order.createdDate}"/></td>
                 <td><c:out value="${order.orderCost}"/></td>
                 <td>
-                    <a href="controller?command=add_black_list&userLogin=${order.createdDate}"
+                    <a href="controller?command=add_black_list&userLogin=${order.createdDate}&orderId=${order.orderId}"
                        class="glyphicon glyphicon-ok"></a>
                 </td>
             </tr>
@@ -91,15 +102,15 @@
         </tbody>
     </table>
 
-    <div class="i-right-title-text">Черный список</div>
+    <div class="i-right-title-text">${blackListLabel}</div>
     <table class="table table-bordered">
         <thead>
         <tr align="center" class="warning">
             <th>№</th>
-            <th>Логин</th>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Удалить из чс</th>
+            <th>${loginLabel}</th>
+            <th>${surnameLabel}</th>
+            <th>${nameLabel}</th>
+            <th>${removeFromBlackList}</th>
         </tr>
         </thead>
         <tbody>

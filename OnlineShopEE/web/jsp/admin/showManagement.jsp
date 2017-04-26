@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Интернет магазин</title>
+    <title>${title}</title>
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="js/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -46,38 +46,50 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="controller?command=catalog">Каталог</a></li>
+                <li><a href="controller?command=catalog">${catalog}</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search" action="controller" method="POST" id="find-form">
                 <input type="hidden" name="command" value="find_goods"/>
                 <div class="form-group">
-                    <input type="text" class="form-control" name="find" placeholder="Искать товар">
+                    <input type="text" class="form-control" name="find" placeholder="${searchGood}">
                 </div>
                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
-                    Искать
+                    ${search}
                 </button>
             </form>
+            <ul class="nav navbar-nav">
+                <li><a href="controller?command=select_language&language=EN&page=path.page.showManagement"><span class="bfh-languages" data-language="en_US" data-flags="true"></span>EN</a></li>
+                <li><a href="controller?command=select_language&language=RU&page=path.page.showManagement"><span class="bfh-languages" data-language="ru_RU" data-flags="true"></span>RU</a></li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="controller?command=show_order">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> Корзина <span
-                        class="badge"> ${goodsOrder}</span></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
-                            class="glyphicon glyphicon-user"></span> ${user}<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="controller?command=adminprofilepage">Мой профиль</a></li>
-                        <li><a href="controller?command=editpage">Редактировать</a></li>
-                        <c:if test="${userType == 'ADMINISTRATOR'}">
-                            <li><a href="controller?command=show_customers">Пользователи</a></li>
-                            <li><a href="controller?command=black_list">Управление черным списком</a></li>
-                            <li><a href="controller?command=show_purchase_history">История покупок</a></li>
-                            <li><a href="controller?command=shop_management">Управление магазином</a></li>
-                        </c:if>
-                        <li class="divider"></li>
-                        <li><a href="controller?command=logout">Выйти</a></li>
-                    </ul>
-                </li>
+                <c:choose>
+                    <c:when test="${userType == 'GUEST'}">
+                        <li><a href="controller?command=loginpage">${entrance}</a></li>
+                        <li><a href="controller?command=registrationpage">${registration}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="controller?command=show_order">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>  ${basket} <span
+                                class="badge"> ${goodsOrder}</span></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                                    class="glyphicon glyphicon-user"></span> ${user}<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="controller?command=adminprofilepage">${myProfile}</a></li>
+                                <li><a href="controller?command=editpage">${edit}</a></li>
+                                <c:if test="${userType == 'ADMINISTRATOR'}">
+                                    <li><a href="controller?command=show_customers">${users}</a></li>
+                                    <li><a href="controller?command=black_list"> ${managingBlackList}</a></li>
+                                    <li><a href="controller?command=show_purchase_history">${purchaseHistory} </a></li>
+                                    <li><a href="controller?command=shop_management">${shopManagement} </a></li>
+                                </c:if>
+                                <li class="divider"></li>
+                                <li><a href="controller?command=logout">${logout}</a></li>
+                            </ul>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>
@@ -89,16 +101,16 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Добавление категории</h4>
+                <h4 class="modal-title" id="myModalLabel">${addCategory}</h4>
             </div>
             <div class="modal-body">
 
                 <form action="controller" method="POST" id="add_category">
                     <div class="message js-form-message"></div>
                     <input type="hidden" name="command" value="add_category"/>
-                    <input type="text" placeholder="Наименование категории" name="categoryName" class="form-input">
+                    <input type="text" placeholder="${nameCategory}" name="categoryName" class="form-input">
                     <p>
-                        <input type="submit" value="Добавить" style="margin-left: 45%;margin-top: 3%"
+                        <input type="submit" value="${add}" style="margin-left: 45%;margin-top: 3%"
                                class="btn btn-success"/></p>
                     <br/>
                 </form>
@@ -115,7 +127,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalUpdateLabel">Изменение категории</h4>
+                <h4 class="modal-title" id="myModalUpdateLabel">${editCategory}</h4>
             </div>
             <div class="modal-body">
 
@@ -123,9 +135,9 @@
                     <div class="message js-form-message"></div>
                     <input type="hidden" name="command" value="update_category"/>
                     <input type="hidden" id="idCategory" name="categoryId" value=""/>
-                    Наименование категории: <input type="text" name="categoryName" id ="nameCategory" class="form-input">
+                   ${nameCategory}: <input type="text" name="categoryName" id ="nameCategory" class="form-input">
                     <p>
-                        <input type="submit" value="Изменить" style="margin-left: 45%;margin-top: 3%"
+                        <input type="submit" value="${edit}" style="margin-left: 45%;margin-top: 3%"
                                class="btn btn-success"/></p>
                     <br/>
                 </form>
@@ -142,26 +154,26 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalUpdateGoodsLabel">Изменение товара</h4>
+                <h4 class="modal-title" id="myModalUpdateGoodsLabel">${editGoods}</h4>
             </div>
             <div class="modal-body">
                 <form action="controller" method="POST" id="update_goods">
                     <div class="message js-form-message"></div>
                     <input type="hidden" name="command" value="update_goods"/>
                     <input type="hidden" name="idGoods" id="goodsId" value=""/>
-                    <input type="text" placeholder="Наименование товара" name="goodsName" class="form-input">
-                    <input type="number" min="0" placeholder="Количество товара" name="goodsNumber" class="form-input">
-                    <input type="text" placeholder="Цена единицы товара" name="goodsPrice" class="form-input">
-                    <input type="text" placeholder="Производитель" name="goodsProducer" class="form-input">
-                    <input type="text" placeholder="Описание"  name="goodsDescription" class="form-input">
+                    <input type="text" placeholder="${nameLabel}" name="goodsName" class="form-input">
+                    <input type="number" min="0" placeholder="${numberLabel}" name="goodsNumber" class="form-input">
+                    <input type="text" placeholder="${numberLabel}" name="goodsPrice" class="form-input">
+                    <input type="text" placeholder="${producerLabel}" name="goodsProducer" class="form-input">
+                    <input type="text" placeholder="${descriptionLabel}"  name="goodsDescription" class="form-input">
                     <select id="name_category" name="categoryName">
-                        <option value="">Выберите категорию:</option>
+                        <option value="">${chooseCategory}:</option>
                         <c:forEach var="category" items="${categoryList}">
                             <option><c:out value="${category.categoryName}"/></option>
                         </c:forEach>
                     </select>
                     <p>
-                        <input type="submit" value="Изменить" style="margin-left: 45%;margin-top: 3%"
+                        <input type="submit" value="${edit}" style="margin-left: 45%;margin-top: 3%"
                                class="btn btn-success"/></p>
                     <br/>
                 </form>
@@ -178,26 +190,25 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalGoodsLabel">Добавление товара</h4>
+                <h4 class="modal-title" id="myModalGoodsLabel">${addGoods}</h4>
             </div>
             <div class="modal-body">
-
                 <form action="controller" method="POST" id="add_goods">
                     <div class="message js-form-message"></div>
                     <input type="hidden" name="command" value="add_goods"/>
-                    <input type="text" placeholder="Наименование товара" name="goodsName" class="form-input">
-                    <input type="number" min="0" placeholder="Количество товара" name="goodsNumber" class="form-input">
-                    <input type="text" placeholder="Цена единицы товара" name="goodsPrice" class="form-input">
-                    <input type="text" placeholder="Производитель" name="goodsProducer" class="form-input">
-                    <input type="text" placeholder="Описание" name="goodsDescription" class="form-input">
+                    <input type="text" placeholder="${nameLabel}" name="goodsName" class="form-input">
+                    <input type="number" min="0" placeholder="${numberLabel}" name="goodsNumber" class="form-input">
+                    <input type="text" placeholder="${priceLabel}" name="goodsPrice" class="form-input">
+                    <input type="text" placeholder="${producerLabel}" name="goodsProducer" class="form-input">
+                    <input type="text" placeholder="${descriptionLabel}"  name="goodsDescription" class="form-input">
                     <select id="categoryName" name="categoryName">
-                        <option value="">Выберите категорию:</option>
+                        <option value="">${chooseCategory}:</option>
                         <c:forEach var="category" items="${categoryList}">
                             <option><c:out value="${category.categoryName}"/></option>
                         </c:forEach>
                     </select>
                     <p>
-                        <input type="submit" value="Добавить" style="margin-left: 45%;margin-top: 3%"
+                        <input type="submit" value="${add}" style="margin-left: 45%;margin-top: 3%"
                                class="btn btn-success"/></p>
                     <br/>
                 </form>
@@ -211,14 +222,14 @@
         <thead>
         <tr class="warning">
             <th align="center">№</th>
-            <th align="center">Наименование товара</th>
-            <th align="center">Количество</th>
-            <th align="center">Цена</th>
-            <th align="center">Производитель</th>
-            <th align="center">Описание</th>
-            <th align="center">Категория</th>
-            <th align="center">Удалить товар</th>
-            <th align="center">Изменить товар</th>
+            <th align="center">${nameLabel}</th>
+            <th align="center">${numberLabel}</th>
+            <th align="center">${priceLabel}</th>
+            <th align="center">${producerLabel}</th>
+            <th align="center">${descriptionLabel}</th>
+            <th align="center">${categoryLabel}</th>
+            <th align="center">${remove}</th>
+            <th align="center">${edit}</th>
         </tr>
         </thead>
         <tbody>
@@ -245,7 +256,7 @@
     </table>
     <p>
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalGoods">
-            Добавить товар
+            ${addGoods}
         </button>
     </p>
     <p>
@@ -253,10 +264,10 @@
         <thead>
         <tr class="warning">
             <th align="center">№</th>
-            <th align="center">Наименование категории</th>
-            <th align="center">Изменить</th>
-            <th align="center">Удалить</th>
-            <th align="center">Выбрать</th>
+            <th align="center">${nameCategory}</th>
+            <th align="center">${edit}</th>
+            <th align="center">${remove}</th>
+            <th align="center">${select}</th>
         </tr>
         </thead>
         <tbody>
@@ -281,10 +292,10 @@
         </tbody>
     </table>
     <a href="controller?command=shop_management"
-       class="glyphicon glyphicon-ok">Выбрать все товары</a>
+       class="glyphicon glyphicon-ok">${selectAllGoods}</a>
     </p>
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
-        Добавить категорию
+        ${addCategory}
     </button>
 
 </div>

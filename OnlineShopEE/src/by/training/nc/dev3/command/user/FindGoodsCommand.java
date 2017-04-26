@@ -30,18 +30,17 @@ public class FindGoodsCommand implements ActionCommand {
             Category category = categoryDAO.getEntityById(goods.getCategoryId());
             List<Category> list = categoryDAO.findAll();
             session.setAttribute(Parameters.CATEGORY_LIST, list);
-            System.out.println(goods);
             session.setAttribute(Parameters.CATEGORY_NAME, category.getCategoryName());
             session.setAttribute(Parameters.GOODS_DESCRIPTION, goods);
-            if (goods.getIdGoods() == 0){
+            if (goods.getIdGoods() == 0) {
                 LocaleManager.setBundle((Locale) session.getAttribute("locale"));
                 session.setAttribute("notFound", new String((LocaleManager.getProperty("message.notFound").getBytes("ISO-8859-1")), "Cp1251"));
-            }
+            } else if (session != null)
+                session.removeAttribute("notFound");
             page = ConfigurationManager.getProperty("path.page.goodsDescription");
         } catch (SQLException e) {
             System.out.println("SQLException");
-        }
-        catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             System.out.println("Encoding exception");
         }
         return page;

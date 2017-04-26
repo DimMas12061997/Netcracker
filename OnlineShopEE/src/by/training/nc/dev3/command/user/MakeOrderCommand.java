@@ -29,11 +29,10 @@ public class MakeOrderCommand implements ActionCommand {
         HttpSession session = request.getSession(true);
         String userLogin = (String) session.getAttribute("user");
         BlackListDAO blackListDAO = new BlackListDAO();
-        BlackList blackList = new BlackList();
         try {
             GoodsDAO goodsDAO = new GoodsDAO();
             int idUser = new UserDAO().getUserIdByName(userLogin);
-            blackList = blackListDAO.getEntityById(idUser);
+            BlackList blackList = blackListDAO.getEntityById(idUser);
             if (blackList.getUserId() == 0) {
                 Goods goods = goodsDAO.getGoodsByName(name);
                 goods.setNumber(goods.getNumber() - number);
@@ -41,20 +40,18 @@ public class MakeOrderCommand implements ActionCommand {
                 createOrder(price, number, userLogin, id, session);
                 goods = goodsDAO.getEntityById(id);
                 session.setAttribute(Parameters.GOODS_DESCRIPTION, goods);
-            } else{
+            } else {
                 LocaleManager.setBundle((Locale) session.getAttribute("locale"));
                 session.setAttribute("userBlackList", new String((LocaleManager.getProperty("message.userBlackList").getBytes("ISO-8859-1")), "Cp1251"));
             }
         } catch (SQLException e) {
             System.out.println("SQL exception");
-        }
-        catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             System.out.println("Encoding exception");
         }
         page = ConfigurationManager.getProperty("path.page.goodsDescription");
         return page;
     }
-
 
     public void createOrder(double price, int number, String userLogin, int id, HttpSession session) {
         Order order = new Order();
@@ -65,8 +62,15 @@ public class MakeOrderCommand implements ActionCommand {
         try {
             if (orderDAO.isCreated(order.getIdUser())) {
                 order = orderDAO.getOrderByIdUser(order.getIdUser());
-                order.setOrderCost(order.getOrderCost() + totalPrice);
-                orderDAO.updateOrder(order);
+                if (order.getStatus() == false) {
+                    order.setOrderCost(order.getOrderCost() + totalPrice);
+                    orderDAO.updateOrder(order);
+                }
+                else {
+                    order.setOrderCost(number * price);
+                    order.setIdUser(new UserDAO().getUserIdByName(userLogin));
+                    orderDAO.createEntity(order);
+                }
             } else
                 orderDAO.createEntity(order);
             order = orderDAO.getOrderByIdUser(order.getIdUser());
@@ -84,7 +88,7 @@ public class MakeOrderCommand implements ActionCommand {
                 }
             }
             if (flag == 0)
-                goodsOrderDAO.createEntity(goodsOrder);
+            goodsOrderDAO.createEntity(goodsOrder);
             else
                 goodsOrderDAO.updateNumber(goodsOrder);
             session.setAttribute("goodsOrder", new GoodsOrderDAO().countNumber(goodsOrder.getIdOrder()));

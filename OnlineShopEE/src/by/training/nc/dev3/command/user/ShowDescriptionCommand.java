@@ -25,6 +25,8 @@ public class ShowDescriptionCommand implements ActionCommand {
             GoodsDAO goodsDAO = new GoodsDAO();
             Goods goods = goodsDAO.getEntityById(id);
             CategoryDAO categoryDAO = new CategoryDAO();
+            if(session != null)
+                session.removeAttribute("notFound");
             Category category = categoryDAO.getEntityById(goods.getCategoryId());
             session.setAttribute(Parameters.GOODS_DESCRIPTION, goods);
             session.setAttribute(Parameters.CATEGORY_NAME, category.getCategoryName());

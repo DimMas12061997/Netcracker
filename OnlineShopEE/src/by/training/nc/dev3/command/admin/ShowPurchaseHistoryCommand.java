@@ -29,7 +29,7 @@ public class ShowPurchaseHistoryCommand implements ActionCommand {
             User user = userDAO.getUserByLogin(userLogin);
             OnlineShop shop = shopDAO.getEntityById(user.getShopId());
             session.setAttribute("shopProfit", shop.getProfit());
-            session.setAttribute(Parameters.ORDER_LIST, orderList);
+            session.setAttribute(Parameters.ORDER_LIST_PURCHASE, orderList);
             page = ConfigurationManager.getProperty("path.page.purchaseHistory");
         } catch (SQLException e) {
             System.out.println("SQLException");

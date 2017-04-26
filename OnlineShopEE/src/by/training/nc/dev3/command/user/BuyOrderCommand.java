@@ -41,7 +41,6 @@ public class BuyOrderCommand implements ActionCommand {
                 shop.setProfit(shop.getProfit() + cost);
                 shopDAO.updateShop(shop);
                 Order order = orderDAO.getOrderByIdUser(new UserDAO().getUserIdByName(userLogin));
-                System.out.println(order);
                 List<Goods> goods = null;
                 if (order.getStatus() == false) {
                     goods = new GoodsOrderDAO().getAllById(order.getOrderId());
@@ -55,7 +54,6 @@ public class BuyOrderCommand implements ActionCommand {
             } else{
                 LocaleManager.setBundle((Locale) session.getAttribute("locale"));
                 session.setAttribute("errorPayment", new String((LocaleManager.getProperty("message.buyerror").getBytes("ISO-8859-1")), "Cp1251"));
-
             }
             page = ConfigurationManager.getProperty("path.page.showOrder");
         } catch (SQLException e) {

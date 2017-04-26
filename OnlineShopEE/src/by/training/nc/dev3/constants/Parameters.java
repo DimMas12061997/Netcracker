@@ -19,6 +19,7 @@ public class Parameters {
 	public static final String UNIT_PRICE = "unitPrice";
 	public static final String ID_GOODS = "idGoods";
 	public static final String ORDER_LIST = "orderList";
+	public static final String ORDER_LIST_PURCHASE = "orderListPurchase";
 	public static final String ORDER_COST = "orderCost";
 	public static final String CATEGORY_ID = "categoryId";
 	public static final String USER = "userLogin";

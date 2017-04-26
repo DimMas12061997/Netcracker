@@ -46,7 +46,7 @@ public class FillProfileCommand implements ActionCommand {
         } catch (SQLException e) {
             LocaleManager.setBundle((Locale) session.getAttribute("locale"));
             try {
-                session.setAttribute("errorLoginPassMessage", new String((LocaleManager.getProperty("message.errorfillprofile").getBytes("ISO-8859-1")), "Cp1251"));
+                session.setAttribute("errorProfile", new String((LocaleManager.getProperty("message.errorfillprofile").getBytes("ISO-8859-1")), "Cp1251"));
             } catch (UnsupportedEncodingException e1) {
                 System.out.println("Encoding exception");
             }

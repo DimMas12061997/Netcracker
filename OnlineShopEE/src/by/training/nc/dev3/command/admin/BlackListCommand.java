@@ -20,7 +20,7 @@ public class BlackListCommand implements ActionCommand {
         try {
             HttpSession session = request.getSession();
             List<Order> orderList = new OrderDAO().getOrdersById(0);
-            session.setAttribute(Parameters.ORDER_LIST, orderList);
+            session.setAttribute(Parameters.ORDER_LIST_PURCHASE, orderList);
             session.setAttribute(Parameters.BLACKLIST, new BlackListDAO().getAllUsers());
             page = ConfigurationManager.getProperty("path.page.blackList");
         } catch (SQLException e) {

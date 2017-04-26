@@ -151,7 +151,8 @@ $(function () {
                 },
                 credit_card: {
                     required: "Поле credit_card обязательное для заполнения.",
-                    digits: "Поле credit_card должно содержать только цифры."
+                    digits: "Поле credit_card должно содержать только цифры.",
+                    minlength: "Поле credit_card должно содержать не менее 5 цифр."
                 }
             },
             focusCleanup: true,
@@ -246,48 +247,48 @@ $(function () {
     });
 
     $(function () {
-                    $("#update_goods").validate({
-                        rules: {
-                            goodsName: {
-                                required: true
-                            },
-                            goodsNumber: {
-                                required: true,
-                                digits: true
-                            },
-                            goodsPrice: {
-                                required: true,
-                                number: true
-                            },
-                            goodsProducer: {
-                                required: true
-                            },
-                            goodsDescription: {
-                                required: true
-                            },
-                            categoryName: {
-                                required: true
-                            }
-                        },
-                        messages: {
-                            goodsName: {
-                                required: "Поле goodsName обязательное для заполнения."
-                            },
-                            goodsNumber: {
-                                required: "Поле goodsNumber обязательное для заполнения.",
-                                digits: "Поле goodsNumber должно содержать только цифры."
-                            },
-                            goodsPrice: {
-                                required: "Поле goodsPrice обязательное для заполнения.",
-                                number: "Поле goodsPrice должно содержать только знаки и цифры."
-                            },
-                            goodsProducer: {
-                                required: "Поле goodsProducer обязательное для заполнения."
-                            },
-                            goodsDescription: {
-                                required: "Поле goodsDescription обязательное для заполнения."
-                            },
-                            categoryName: {
+        $("#update_goods").validate({
+            rules: {
+                goodsName: {
+                    required: true
+                },
+                goodsNumber: {
+                    required: true,
+                    digits: true
+                },
+                goodsPrice: {
+                    required: true,
+                    number: true
+                },
+                goodsProducer: {
+                    required: true
+                },
+                goodsDescription: {
+                    required: true
+                },
+                categoryName: {
+                    required: true
+                }
+            },
+            messages: {
+                goodsName: {
+                    required: "Поле goodsName обязательное для заполнения."
+                },
+                goodsNumber: {
+                    required: "Поле goodsNumber обязательное для заполнения.",
+                    digits: "Поле goodsNumber должно содержать только цифры."
+                },
+                goodsPrice: {
+                    required: "Поле goodsPrice обязательное для заполнения.",
+                    number: "Поле goodsPrice должно содержать только знаки и цифры."
+                },
+                goodsProducer: {
+                    required: "Поле goodsProducer обязательное для заполнения."
+                },
+                goodsDescription: {
+                    required: "Поле goodsDescription обязательное для заполнения."
+                },
+                categoryName: {
                     required: "Поле categoryName обязательное для заполнения."
                 }
             },
@@ -326,16 +327,3 @@ $(function () {
         });
     });
 });
-// $('#myModalUpdate').on('show.bs.modal', function (event) {
-//     var button = $(event.relatedTarget) // Кнопка, что спровоцировало модальное окно
-//
-//     var recipient = button.data('whatever') // Извлечение информации из данных-* атрибутов
-//     console.log(recipient);
-//
-//     // Если необходимо, вы могли бы начать здесь AJAX-запрос (и выполните обновление в обратного вызова).
-//
-//     // Обновление модальное окно Контента. Мы будем использовать jQuery здесь, но вместо него можно использовать привязки данных библиотеки или других методов.
-//
-//     var modal = $(this)
-//     modal.find('.modal-body input').val(recipient)
-// })

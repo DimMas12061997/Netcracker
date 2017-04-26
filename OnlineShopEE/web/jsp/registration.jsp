@@ -68,7 +68,7 @@
         <div class="form-group">
             <input type="password" placeholder="${placeholderRepeatPassword}" name="password2" class="form-input">
         </div>
-        ${errorLoginPassMessage}
+        ${regError}
         <br/>
         ${wrongAction}
         <br/>

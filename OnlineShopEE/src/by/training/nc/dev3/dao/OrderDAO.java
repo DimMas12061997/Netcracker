@@ -102,7 +102,20 @@ public class OrderDAO implements AbstractDAO<Order>, OrderI {
 
     @Override
     public Order getEntityById(int id) throws SQLException {
-        throw new UnsupportedOperationException();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SqlRequests.GET_ORDER_BY_ORDER_ID);
+        statement.setInt(1, id);
+        ResultSet result = statement.executeQuery();
+        Order order = new Order();
+        while(result.next()){
+            order.setOrderId(result.getInt(ColumnNames.ORDER_ID));
+            order.setOrderCost(result.getDouble(ColumnNames.ORDER_COST));
+            order.setCreatedDate(result.getString(ColumnNames.DATE));
+            order.setStatus(result.getBoolean(ColumnNames.ORDER_STATUS));
+            order.setIdUser(result.getInt(ColumnNames.USER_ID_ORDER));
+        }
+        ConnectionPool.INSTANCE.releaseConnection(connection);
+        return order;
     }
 
     public void removeOrderById(int id) throws SQLException {

@@ -84,7 +84,7 @@
             ${placeholderPassword}: <input type="text" name="password" value = ${password} class="form-input">
         </div>
         ${dateLabel}: ${date}
-        ${errorLoginPassMessage}
+        ${errorProfile}
         <br/>
         ${wrongAction}
         <br/>

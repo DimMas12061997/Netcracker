@@ -15,7 +15,6 @@ import java.io.IOException;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
-//  public static int flag = 0;
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     processRequest(request, response);
   }
@@ -25,13 +24,6 @@ public class Controller extends HttpServlet {
   }
 
   private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//    if(flag == 0) {
-//      Locale russianLocale = new Locale("ru", "RU");
-//      request.setAttribute("locale", russianLocale);
-//      request.setAttribute(Parameters.LANGUAGE, "RU");
-//      new SelectLanguageCommand().execute(request);
-//    }
-//    flag++;
     String page = null;
     ActionFactory client = new ActionFactory();
     ActionCommand command = client.defineCommand(request);
