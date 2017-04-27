@@ -18,10 +18,14 @@ public class SelectLanguageCommand implements ActionCommand {
         String language = request.getParameter(Parameters.LANGUAGE);
         String nextPage = request.getParameter("page");
         Locale locale = null;
-        if ("RU".equals(language))
+        if ("RU".equals(language)) {
             locale = new Locale("ru", "RU");
-        else if ("EN".equals(language))
+            session.setAttribute("localeLang", "ru");
+        }
+        else if ("EN".equals(language)) {
             locale = new Locale("en", "US");
+            session.setAttribute("localeLang", "en");
+        }
         session.setAttribute("locale", locale);
         LocaleManager.setBundle((Locale) session.getAttribute("locale"));
         LocaleManager.fillSession(session);

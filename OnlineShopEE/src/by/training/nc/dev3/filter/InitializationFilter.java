@@ -26,6 +26,7 @@ public class InitializationFilter implements Filter {
         Locale locale = (Locale) session.getAttribute("locale");
         if (locale == null || new Locale("ru", "RU").equals(locale)) {
             session.setAttribute("locale", new Locale("ru", "RU"));
+            session.setAttribute("localeLang", "ru");
             Locale russianLocale = new Locale("ru", "RU");
             LocaleManager.setBundle(russianLocale);
             LocaleManager.fillSession(session);

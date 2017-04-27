@@ -8,9 +8,15 @@
     <link href="css/style.css" rel="stylesheet">
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
+    <c:choose>
+    <c:when test="${localeLang == 'ru'}">
+        <script src="js/script.js"></script>
+    </c:when>
+    <c:otherwise>
+        <script src="js/scriptEN.js"></script>
+   </c:otherwise>
+    </c:choose>
     <script src="js/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="js/jquery-validation/src/localization/messages_de.js"> </script>
 </head>
 <body>
 <nav class="navbar navbar-my" role="navigation">
